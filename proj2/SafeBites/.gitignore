@@ -1,0 +1,38 @@
+# --- Root-level .gitignore ---
+
+# General
+.DS_Store
+Thumbs.db
+*.log
+*.env
+.env.*
+!.env.example
+
+# Python backend
+/backend/__pycache__/
+/backend/venv/
+/backend/.venv/
+/backend/*.py[cod]
+/backend/.mypy_cache/
+/backend/.pytest_cache/
+/backend/.coverage
+/backend/htmlcov/
+/backend/*.db
+/backend/*.env
+
+# Node frontend
+/frontend/node_modules/
+/frontend/dist/
+/frontend/build/
+/frontend/*.tsbuildinfo
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/.pnpm-debug.log*
+/frontend/*.env
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
