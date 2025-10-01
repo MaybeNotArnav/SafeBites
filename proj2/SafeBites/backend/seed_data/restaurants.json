@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "rest_1",
+    "name": "Shaw-QuinnDiner",
+    "address": "41243 Jacobson Mount, New Jenniferfort, PW 71996",
+    "cuisine": [
+      "Thai"
+    ]
+  },
+  {
+    "_id": "rest_2",
+    "name": "Fowler, Riley and OrtizBistro",
+    "address": "496 Kaitlyn Lock Suite 101, North Ericamouth, AZ 03188",
+    "cuisine": [
+      "American"
+    ]
+  },
+  {
+    "_id": "rest_3",
+    "name": "Williams IncTrattoria",
+    "address": "701 Greene Landing Apt. 478, South Luisberg, AL 93056",
+    "cuisine": [
+      "Mexican"
+    ]
+  }
+]
