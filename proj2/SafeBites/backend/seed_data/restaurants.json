@@ -1,26 +1,26 @@
 [
   {
     "_id": "rest_1",
-    "name": "Shaw-QuinnDiner",
-    "address": "41243 Jacobson Mount, New Jenniferfort, PW 71996",
+    "name": "Singh LtdKitchen",
+    "address": "20492 Shelton Pine Apt. 298, Lake Richardshire, MP 25830",
     "cuisine": [
-      "Thai"
+      "Indian"
     ]
   },
   {
     "_id": "rest_2",
-    "name": "Fowler, Riley and OrtizBistro",
-    "address": "496 Kaitlyn Lock Suite 101, North Ericamouth, AZ 03188",
+    "name": "Cook PLCBistro",
+    "address": "3720 Smith Summit Apt. 568, Port Abigailstad, MN 25288",
     "cuisine": [
-      "American"
+      "Indian"
     ]
   },
   {
     "_id": "rest_3",
-    "name": "Williams IncTrattoria",
-    "address": "701 Greene Landing Apt. 478, South Luisberg, AL 93056",
+    "name": "Chan and SonsDiner",
+    "address": "45405 Little Coves Suite 851, New John, OK 53850",
     "cuisine": [
-      "Mexican"
+      "Thai"
     ]
   }
 ]

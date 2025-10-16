@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
-from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException
+from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException, GenericException
 
 
 def register_exception_handlers(app):
@@ -20,6 +20,13 @@ def register_exception_handlers(app):
 
     @app.exception_handler(DatabaseException)
     async def database_exception_handler(request, exc: DatabaseException):
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"error": exc.message}
+        )
+
+    @app.exception_handler(GenericException)
+    async def generic_exception_handler(request, exc: GenericException):
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={"error": exc.message}
