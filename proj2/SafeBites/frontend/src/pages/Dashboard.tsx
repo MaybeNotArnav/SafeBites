@@ -24,28 +24,35 @@ function Dashboard() {
       case 'home':
         return (
           <div className="page-content">
-            <h2>🏠 Home</h2>
+            <h2>Home</h2>
             <p className="wip-message">Work in progress... This page is under construction.</p>
           </div>
         );
       case 'menu':
         return (
           <div className="page-content">
-            <h2>📋 Menu</h2>
+            <h2>Menu</h2>
+            <p className="wip-message">Work in progress... This page is under construction.</p>
+          </div>
+        );
+      case 'search-chat':
+        return (
+          <div className="page-content">
+            <h2>Search Chat</h2>
             <p className="wip-message">Work in progress... This page is under construction.</p>
           </div>
         );
       case 'dish':
         return (
           <div className="page-content">
-            <h2>🍽️ Dish</h2>
+            <h2>Dish</h2>
             <p className="wip-message">Work in progress... This page is under construction.</p>
           </div>
         );
       case 'settings':
         return (
           <div className="page-content">
-            <h2>⚙️ Settings</h2>
+            <h2>Settings</h2>
             <p className="wip-message">Work in progress... This page is under construction.</p>
           </div>
         );
@@ -69,7 +76,9 @@ function Dashboard() {
         {/* Middle: Search Bar */}
         <div className="header-middle">
           <div className="search-container">
-            <span className="search-icon">🔍</span>
+            <div className="search-icon-wrapper">
+              <img src="/icons/hugeicons_search.png" alt="Search" className="search-icon" />
+            </div>
             <input 
               type="text" 
               placeholder="Search for dishes, restaurants..." 
@@ -85,7 +94,7 @@ function Dashboard() {
               className="profile-btn"
               onClick={() => setIsProfileOpen(!isProfileOpen)}
             >
-              👤
+              <img src="/icons/hugeicons_male.png" alt="Profile" className="profile-icon" />
             </button>
             
             {/* Profile Dropdown */}
@@ -126,15 +135,23 @@ function Dashboard() {
               className={`sidebar-item ${currentPage === 'home' ? 'active' : ''}`}
               onClick={() => setCurrentPage('home')}
             >
-              <span className="sidebar-icon">🏠</span>
+              <img src="/icons/hugeicons_home.png" alt="Home" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Home</span>}
+            </button>
+
+            <button 
+              className={`sidebar-item ${currentPage === 'search-chat' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('search-chat')}
+            >
+              <img src="/icons/hugeicon_ai_search.png" alt="Search Chat" className="sidebar-icon" />
+              {isSidebarOpen && <span className="sidebar-text">Search Chat</span>}
             </button>
             
             <button 
               className={`sidebar-item ${currentPage === 'menu' ? 'active' : ''}`}
               onClick={() => setCurrentPage('menu')}
             >
-              <span className="sidebar-icon">📋</span>
+              <img src="/icons/hugeicons_menu_restaurant.png" alt="Menu" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Menu</span>}
             </button>
             
@@ -142,7 +159,7 @@ function Dashboard() {
               className={`sidebar-item ${currentPage === 'dish' ? 'active' : ''}`}
               onClick={() => setCurrentPage('dish')}
             >
-              <span className="sidebar-icon">🍽️</span>
+              <img src="/icons/hugeicons_dish.png" alt="Dish" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Dish</span>}
             </button>
             
@@ -150,7 +167,7 @@ function Dashboard() {
               className={`sidebar-item ${currentPage === 'settings' ? 'active' : ''}`}
               onClick={() => setCurrentPage('settings')}
             >
-              <span className="sidebar-icon">⚙️</span>
+              <img src="/icons/hugeicons_setting.png" alt="Settings" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Settings</span>}
             </button>
           </nav>
