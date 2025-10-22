@@ -60,8 +60,4 @@ class MenuQueryResults(BaseModel):
     dishes: List[Dict[str,Any]] = Field(default_factory=list)
 
 class MenuResultResponse(BaseModel):
-<<<<<<< HEAD
     menu_results: Dict[str, List[DishData]] = Field(default_factory=dict)
-=======
-    menu_results:Dict[str,List[Dict[str,Any]]] = Field(default_factory=list)
->>>>>>> docs/project-documentations

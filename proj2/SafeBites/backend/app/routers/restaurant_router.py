@@ -57,7 +57,6 @@ async def chat_search(payload: ChatQuery):
         restaurant_id = payload.restaurant_id
         prev_state = state_store.get("sess001")
         chat_graph = create_chat_graph()
-<<<<<<< HEAD
         state = ChatState(user_id="u123", session_id="sess001", restaurant_id=restaurant_id, query=query, query_parts={},
                           context=prev_state.context if prev_state else [])
 
@@ -65,13 +64,6 @@ async def chat_search(payload: ChatQuery):
         logger.debug(f"Final State: {final_state}")
         state_store.save(state)
         return JSONResponse(status_code=200, content=jsonable_encoder(final_state))
-=======
-        query = "Any pizza under $50.Also, what's the average price for a pizza in this restaurant?"
-        state = ChatState(user_id="u123", session_id="sess001",restaurant_id="rest_1", query=query,query_parts={})
-        
-        final_state = chat_graph.invoke(state)
-        return JSONResponse(status_code=200, content=final_state)
->>>>>>> docs/project-documentations
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

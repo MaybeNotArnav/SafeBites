@@ -30,7 +30,6 @@ def get_menu_items(state):
         logging.debug(f"Retrieving menu items for query: {q} and restaurant_id: {restaurant_id}")
         try:
             hits = semantic_retrieve_with_negation(q, restaurant_id)
-<<<<<<< HEAD
             logging.debug(f"Retrieved data from semantic search: {hits}")
             dish_results = [DishData(
                 dish_id=hit.dish["_id"],
@@ -43,9 +42,6 @@ def get_menu_items(state):
                 allergens=[a["allergen"] for a in hit.dish["inferred_allergens"]],
                 nutrition_facts=hit.dish["nutrition_facts"]
             ) for hit in hits]
-=======
-            dish_results = [res.get("dish") for res in hits if "dish" in res]
->>>>>>> docs/project-documentations
 
             if not dish_results:
                 logger.warning(f"No dishes found for query= {q}")
