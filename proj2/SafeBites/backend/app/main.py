@@ -1,8 +1,8 @@
 import logging
 from fastapi import FastAPI
+from app.routers import restaurant_router, dish_router, user_router
+from app.services.exception_service import register_exception_handlers
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import restaurant_router
-from .services.exception_service import register_exception_handlers
 from .config import setup_logging
 
 app = FastAPI(title="SafeBites")
@@ -20,6 +20,8 @@ logger = logging.getLogger(__name__)
 logger.info("Welcome to Safebites....")
 logger.info("Setting up routers....")
 app.include_router(restaurant_router.router)
+app.include_router(dish_router.router)
+app.include_router(user_router.router)
 
 logger.info("Registering Exception Handlers....")
 register_exception_handlers(app)

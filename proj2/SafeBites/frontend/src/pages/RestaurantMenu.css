@@ -1,0 +1,356 @@
+/* ===== POPUP OVERLAY ===== */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== MENU POPUP CONTENT ===== */
+.menu-popup-content {
+  background-color: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 45%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+/* Slide left when dish detail opens */
+.menu-popup-content.slide-left {
+  margin-left: 2.5%;
+  margin-right: auto;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  color: #999;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.popup-close-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* ===== RESTAURANT HEADER ===== */
+.restaurant-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  text-align: left;
+}
+
+.menu-title {
+  font-size: 1.75rem;
+  color: #333;
+  margin: 0.5rem 0;
+  font-weight: 700;
+  text-align: center;
+}
+
+.menu-divider {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 1rem 0 1.5rem 0;
+}
+
+/* ===== DISHES LIST ===== */
+.dishes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dish-item {
+  padding: 1.25rem;
+  transition: background-color 0.2s;
+  border-radius: 8px;
+}
+
+.dish-item.highlighted {
+  background-color: #f7fafc;
+}
+
+.dish-item:hover {
+  background-color: #edf2f7;
+}
+
+.dish-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+}
+
+.dish-name {
+  font-size: 1.15rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+  flex: 1;
+}
+
+.dish-price {
+  font-size: 1.15rem;
+  color: #ff6b6b;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dish-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0 0 0.75rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dish-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ingredients-btn {
+  padding: 0.5rem 1.25rem;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ingredients-btn:hover {
+  background-color: #ff5252;
+}
+
+/* ===== ALLERGEN BADGES ===== */
+.allergen-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.allergen-badge {
+  padding: 0.35rem 0.75rem;
+  background-color: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #feb2b2;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* ===== DISH DETAIL POPUP ===== */
+.dish-detail-popup {
+  position: fixed;
+  top: 50%;
+  right: 2.5%;
+  transform: translateY(-50%);
+  background-color: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 700px;
+  width: 45%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideInRight 0.3s ease;
+  z-index: 1001;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    right: -50%;
+  }
+  to {
+    opacity: 1;
+    right: 2.5%;
+  }
+}
+
+.dish-detail-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 1.5rem 0;
+  font-weight: 700;
+  padding-right: 2rem;
+}
+
+.wip-message {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+.menu-popup-content::-webkit-scrollbar,
+.dish-detail-popup::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-popup-content,
+.dish-detail-popup {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+  .menu-popup-content {
+    width: 45%;
+  }
+
+  .menu-popup-content.slide-left {
+    margin-left: 2.5%;
+  }
+
+  .dish-detail-popup {
+    width: 45%;
+    right: 2.5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-popup-content {
+    padding: 1.5rem;
+    width: 48%;
+    max-height: 90vh;
+  }
+
+  .menu-popup-content.slide-left {
+    margin-left: 1%;
+  }
+
+  .dish-detail-popup {
+    width: 48%;
+    padding: 2rem;
+    right: 1%;
+  }
+
+  .restaurant-title {
+    font-size: 1.25rem;
+  }
+
+  .menu-title {
+    font-size: 1.5rem;
+  }
+
+  .dish-name {
+    font-size: 1rem;
+  }
+
+  .dish-price {
+    font-size: 1rem;
+  }
+
+  .dish-description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-popup-content {
+    padding: 1rem;
+  }
+
+  /* Stack popups vertically on mobile */
+  .menu-popup-content.slide-left {
+    transform: translateY(-100%);
+    margin-right: 0;
+  }
+
+  .dish-detail-popup {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 60vh;
+    animation: slideInUp 0.3s ease;
+  }
+
+  @keyframes slideInUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .dish-header {
+    flex-direction: column;
+    align-items: start;
+    gap: 0.25rem;
+  }
+
+  .allergen-badges {
+    margin-top: 0.5rem;
+  }
+}
