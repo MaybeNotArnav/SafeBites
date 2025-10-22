@@ -29,8 +29,8 @@ class DishResult(BaseModel):
     explicit_allergens : Optional[List[str]] = None
 
 class InfoResult(BaseModel):
-    dish_name:str
-    requested_info:Union[str, Dict[str, Any]]
+    dish_name:Optional[str] = None
+    requested_info:Optional[Union[str, Dict[str, Any]]] = None
     source_data : Optional[List[Any]] = []
 
 class QueryResponse(BaseModel):
