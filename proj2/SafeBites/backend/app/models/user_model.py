@@ -5,7 +5,7 @@ class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password: str
-    allergen_preferences: Optional[List[str]] = []
+    allergen_preferences: List[str] = Field(default_factory=list)
 
 class UserUpdate(BaseModel):
     name: Optional[str]

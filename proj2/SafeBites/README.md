@@ -37,3 +37,18 @@ Make sure you have the following installed:
     pip install -r requirements.txt
     Create .env file for storing private variables such as database urls, openAI api keys, jwt_secret.
     uvicorn app.main:app --reload
+
+## Dish CRUD APIs implemented:
+   1. POST   /dishes/               → Create a new dish
+   2. GET    /dishes/{dish_id}      → Get dish by ID
+   3. GET    /dishes/               → Get all dishes
+   4. PUT    /dishes/{dish_id}      → Update a dish
+   5. DELETE /dishes/{dish_id}      → Delete a dish
+
+## User CRUD APIs implemented:
+   1. POST   /users/signup          → Create new user
+   2. POST   /users/login           → Login & get token
+   3. GET    /users/me              → Get logged-in user profile
+   4. PUT    /users/me              → Update profile
+   5. DELETE /users/me              → Delete user
+   6. GET    /users/{id}            → Get user by ID
