@@ -5,7 +5,7 @@ from langchain.tools import StructuredTool
 # from fastapi import HTTPException
 from pydantic import BaseModel
 from ..services.retrieval_service import get_menu_items
-from ..services.response_synthesizer_tool import response_formatter_tool
+from ..services.response_synthesizer_tool import format_final_response
 from ..services.dish_info_service import get_dish_info
 import os
 from dotenv import load_dotenv
@@ -68,7 +68,7 @@ tools = [
     get_dish_info_tool,
     Tool(
         name="format_response",
-        func=response_formatter_tool,
+        func=format_final_response,
         description=(
             "This is a mandatory final step."
             "Take the intermediate dish results or any informative info or both"

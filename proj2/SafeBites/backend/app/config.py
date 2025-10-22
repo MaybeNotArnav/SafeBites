@@ -60,7 +60,7 @@ def setup_logging():
             "error_file": {
                 "class": "logging.handlers.RotatingFileHandler",
                 "formatter": "standard",
-                "filename": LOG_FILE,
+                "filename": ERROR_LOG_FILE,
                 "maxBytes": 2 * 1024 * 1024,  # 2 MB per file
                 "backupCount": 3,
                 "level": "ERROR",

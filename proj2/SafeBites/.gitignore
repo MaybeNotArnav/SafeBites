@@ -1,6 +1,9 @@
 # --- Root-level .gitignore ---
 
 # General
+__pycache__/
+*.py[cod]
+*$py.class
 .DS_Store
 Thumbs.db
 *.log
@@ -10,6 +13,7 @@ Thumbs.db
 
 # Python backend
 /backend/__pycache__/
+/backend/app/*.__pycache__/
 /backend/venv/
 /backend/.venv/
 /backend/*.py[cod]

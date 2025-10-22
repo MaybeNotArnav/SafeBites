@@ -1,26 +1,26 @@
 [
   {
     "_id": "rest_1",
-    "name": "Singh LtdKitchen",
-    "address": "20492 Shelton Pine Apt. 298, Lake Richardshire, MP 25830",
+    "name": "Coleman, Knapp and SerranoTrattoria",
+    "address": "08525 Campbell Villages Suite 625, East Amy, MT 85100",
     "cuisine": [
-      "Indian"
+      "Mexican"
     ]
   },
   {
     "_id": "rest_2",
-    "name": "Cook PLCBistro",
-    "address": "3720 Smith Summit Apt. 568, Port Abigailstad, MN 25288",
+    "name": "Rodriguez-ShawKitchen",
+    "address": "9256 Thompson Pike Suite 751, Newmanshire, AS 52518",
     "cuisine": [
-      "Indian"
+      "Italian"
     ]
   },
   {
     "_id": "rest_3",
-    "name": "Chan and SonsDiner",
-    "address": "45405 Little Coves Suite 851, New John, OK 53850",
+    "name": "Parks-JohnsonCafe",
+    "address": "8012 Stephanie Mount, Lake Adrianville, OH 44373",
     "cuisine": [
-      "Thai"
+      "Japanese"
     ]
   }
 ]
