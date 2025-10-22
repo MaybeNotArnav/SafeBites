@@ -8,7 +8,12 @@ from ..services.orchestrator_service import agents
 from ..services.intent_service import extract_query_intent
 from ..flow.graph import create_chat_graph
 from ..flow.state import ChatState
+from fastapi.encoders import jsonable_encoder
+from ..flow.state_store import state_store
 router = APIRouter(prefix="/restaurants", tags=["restaurants"])
+import logging
+
+logger = logging.getLogger(__name__)
 
 @router.post("/",response_model=RestaurantInDB)
 def create_restaurant(restaurant: RestaurantCreate):
@@ -47,11 +52,17 @@ async def chat_search(payload: ChatQuery):
     Returns a structured JSON suitable for frontend rendering.
     """
     try:
+        query = payload.query
+        restaurant_id = payload.restaurant_id
+        prev_state = state_store.get("sess001")
         chat_graph = create_chat_graph()
-        query = "Any pizza under $20 that includes pepperoni?"
-        state = ChatState(user_id="u123", session_id="sess001",restaurant_id="rest_1", query=query,query_parts={})
-        
+        state = ChatState(user_id="u123", session_id="sess001", restaurant_id=restaurant_id, query=query, query_parts={},
+                          context=prev_state.context if prev_state else [])
+
         final_state = chat_graph.invoke(state)
+        logger.debug(f"Final State: {final_state}")
+        state_store.save(state)
+        return JSONResponse(status_code=200, content=jsonable_encoder(final_state))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

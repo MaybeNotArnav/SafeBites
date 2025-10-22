@@ -68,17 +68,29 @@ def handle_food_item_query(query, restaurant_id=None):
         return {"message": "No relevant dishes found."}
     results = []
     for hit in hits:
-        dish = hit["dish"]
-        results.append({
-            "dish_name": dish.get("name", "N/A"),
-            "description": dish.get("description", "N/A"),
-            "price": dish.get("price", "N/A"),
-            "ingredients": dish.get("ingredients", []),
-            "serving_size": dish.get("serving_size", "N/A"),
-            "availability": dish.get("availability", "N/A"),
-            "allergens": [a['allergen'] for a in dish.get("inferred_allergens", [])],
-            "nutrition_facts": dish.get("nutrition_facts", {})
-        })
+        dish = hit.dish
+        # Retrieved dish from hit: {
+        #     '_id': 'dish_5',
+        #      'restaurant_id': 'rest_1',
+        #       'name': 'Pizza Express Margherita', 
+        #       'description': 'Classic Margherita pizza with a wheat-flour crust, tomato passata, and mozzarella, finished with basil and oregano.', 
+        #       'price': 25.88, 
+        #       'ingredients': ['Water', 'Sugar', 'Yeast', 'Plain Flour', 'Salt', 'Olive Oil', 'Passata', 'Mozzarella', 'Oregano', 'Basil', 'Black Pepper'], 
+        #       'inferred_allergens': [{'allergen': 'wheat_gluten', 'confidence': 0.98, 'why': 'Contains plain flour made from wheat, a source of gluten.'}, {'allergen': 'dairy', 'confidence': 0.98, 'why': 'Contains mozzarella cheese (milk).'}],
+        #         'nutrition_facts': {'calories': {'value': 1030, 'confidence': 0.6}, 'protein': {'value': 42, 'confidence': 0.6}, 'fat': {'value': 33, 'confidence': 0.6}, 'carbohydrates': {'value': 135, 'confidence': 0.6}, 'sugar': {'value': 10, 'confidence': 0.6}, 'fiber': {'value': 6, 'confidence': 0.6}}, 
+        # 'availaibility': True, 'serving_size': 'single', 'explicit_allergens': []}
+        logger.debug(f"Retrieved dish from hit: {dish}")
+        results.append(DishData(
+            dish_id= dish["_id"],
+            dish_name=dish["name"],
+            description=dish["description"],
+            price=dish["price"],
+            ingredients=dish["ingredients"],
+            serving_size=dish["serving_size"],
+            availability=dish["availaibility"],
+            allergens=[a["allergen"] for a in dish["inferred_allergens"]],
+            nutrition_facts=dish["nutrition_facts"]
+        ))
     logging.debug(f"Food item query results: {results}")
     return results
 
@@ -88,17 +100,48 @@ def get_dish_info(state):
     restaurant_id = state.restaurant_id
     for query in state.query_parts.get("dish_info",[]):
         logging.debug(f"Getting dish info for query: {query} and restaurant_id: {restaurant_id}")
-
-        query = query.strip()
-        query_intent = derive_dish_info_intent(query)
-        logging.debug(f"Query intent: {query_intent}")
-        if query_intent.get("type") == "general_knowledge":
-            results[query] = handle_general_knowledge(query)  
-            return {"info_results":results}
+        
+        try:
+            intent = derive_dish_info_intent(query)
+        except GenericException as e:
+            results[query] = DishInfoResponse(
+                dish_name=None,
+                requested_info="Intent derivation failed",
+                source_data=[]
+            )
+            continue
+        
+        logging.debug(f"Query intent: {intent}")
+        if intent.type == "general_knowledge":
+            response = handle_general_knowledge(query=query)
+            results[query] = DishInfoResponse(
+                dish_name=None,
+                requested_info=response.answer,
+                source_data=[]
+            ) 
+            continue
+            
+        try:
+            dishes = handle_food_item_query(query, restaurant_id=restaurant_id)
+            dishes = apply_filters(query,dishes)
+            dishes = validate_retrieved_dishes(query,dishes)
+        except NotFoundException as e:
+            logger.error(str(e))
+            results[query] = DishInfoResponse(
+                dish_name=None,
+                requested_info=str(e),
+                source_data=[]
+            )
+            continue
+        except Exception as e:
+            logger.error(str(e))
+            results[query] = DishInfoResponse(
+                dish_name=None,
+                requested_info=f"Unexpected error: {str(e)}",
+                source_data=[]
+            )
+            continue
     
-        dish = handle_food_item_query(query, restaurant_id=restaurant_id)
-        dish = apply_filters(query,dish)
-        dish = validate_retrieved_dishes(query,dish)
         context = ""
         for result in dish:
             dish = result
@@ -118,9 +161,9 @@ def get_dish_info(state):
     You are a food information assistant.
         Using ONLY the following dish data, answer the user's query.
         Format the response as JSON:
-        - "dish_name"
-        - "requested_info"
-        - "source_data"
+        - "dish_name" - name of the dish being referred to.
+        - "requested_info" - string answer to the user's query.
+        - "source_data" - list of relevant dish data used to answer the query.
 
         User Query: {query}
 
@@ -131,8 +174,13 @@ def get_dish_info(state):
         try:
             refined = json.loads(response.content)
         except Exception as e:
-            logging.error(str(e))
-            refined = {"message": "Could not parse response."}
+            logger.error(str(e))
+            results[query] = DishInfoResponse(
+                dish_name=None,
+                requested_info="Could not parse LLM Response",
+                source_data=[]
+            )
 
-        results[query] = refined
-    return {"info_results":results}
+    # return {"info_results":results}
+    logger.debug(f"Printing Info Results: {results}")
+    return {"info_results":DishInfoResult(info_results=results)}

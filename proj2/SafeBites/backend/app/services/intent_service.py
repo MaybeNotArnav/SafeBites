@@ -91,15 +91,15 @@ Now analyze this user query and split it into independent parts:
     response = llm.invoke(prompt.format_messages(query=query))
     try:
         data = json.loads(response.content)
-    except:
-        data = {"intents": ["irrelevant"]}
+        logging.debug(f"Extracted intents: {data}")
+
+        intents: List[IntentQuery] = []
+        for intent_type, queries in data.items():
+            for q in queries:
+                intents.append(IntentQuery(type=intent_type, query=q))
     
-    logging.debug(f"Extracted intents: {data}")
-    results = []
-    for intent_type, queries in data.items():
-        for q in queries:
-            results.append({
-                "type":intent_type,
-                "query":q
-            })
-    return {"intents":results}
+        return {"intents":IntentExtractionResult(intents=intents)}
+    except Exception as e:
+        return {"intents":IntentExtractionResult(
+            intents=[IntentQuery(type="irrelevant",query=query)]
+        )}

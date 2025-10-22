@@ -5,6 +5,8 @@ from langgraph.constants import END
 from ..services.intent_service import extract_query_intent
 from ..services.retrieval_service import get_menu_items
 from ..services.dish_info_service import get_dish_info
+from ..services.response_synthesizer_tool import format_final_response
+from ..services.context_resolver import resolve_context
 
 logger = logging.getLogger(__name__)
 # def route_branches_debugger(state):
@@ -16,9 +18,13 @@ logger = logging.getLogger(__name__)
 #     return state
 
 def generate_query_parts(state):
-    logging.debug(f"Printing generated query parts : {state.intents}")
-    for item in state.intents:
-        state.query_parts.setdefault(item["type"],[]).append(item["query"])
+    # logging.debug(f"Printing generated query parts : {state.intents}")
+    # for item in state.intents:
+    #     state.query_parts.setdefault(item["type"],[]).append(item["query"])
+    # return state
+    for item in state.intents.intents:
+        state.query_parts.setdefault(item.type, []).append(item.query)
+    
     return state
 
 def route_to_menu_search(state):
@@ -40,12 +46,14 @@ def create_chat_graph():
     graph = StateGraph(ChatState)
 
     graph.add_node("intent_classifier",extract_query_intent)
+    graph.add_node("context_resolver",resolve_context)
     graph.add_node("query_part_generator",generate_query_parts)
     graph.add_node("menu_retriever",get_menu_items)
     graph.add_node("informative_retriever",get_dish_info)
     graph.add_node("last_node",last_node)
     graph.set_entry_point("intent_classifier")
-    graph.add_edge("intent_classifier","query_part_generator")
+    graph.add_edge("intent_classifier","context_resolver")
+    graph.add_edge("context_resolver","query_part_generator")
     graph.add_edge("query_part_generator","menu_retriever")
     graph.add_edge("query_part_generator","informative_retriever")
     graph.add_edge("menu_retriever","last_node")

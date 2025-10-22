@@ -144,9 +144,9 @@ def semantic_retrieve_with_negation(query,restaurant_id=None):
     intents = extract_query_intent(query)
     pos_hits, neg_hits = [],[]
 
-    for p in intents["positive"]:
+    for p in intents.positive:
         pos_hits.extend(search_dishes(p,restaurant_id=restaurant_id))
-    for n in intents["negative"]:
+    for n in intents.negative:
         neg_hits.extend(search_dishes(n,restaurant_id=restaurant_id))
 
     neg_ids = set([hit["dish"]["_id"] for hit in neg_hits])

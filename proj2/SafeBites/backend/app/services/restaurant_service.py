@@ -176,18 +176,45 @@ Response:
 Now analyze this query:
 {query}
 """)
-    response =  llm.invoke(prompt_template.format_messages(query=query))
-    filters = json.loads(response.content)
-    logging.debug(f"Generated filters : {filters}")
+    try:
+        response =  llm.invoke(prompt_template.format_messages(query=query))
+        raw_filters = json.loads(response.content)
+        logger.debug(f"Extracted raw filters: {raw_filters}")
+        price = raw_filters.get("price", {})
+        min_price = price.get("min")
+        max_price = price.get("max")
 
-    price = filters.get("price",{})
-    include_ing = set(filters.get("ingredients",{}).get("include",[]))
-    exclude_ing = set(filters.get("ingredients",{}).get("exclude",[]))
-    exclude_allergens = set(filters.get("allergens",{}).get("exclude",[]))
-    nutrition = filters.get("nutrition",{})
+        # Convert to valid float values
+        min_price = 0.0 if min_price in (None, "inf") else float(min_price)
+        max_price = float("inf") if max_price in (None, "inf") else float(max_price)
+
+        raw_filters["price"]["min"] = min_price
+        raw_filters["price"]["max"] = max_price
+        filters = DishFilterModel.parse_obj(raw_filters)
+        logging.debug(f"Generated filters : {filters.dict()}")
+    except Exception as e:
+        raise GenericException(str(e))
+
+    # price = filters.get("price",{})
+    # include_ing = set(filters.get("ingredients",{}).get("include",[]))
+    # exclude_ing = set(filters.get("ingredients",{}).get("exclude",[]))
+    # exclude_allergens = set(filters.get("allergens",{}).get("exclude",[]))
+    # nutrition = filters.get("nutrition",{})
+
+    # DishData(
+    #         dish_name=dish["name"],
+    #         description=dish["description"],
+    #         price=dish["price"],
+    #         ingredients=dish["ingredients"],
+    #         serving_size=dish["serving_size"],
+    #         availability=dish["availaibility"],
+    #         allergens=[a["allergen"] for a in dish["inferred_allergens"]],
+    #         nutrition_facts=dish["nutrition_facts"]
+    #     )
 
     def passes_nutrition_filter(dish):
-        facts = dish.get("nutrition_facts", {})
+        facts = dish.nutrition_facts
+        logger.debug(f"Checking nutrition facts: {facts} against filters: {filters.nutrition}")
         # Helper to safely get numeric values
         def get_val(key):
             return facts.get(key, {}).get("value", 0)
@@ -206,14 +233,17 @@ Now analyze this query:
     filtered = []
     for d in dishes:
         try:
-            if not (price.get("min", float("-inf")) <= d.get("price", 0) <= price.get("max", float("inf"))):
+            price = filters.price
+            min_price = price.min
+            max_price = price.max
+            if not (min_price <= d.price <= max_price):
                 continue
-            if include_ing and not include_ing.issubset(set(d.get("ingredients", []))):
+            if filters.ingredients.include and not set(filters.ingredients.include).issubset(set(d.ingredients)):
                 continue
-            if exclude_ing and exclude_ing.intersection(set(d.get("ingredients", []))):
+            if filters.ingredients.exclude and set(filters.ingredients.exclude).intersection(set(d.ingredients)):
                 continue
-            if exclude_allergens and exclude_allergens.intersection(
-                {a["allergen"] for a in d.get("inferred_allergens", []) + d.get("explicit_allergens", [])}
+            if filters.allergens.exclude and set(filters.allergens.exclude).intersection(
+                set(d.allergens)
             ):
                 continue
             if not passes_nutrition_filter(d):
@@ -255,7 +285,10 @@ Dishes:
         logging.debug(f"Valid Dish IDs : {valid_ids} ")
         filtered_dishes = [d for d in dishes if d.get("_id") in valid_ids]
     except Exception as e:
-        logging.error(str(e))
-        filtered_dishes = []
+        raise GenericException(str(e))
+
+    valid_ids = {v.dish_id for v in validated if v.include }
+    logging.debug(f"Valid Dish IDs : {valid_ids} ")
+    filtered_dishes = [d for d in dishes if d.dish_id in valid_ids]
     logging.debug(f"Filtered Dishes by LLM : {filtered_dishes}")
     return filtered_dishes
