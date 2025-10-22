@@ -287,8 +287,5 @@ Dishes:
     except Exception as e:
         raise GenericException(str(e))
 
-    valid_ids = {v.dish_id for v in validated if v.include }
-    logging.debug(f"Valid Dish IDs : {valid_ids} ")
-    filtered_dishes = [d for d in dishes if d.dish_id in valid_ids]
     logging.debug(f"Filtered Dishes by LLM : {filtered_dishes}")
     return filtered_dishes
