@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+import Home from './Home';
+import SearchChat from './SearchChat';
+import Menu from './Menu';
+import Dish from './Dish';
+import Settings from './Settings';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -22,40 +27,15 @@ function Dashboard() {
   const renderContent = () => {
     switch(currentPage) {
       case 'home':
-        return (
-          <div className="page-content">
-            <h2>Home</h2>
-            <p className="wip-message">Work in progress... This page is under construction.</p>
-          </div>
-        );
-      case 'menu':
-        return (
-          <div className="page-content">
-            <h2>Menu</h2>
-            <p className="wip-message">Work in progress... This page is under construction.</p>
-          </div>
-        );
+        return <Home />;
       case 'search-chat':
-        return (
-          <div className="page-content">
-            <h2>Search Chat</h2>
-            <p className="wip-message">Work in progress... This page is under construction.</p>
-          </div>
-        );
+        return <SearchChat />;
+      case 'menu':
+        return <Menu />;
       case 'dish':
-        return (
-          <div className="page-content">
-            <h2>Dish</h2>
-            <p className="wip-message">Work in progress... This page is under construction.</p>
-          </div>
-        );
+        return <Dish />;
       case 'settings':
-        return (
-          <div className="page-content">
-            <h2>Settings</h2>
-            <p className="wip-message">Work in progress... This page is under construction.</p>
-          </div>
-        );
+        return <Settings />;
       default:
         return null;
     }

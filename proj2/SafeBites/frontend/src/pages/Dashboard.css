@@ -320,30 +320,6 @@
   transition: margin-left 0.3s ease;
 }
 
-.page-content {
-  background-color: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  min-height: 400px;
-}
-
-.page-content h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.wip-message {
-  color: #666;
-  font-size: 1.1rem;
-  padding: 2rem;
-  text-align: center;
-  background-color: #f7fafc;
-  border-radius: 8px;
-  margin-top: 2rem;
-}
-
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .dashboard-header {
@@ -372,10 +348,6 @@
 
   .dashboard-main {
     padding: 1rem;
-  }
-
-  .page-content {
-    padding: 1.5rem;
   }
 }
 

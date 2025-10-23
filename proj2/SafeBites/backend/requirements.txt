@@ -10,3 +10,9 @@ pydantic==2.9.2
 bcrypt==4.2.0
 pytest==8.3.3
 httpx==0.27.0
+pydantic[email]
+pytest-asyncio
+passlib[bcrypt]
+coverage
+flake8
+

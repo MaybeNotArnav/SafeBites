@@ -4,10 +4,11 @@ from typing import List, Optional
 class DishCreate(BaseModel):
     name: str
     description: Optional[str] = None
-    ingredients: List[str] = []
+    ingredients: List[str] = Field(default_factory=list)
     restaurant: str
-    price: float = 0.0
-    explicit_allergens: List[str] = []
+    price: float
+    explicit_allergens: List[str] = Field(default_factory=list)
+    availability: Optional[bool] = True
 
 class DishUpdate(BaseModel):
     name: Optional[str]

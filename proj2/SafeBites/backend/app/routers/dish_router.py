@@ -1,55 +1,43 @@
+"""
+DISH ROUTER
+APIs implemented:
+1. POST   /dishes/               → Create a new dish
+2. GET    /dishes/{dish_id}      → Get dish by ID
+3. GET    /dishes/               → Get all dishes
+4. PUT    /dishes/{dish_id}      → Update a dish
+5. DELETE /dishes/{dish_id}      → Delete a dish
+"""
+
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional, List
-from ..db import db
 from ..models.dish_model import DishCreate, DishUpdate, DishOut
-from bson import ObjectId
+from ..services import dish_service
 
 router = APIRouter(prefix="/dishes", tags=["dishes"])
 
-def _to_out(doc):
-    doc["_id"] = str(doc["_id"])
-    return doc
-
-@router.post("/", status_code=201)
+@router.post("/", response_model=DishOut, status_code=201)
 async def create_dish(payload: DishCreate):
-    doc = payload.model_dump()
-    doc["availability"] = True
-    res = await db.dishes.insert_one(doc)
-    created = await db.dishes.find_one({"_id": res.inserted_id})
-    return _to_out(created)
+    return await dish_service.create_dish(payload)
 
 @router.get("/", response_model=List[DishOut])
 async def list_dishes(restaurant: Optional[str] = None, tags: Optional[str] = Query(None)):
-    q = {}
+    query = {}
     if restaurant:
-        q["restaurant"] = restaurant
+        query["restaurant"] = restaurant
     if tags:
-        tags_set = set(tags.split(","))
-        q["ingredients"] = {"$in": list(tags_set)}
-    docs = await db.dishes.find(q).to_list(length=200)
-    return [_to_out(d) for d in docs]
+        query["ingredients"] = {"$in": tags.split(",")}
+    return await dish_service.list_dishes(query)
 
 @router.get("/{dish_id}", response_model=DishOut)
 async def get_dish(dish_id: str):
-    doc = await db.dishes.find_one({"_id": ObjectId(dish_id)})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Dish not found")
-    return _to_out(doc)
+    return await dish_service.get_dish(dish_id)
 
 @router.put("/{dish_id}", response_model=DishOut)
 async def update_dish(dish_id: str, payload: DishUpdate):
-    update_doc = {k: v for k, v in payload.model_dump().items() if v is not None}
-    if not update_doc:
-        raise HTTPException(status_code=400, detail="No fields to update")
-    res = await db.dishes.update_one({"_id": ObjectId(dish_id)}, {"$set": update_doc})
-    if res.matched_count == 0:
-        raise HTTPException(status_code=404, detail="Dish not found")
-    doc = await db.dishes.find_one({"_id": ObjectId(dish_id)})
-    return _to_out(doc)
+    data = {k: v for k, v in payload.model_dump().items() if v is not None}
+    return await dish_service.update_dish(dish_id, data)
 
 @router.delete("/{dish_id}")
 async def delete_dish(dish_id: str):
-    res = await db.dishes.delete_one({"_id": ObjectId(dish_id)})
-    if res.deleted_count == 0:
-        raise HTTPException(status_code=404, detail="Dish not found")
+    await dish_service.delete_dish(dish_id)
     return {"detail": "deleted"}
