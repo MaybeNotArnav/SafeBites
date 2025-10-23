@@ -1,0 +1,210 @@
+.dish-detail-container {
+  position: relative;
+}
+
+.detail-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  color: #999;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.detail-close-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* ===== DISH HEADER ===== */
+.detail-dish-name {
+  font-size: 1.75rem;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  padding-right: 2.5rem;
+  line-height: 1.3;
+}
+
+.detail-dish-price {
+  font-size: 1.5rem;
+  color: #ff6b6b;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+}
+
+/* ===== SECTIONS ===== */
+.detail-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.allergen-title {
+  color: #e53e3e;
+  border-bottom-color: #feb2b2;
+}
+
+/* ===== INGREDIENTS GRID ===== */
+.ingredients-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.ingredient-chip {
+  padding: 0.6rem 1rem;
+  background-color: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+  transition: all 0.2s;
+}
+
+.ingredient-chip:hover {
+  background-color: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+/* ===== ALLERGENS LIST ===== */
+.allergens-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.allergen-item {
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.allergen-item:hover {
+  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.15);
+}
+
+.allergen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+}
+
+.allergen-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e53e3e;
+  text-transform: capitalize;
+}
+
+.allergen-confidence {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  background-color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.allergen-reason {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ===== NO ALLERGENS MESSAGE ===== */
+.no-allergens-message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.check-icon {
+  font-size: 2rem;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.no-allergens-message p {
+  font-size: 1rem;
+  color: #166534;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .detail-dish-name {
+    font-size: 1.5rem;
+  }
+
+  .detail-dish-price {
+    font-size: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .ingredients-grid {
+    gap: 0.5rem;
+  }
+
+  .ingredient-chip {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.85rem;
+  }
+
+  .allergen-header {
+    flex-direction: column;
+    align-items: start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-dish-name {
+    font-size: 1.25rem;
+  }
+
+  .detail-dish-price {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+}

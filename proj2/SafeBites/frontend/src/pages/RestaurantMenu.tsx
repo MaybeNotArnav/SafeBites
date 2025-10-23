@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import DishDetail from './DishDetail';
 import './RestaurantMenu.css';
 
 interface Dish {
@@ -162,12 +163,11 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
           className="dish-detail-popup"
           onClick={(e) => e.stopPropagation()}
         >
-          <button className="popup-close-btn" onClick={handleCloseDishDetail}>
-            ✕
-          </button>
-          
-          <h2 className="dish-detail-title">{selectedDish.name}</h2>
-          <p className="wip-message">Work in progress</p>
+          <DishDetail
+            dish={selectedDish}
+            isOpen={isDishDetailOpen}
+            onClose={handleCloseDishDetail}
+          />
         </div>
       )}
     </div>
