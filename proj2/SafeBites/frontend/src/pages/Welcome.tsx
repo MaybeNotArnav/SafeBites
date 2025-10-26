@@ -116,7 +116,7 @@ function Welcome() {
           <div className="footer-column">
             <h3>Doing Business</h3>
             <ul>
-              <li><a href="#">Add your restaurant</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); navigate('/add-restaurant'); }}>Add your restaurant</a></li>
               <li><a href="#">Sign up to deliver</a></li>
               <li><a href="#">Create a business account</a></li>
             </ul>
