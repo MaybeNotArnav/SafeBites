@@ -62,7 +62,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,7 +133,7 @@
 /* Edit Buttons */
 .settings-edit-btn {
   padding: 0.5rem 1.25rem;
-  background-color: #667eea;
+  background-color: #ff6b6b;
   color: white;
   border: none;
   border-radius: 8px;
@@ -144,7 +144,7 @@
 }
 
 .settings-edit-btn:hover {
-  background-color: #764ba2;
+  background-color: #ff5252;
   transform: translateY(-1px);
 }
 
@@ -166,7 +166,7 @@
 }
 
 .settings-edit-field input:focus {
-  border-color: #667eea;
+  border-color: #ff6b6b;
 }
 
 .settings-edit-actions {
@@ -250,7 +250,7 @@
 }
 
 .toggle-switch input:checked + .toggle-slider {
-  background-color: #667eea;
+  background-color: #ff6b6b;
 }
 
 .toggle-switch input:checked + .toggle-slider:before {
