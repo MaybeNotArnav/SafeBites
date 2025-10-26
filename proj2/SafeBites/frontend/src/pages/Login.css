@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
   padding: 2rem;
 }
 
@@ -84,8 +84,8 @@
 }
 
 .form-group input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
 }
 
 .form-group input::placeholder {
@@ -95,7 +95,7 @@
 /* Forgot Password Link */
 .forgot-password {
   text-align: right;
-  color: #667eea;
+  color: #ff6b6b;
   font-size: 0.9rem;
   text-decoration: none;
   margin-top: -0.5rem;
@@ -103,14 +103,14 @@
 }
 
 .forgot-password:hover {
-  color: #764ba2;
+  color: #ff5252;
   text-decoration: underline;
 }
 
 /* Login Button */
 .login-btn {
   padding: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -123,7 +123,7 @@
 
 .login-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
 }
 
 .login-btn:active {
@@ -145,14 +145,14 @@
 }
 
 .signup-prompt a {
-  color: #667eea;
+  color: #ff6b6b;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .signup-prompt a:hover {
-  color: #764ba2;
+  color: #ff5252;
   text-decoration: underline;
 }
 
