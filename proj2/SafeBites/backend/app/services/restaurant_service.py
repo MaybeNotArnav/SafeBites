@@ -1,3 +1,5 @@
+import csv
+import pandas as pd
 import logging
 from bson import ObjectId
 from fastapi import HTTPException
@@ -10,18 +12,23 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 import os, json
 from dotenv import load_dotenv
+from ..models.dish_model import DishCreate
 from ..utils.llm_tracker import LLMUsageTracker
+from .dish_service import create_dish
 
 logger = logging.getLogger(__name__)
 
 load_dotenv()
 db = get_db()
 
+tmp_dir = "/tmp"
+os.makedirs(tmp_dir, exist_ok=True)
+
 llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
 
 restaurant_collection = db["restaurants"]
 
-def create_restaurant(restaurant:RestaurantCreate):
+async def create_restaurant(restaurant:RestaurantCreate, menu_csv, background_tasks):
     """
         Creates a new restaurant in the database.
 
@@ -42,12 +49,164 @@ def create_restaurant(restaurant:RestaurantCreate):
         result = restaurant_collection.insert_one(restaurant.dict())
         if not result.inserted_id:
             raise BadRequestException("Failed to create restaurant")
+        
+        file_path = os.path.join(tmp_dir, f"{result.inserted_id}_menu.csv")
+        contents = await menu_csv.read()
+        with open(file_path, "wb") as f:
+            f.write(contents)
+
+        background_tasks.add_task(process_menu_file,file_path, str(result.inserted_id))
         return JSONResponse(status_code=201, content={"id": str(result.inserted_id)})
     except PyMongoError as e:
         raise DatabaseException(f"Database error: {str(e)}")
     except Exception as e:
         raise GenericException(f"Unexpected error: {str(e)}")
     
+
+def process_menu_file(file_path:str,restaurant_id:str):
+    try:
+        dishes = parse_menu_csv(file_path,restaurant_id)
+        print(dishes)
+        for dish in dishes:
+            if not dish.ingredients or not dish.explicit_allergens or not dish.nutrition_facts:
+                enrich_dish_info(dish)
+                # dish.ingredients = enriched.get("ingredients", dish.ingredients)
+                # dish.allergens = enriched.get("allergens", dish.allergens)
+            print(dish.dict())
+            created_dish = create_dish(restaurant_id, dish)
+            print(created_dish)
+    except Exception as e:
+        logger.error(f"Error processing menu file for restaurant {restaurant_id}: {str(e)}")
+        # raise GenericException(f"Error processing menu file: {str(e)}") 
+
+def enrich_dish_info(dish:DishCreate):
+    llm = ChatOpenAI(model="gpt-5", api_key=os.environ.get("OPENAI_KEY"))
+    prompt_template = ChatPromptTemplate.from_template("""
+You are an allergen annotator for a restaurant dish database.
+
+Given a dish name and description,ingredients(maybe) infer ONLY:
+- ingredients (as a list of words/phrases) only if they are not present,
+- allergens (list of {{allergen, confidence [0–1], why}}),
+- nutrition_facts: object with approximate nutritional numeric values
+- a one-line summary of the dish.
+
+Do NOT return any other fields. 
+Do NOT change dish name, description, price, or other metadata.
+
+Allowed allergens: peanuts, tree_nuts, dairy, egg, soy, wheat_gluten, fish, shellfish, sesame.
+
+Dish input:
+Name: "{name}"
+Description: "{description}"
+Ingredients: "{ingredients}"
+
+Output JSON ONLY:
+{{
+  "ingredients": [...],
+  "inferred_allergens": [
+    {{"allergen": "...", "confidence": 0.95, "why": "..."}}
+  ],
+    "nutrition_facts": object with approximate numeric values and confidences for:
+    {{
+      "calories": "value": number (kcal),
+      "protein":"value": number (grams),
+      "fat":"value": number (grams),
+      "carbohydrates":"value": number (grams),
+      "sugar":"value": number (grams),
+      "fiber":"value": number (grams)
+    }}
+  "summary": "..."
+}}
+""")
+    
+    prompt = prompt_template.format_messages(
+        name=dish.name,
+        description=dish.description,
+        ingredients=dish.ingredients
+    )
+
+    logger.debug(f"Printing generated prompt {prompt}")
+    response = llm.invoke(prompt)
+
+    try:
+        refined = json.loads(response.content)
+    except Exception as e:
+        logger.error(str(e))
+        return dish
+    
+    if not getattr(dish, "ingredients", []):
+        print("Setting ingredients")
+        dish.ingredients = refined.get("ingredients", [])
+
+    if not getattr(dish, "explicit_allergens", []):
+        print("Setting allergens")
+        dish.explicit_allergens = refined.get("inferred_allergens", [])
+
+    if not getattr(dish, "nutrition_facts", {}):
+        print("Setting nutrition facts")
+        dish.nutrition_facts = refined.get("nutrition_facts", {})
+
+    if not getattr(dish, "description", ""):
+        dish.description = refined.get("summary", "")
+
+    # Ensure defaults exist
+    if not hasattr(dish, "availability"):
+        dish.availability = True
+    # if not hasattr(dish, "serving_size"):
+    #     dish.serving_size = "single"
+
+    return dish
+
+
+def parse_menu_csv(file_path:str,restaurant_id:str):
+    dishes = []
+    try:
+        df = pd.read_csv(file_path, encoding='utf-8')
+    except UnicodeDecodeError:
+        logger.warning(f"UTF-8 failed for {file_path}, trying latin1")
+        df = pd.read_csv(file_path, encoding='latin1')
+    for num, row in df.iterrows():  # iterate over DataFrame rows
+        try:
+            # Handle possible NaN
+            name = row.get("dish_name") or row.get("name") or "Unnamed Dish"
+            description = row.get("description") if pd.notna(row.get("description")) else ""
+            price = float(row["price"]) if pd.notna(row.get("price")) else 0.0
+
+            ingredients = []
+            if pd.notna(row.get("ingredients")):
+                ingredients = [ing.strip() for ing in str(row.get("ingredients")).split(",") if ing.strip()]
+
+            explicit_allergens = []
+            if pd.notna(row.get("allergens")):
+                explicit_allergens = [a.strip() for a in str(row.get("allergens")).split(",") if a.strip()]
+
+            serving_size = row.get("serving_size") if pd.notna(row.get("serving_size")) else ""
+            availability = str(row.get("availability", "True")).lower() in ("true", "1", "yes")
+
+            nutrition_facts = {}
+            if pd.notna(row.get("nutrition_facts")) and row.get("nutrition_facts").strip():
+                try:
+                    nutrition_facts = json.loads(row.get("nutrition_facts"))
+                except json.JSONDecodeError:
+                    logger.warning(f"Invalid nutrition JSON in row {num}, defaulting to empty dict")
+
+            dish = DishCreate(
+                name=name,
+                restaurant_id=restaurant_id,
+                description=description,
+                price=price,
+                ingredients=ingredients,
+                explicit_allergens=explicit_allergens,
+                serving_size=serving_size,
+                availability=availability,
+                nutrition_facts=nutrition_facts
+            )
+            dishes.append(dish)
+        except Exception as e:
+            logger.error(f"Error parsing row {num}: {str(e)}")
+
+    return dishes
+
 def get_restaurant_by_id(restaurant_id:str):
     """
     Retrieves a restaurant by ID.

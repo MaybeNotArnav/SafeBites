@@ -1,8 +1,8 @@
-from fastapi import APIRouter,HTTPException, Depends
+from fastapi import APIRouter,HTTPException, Depends,Form,UploadFile,File,BackgroundTasks
 from bson import ObjectId
 from fastapi.responses import JSONResponse
 from app.models.restaurant_model import RestaurantCreate, RestaurantUpdate, RestaurantBase, RestaurantInDB
-from app.services import restaurant_service
+from app.services import restaurant_service, state_service
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from ..services.orchestrator_service import agents
@@ -17,7 +17,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 @router.post("/",response_model=RestaurantInDB)
-def create_restaurant(restaurant: RestaurantCreate):
+async def create_restaurant(
+    background_tasks : BackgroundTasks,
+    restaurant_name : str = Form(...),
+    location:str = Form(...),
+    cuisine:str = Form(...),
+    rating:float = Form(...),
+    menu_csv : UploadFile = File(...)
+):
     """
         Create a new restaurant entry in the database. If allergen information is not provided, 
         it will be inferred using an external service.
@@ -28,7 +35,8 @@ def create_restaurant(restaurant: RestaurantCreate):
         Returns:
             RestaurantInDB: The created restaurant entry with its unique ID.
     """
-    return restaurant_service.create_restaurant(restaurant)
+    cuisine = cuisine.split(",") if cuisine else []
+    return await restaurant_service.create_restaurant(RestaurantCreate(name=restaurant_name,location=location,cuisine=cuisine,rating=rating),menu_csv,background_tasks)
 
 @router.get("/",response_model=list[RestaurantInDB])
 async def list_restaurants():
@@ -55,15 +63,30 @@ async def chat_search(payload: ChatQuery):
     try:
         query = payload.query
         restaurant_id = payload.restaurant_id
-        prev_state = state_store.get("sess001")
+        # prev_state = state_store.get("sess001")
+        session_id = state_service.get_or_create_session("u123", restaurant_id)
+
+        context = state_service.rebuild_context(session_id)
+
         chat_graph = create_chat_graph()
-        state = ChatState(user_id="u123", session_id="sess001", restaurant_id=restaurant_id, query=query, query_parts={},
-                          context=prev_state.context if prev_state else [])
+        state = ChatState(user_id="u123", session_id=session_id, restaurant_id=restaurant_id, query=query, query_parts={},
+                          context=context)
 
         final_state = chat_graph.invoke(state)
         logger.debug(f"Final State: {final_state}")
-        state_store.save(state)
+        # state_store.save(state)
+        state_service.save_chat_state(final_state)
         return JSONResponse(status_code=200, content=jsonable_encoder(final_state))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/history/{user_id}/{restaurant_id}")
+def chat_history(user_id:str, restaurant_id:str):
+    try:
+        session_id = state_service.get_or_create_session(user_id, restaurant_id)
+        chat_states = state_service.get_chat_history(session_id)
+
+        return JSONResponse(status_code=200, content=jsonable_encoder(chat_states))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
