@@ -211,50 +211,123 @@
   gap: 0.75rem;
 }
 
-/* Toggle Switch */
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
+/* Allergies Section */
+.allergies-row {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 1rem 0 0 0;
 }
 
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.settings-info-label {
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.toggle-slider {
-  position: absolute;
+.allergies-row .settings-info-label {
+  margin-bottom: 0.75rem;
+}
+
+.allergies-value {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 0;
+}
+
+.allergies-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.allergies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  min-height: auto;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.no-allergies {
+  color: #999;
+  font-style: italic;
+  margin: 0;
+}
+
+.allergy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #fff5f5;
+  color: #ff6b6b;
+  border: 2px solid #ffcccc;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.remove-allergy-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  font-size: 1.5rem;
+  line-height: 1;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #cbd5e0;
-  transition: 0.3s;
-  border-radius: 28px;
-}
-
-.toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
+  padding: 0;
   width: 20px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.3s;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
+  transition: all 0.2s;
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.remove-allergy-btn:hover {
   background-color: #ff6b6b;
+  color: white;
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
-  transform: translateX(22px);
+.add-allergy-section {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.allergy-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.allergy-input:focus {
+  border-color: #ff6b6b;
+}
+
+.add-allergy-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.add-allergy-btn:hover {
+  background-color: #ff5252;
+  transform: translateY(-1px);
 }
 
 /* Danger Button */

@@ -9,6 +9,8 @@ function Settings() {
   const [username, setUsername] = useState('johndoe');
   const [fullName] = useState('John Doe');
   const [joinDate] = useState('January 2025');
+  const [allergies, setAllergies] = useState<string[]>(['Peanuts', 'Shellfish']);
+  const [newAllergy, setNewAllergy] = useState('');
 
   // Temporary states for editing
   const [tempUsername, setTempUsername] = useState(username);
@@ -41,6 +43,23 @@ function Settings() {
     setNewPassword('');
     setConfirmPassword('');
     setIsChangingPassword(false);
+  };
+
+  const handleAddAllergy = () => {
+    if (newAllergy.trim() === '') {
+      alert('Please enter an allergy');
+      return;
+    }
+    if (allergies.includes(newAllergy.trim())) {
+      alert('This allergy is already in your list');
+      return;
+    }
+    setAllergies([...allergies, newAllergy.trim()]);
+    setNewAllergy('');
+  };
+
+  const handleRemoveAllergy = (allergyToRemove: string) => {
+    setAllergies(allergies.filter(allergy => allergy !== allergyToRemove));
   };
 
   return (
@@ -153,37 +172,64 @@ function Settings() {
         </div>
       </div>
 
-      {/* Additional Settings Sections */}
+      {/* Dietary Restrictions Section */}
       <div className="settings-section">
         <div className="section-header">
-          <h2>Preferences</h2>
-          <p className="section-description">Customize your SafeBites experience</p>
+          <h2>Dietary Restrictions</h2>
+          <p className="section-description">Manage your food allergies and restrictions</p>
         </div>
 
         <div className="settings-card">
-          <div className="settings-info-row">
+          <div className="settings-info-row allergies-row">
             <div className="settings-info-label">
-              <strong>Notifications</strong>
-              <span className="info-description">Manage notification preferences</span>
+              <strong>Food Allergies</strong>
+              <span className="info-description">Add allergies to filter unsafe dishes</span>
             </div>
-            <div className="settings-info-value">
-              <label className="toggle-switch">
-                <input type="checkbox" defaultChecked />
-                <span className="toggle-slider"></span>
-              </label>
-            </div>
-          </div>
+            <div className="settings-info-value allergies-value">
+              <div className="allergies-container">
+                {/* Display current allergies */}
+                <div className="allergies-list">
+                  {allergies.length === 0 ? (
+                    <p className="no-allergies">No allergies added yet</p>
+                  ) : (
+                    allergies.map((allergy, index) => (
+                      <div key={index} className="allergy-badge">
+                        <span>{allergy}</span>
+                        <button 
+                          className="remove-allergy-btn"
+                          onClick={() => handleRemoveAllergy(allergy)}
+                          aria-label={`Remove ${allergy}`}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
 
-          <div className="settings-info-row">
-            <div className="settings-info-label">
-              <strong>Dark Mode</strong>
-              <span className="info-description">Toggle dark mode appearance</span>
-            </div>
-            <div className="settings-info-value">
-              <label className="toggle-switch">
-                <input type="checkbox" />
-                <span className="toggle-slider"></span>
-              </label>
+                {/* Add new allergy */}
+                <div className="add-allergy-section">
+                  <input
+                    type="text"
+                    value={newAllergy}
+                    onChange={(e) => setNewAllergy(e.target.value)}
+                    placeholder="Enter allergy (e.g., Peanuts, Dairy)"
+                    className="allergy-input"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleAddAllergy();
+                      }
+                    }}
+                  />
+                  <button 
+                    className="add-allergy-btn"
+                    onClick={handleAddAllergy}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
