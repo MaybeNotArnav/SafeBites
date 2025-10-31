@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class UserCreate(BaseModel):
     name: str
-    email: EmailStr
+    username: str
     password: str
     allergen_preferences: List[str] = Field(default_factory=list)
 

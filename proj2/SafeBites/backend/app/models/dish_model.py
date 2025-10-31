@@ -25,5 +25,5 @@ class DishOut(BaseModel):
     ingredients: List[str]
     restaurant: str
     price: float
-    explicit_allergens: List[str] = []
+    explicit_allergens: List[str] = Field(default_factory=list)
     availability: bool = True

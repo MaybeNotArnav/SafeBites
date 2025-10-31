@@ -1,14 +1,15 @@
+# backend/app/routers/dish_router.py
 """
 DISH ROUTER
 APIs implemented:
 1. POST   /dishes/               → Create a new dish
 2. GET    /dishes/{dish_id}      → Get dish by ID
 3. GET    /dishes/               → Get all dishes
-4. PUT    /dishes/{dish_id}      → Update a dish
-5. DELETE /dishes/{dish_id}      → Delete a dish
+4. GET    /dishes/filter         → Filter dishes by exclude_allergens
+5. PUT    /dishes/{dish_id}      → Update a dish
+6. DELETE /dishes/{dish_id}      → Delete a dish
 """
-
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 from typing import Optional, List
 from ..models.dish_model import DishCreate, DishUpdate, DishOut
 from ..services import dish_service
@@ -27,6 +28,30 @@ async def list_dishes(restaurant: Optional[str] = None, tags: Optional[str] = Qu
     if tags:
         query["ingredients"] = {"$in": tags.split(",")}
     return await dish_service.list_dishes(query)
+
+@router.get("/filter", response_model=List[DishOut])
+async def filter_dishes(exclude_allergens: Optional[str] = Query(None), restaurant: Optional[str] = None):
+    """
+    exclude_allergens: comma-separated list e.g. peanuts,gluten
+    returns dishes that do NOT contain any of the excluded allergens
+    optional restaurant filter is supported
+    """
+    query = {}
+    if restaurant:
+        query["restaurant"] = restaurant
+    # if no exclude list -> return all (subject to restaurant filter)
+    if not exclude_allergens:
+        return await dish_service.list_dishes(query)
+
+    exclude_list = [a.strip().lower() for a in exclude_allergens.split(",") if a.strip()]
+    # fetch dishes matching restaurant (if provided)
+    docs = await dish_service.list_dishes(query)
+    safe = []
+    for d in docs:
+        allergens = [a.lower() for a in d.get("explicit_allergens", [])]
+        if not set(allergens) & set(exclude_list):
+            safe.append(d)
+    return safe
 
 @router.get("/{dish_id}", response_model=DishOut)
 async def get_dish(dish_id: str):

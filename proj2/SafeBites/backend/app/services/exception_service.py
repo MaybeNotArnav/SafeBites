@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
-from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException
+from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException,AuthError
 
 
 def register_exception_handlers(app):
@@ -10,7 +10,12 @@ def register_exception_handlers(app):
             status_code=status.HTTP_404_NOT_FOUND,
             content={"error": exc.message}
         )
-
+    @app.exception_handler(AuthError)
+    async def auth_error_handler(request, exc: AuthError):
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={"error": exc.detail},
+        )
     @app.exception_handler(BadRequestException)
     async def bad_request_handler(request, exc: BadRequestException):
         return JSONResponse(
