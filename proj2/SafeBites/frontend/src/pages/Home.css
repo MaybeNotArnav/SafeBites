@@ -1,89 +1,63 @@
+/* ===== HOME CONTAINER ===== */
 .home-container {
-  min-height: 100vh;
-  background-color: #f7fafc;
   padding: 2rem;
-}
-
-/* ===== HEADER ===== */
-.home-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .page-title {
   font-size: 2rem;
   color: #333;
-  margin: 0;
+  margin-bottom: 1.5rem;
   font-weight: 700;
+  text-align: center;
 }
 
-.filter-btn {
-  background-color: white;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.filter-btn:hover {
-  border-color: #ff5252;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.filter-icon {
-  width: 24px;
-  height: 24px;
-}
-
-/* ===== FILTER DROPDOWN ===== */
-.filter-dropdown {
-  background-color: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.filter-dropdown h3 {
-  margin: 0 0 1.5rem 0;
-  color: #333;
-  font-size: 1.25rem;
-}
-
+/* ===== FILTER SECTION ===== */
 .filter-section {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.filter-toggle-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filter-toggle-btn:hover {
+  background-color: #ff3838;
+}
+
+.filter-container {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.filter-group {
   margin-bottom: 1.5rem;
 }
 
-.filter-section:last-of-type {
+.filter-group:last-of-type {
   margin-bottom: 1rem;
 }
 
-.filter-section label {
+.filter-label {
+  font-weight: 700;
+  color: #333;
   display: block;
-  font-weight: 600;
-  color: #555;
   margin-bottom: 0.75rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .filter-options {
@@ -94,56 +68,81 @@
 
 .filter-option-btn {
   padding: 0.6rem 1.25rem;
-  background-color: #f7fafc;
-  border: 2px solid #e2e8f0;
+  background-color: white;
+  border: 2px solid #ddd;
   border-radius: 8px;
-  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: 600;
   color: #666;
 }
 
 .filter-option-btn:hover {
   border-color: #ff5252;
-  background-color: #f0f4ff;
+  color: #ff5252;
 }
 
 .filter-option-btn.active {
-  background-color: #ff6b6b;
-  color: white;
+  background-color: #ff5252;
   border-color: #ff5252;
+  color: white;
 }
 
 .clear-filter-btn {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
+  padding: 0.6rem 1.5rem;
+  background-color: white;
+  border: 2px solid #ff5252;
   border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
-  margin-top: 0.5rem;
+  font-weight: 600;
+  color: #ff5252;
+  transition: all 0.2s;
 }
 
 .clear-filter-btn:hover {
   background-color: #ff5252;
+  color: white;
+}
+
+/* ===== LOADING AND ERROR STATES ===== */
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.loading-container p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+}
+
+.error-container {
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+}
+
+.error-container p {
+  color: #742a2a;
+  margin: 0.5rem 0;
 }
 
 /* ===== RESTAURANT GRID ===== */
 .restaurant-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-/* ===== RESTAURANT CARD ===== */
 .restaurant-card {
   background-color: white;
   border-radius: 16px;
   padding: 1.75rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid transparent;

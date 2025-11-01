@@ -102,6 +102,38 @@
   margin: 1rem 0 1.5rem 0;
 }
 
+/* ===== LOADING AND ERROR STATES ===== */
+.menu-loading,
+.menu-error {
+  text-align: center;
+  padding: 2rem;
+}
+
+.menu-loading p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.menu-error {
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 8px;
+}
+
+.menu-error p {
+  color: #742a2a;
+  margin: 0.5rem 0;
+}
+
+.no-dishes {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+  margin: 0;
+}
+
 /* ===== DISHES LIST ===== */
 .dishes-list {
   display: flex;
@@ -131,6 +163,13 @@
   gap: 1rem;
 }
 
+.dish-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
 .dish-name {
   font-size: 1.15rem;
   color: #333;
@@ -146,6 +185,27 @@
   white-space: nowrap;
 }
 
+/* ===== AVAILABILITY BADGE ===== */
+.availability-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.availability-badge.available {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.availability-badge.unavailable {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
 .dish-description {
   font-size: 0.9rem;
   color: #666;
@@ -156,6 +216,29 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ===== SERVING SIZE ===== */
+.serving-size {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.serving-icon {
+  font-size: 1rem;
+}
+
+.serving-text {
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .dish-footer {
@@ -179,7 +262,7 @@
 }
 
 .ingredients-btn:hover {
-  background-color: #ff5252;
+  background-color: #e53e3e;
 }
 
 /* ===== ALLERGEN BADGES ===== */
@@ -191,102 +274,71 @@
 
 .allergen-badge {
   padding: 0.35rem 0.75rem;
-  background-color: #fff5f5;
-  color: #e53e3e;
-  border: 1px solid #feb2b2;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: capitalize;
 }
 
-/* ===== DISH DETAIL POPUP ===== */
-.dish-detail-popup {
-  position: fixed;
-  top: 50%;
-  right: 2.5%;
-  transform: translateY(-50%);
-  background-color: white;
-  border-radius: 20px;
-  padding: 2.5rem;
-  max-width: 700px;
-  width: 45%;
-  max-height: 85vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  animation: slideInRight 0.3s ease;
-  z-index: 1001;
+.allergen-badge.explicit {
+  background-color: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #feb2b2;
 }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    right: -50%;
-  }
-  to {
-    opacity: 1;
-    right: 2.5%;
-  }
+.allergen-badge.inferred {
+  background-color: #fffaf0;
+  color: #ed8936;
+  border: 1px solid #fbd38d;
 }
 
-.dish-detail-title {
-  font-size: 1.5rem;
-  color: #333;
-  margin: 0 0 1.5rem 0;
-  font-weight: 700;
-  padding-right: 2rem;
-}
-
-.wip-message {
-  font-size: 1.1rem;
-  color: #666;
-  text-align: center;
-  padding: 3rem 0;
+.allergen-badge.more {
+  background-color: #edf2f7;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
 }
 
 /* ===== SCROLLBAR STYLING ===== */
-.menu-popup-content::-webkit-scrollbar,
-.dish-detail-popup::-webkit-scrollbar {
-  display: none;
+.menu-popup-content::-webkit-scrollbar {
+  width: 8px;
 }
 
-.menu-popup-content,
-.dish-detail-popup {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+.menu-popup-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.menu-popup-content::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 10px;
+}
+
+.menu-popup-content::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .menu-popup-content {
-    width: 45%;
+    width: 50%;
+  }
+}
+
+@media (max-width: 968px) {
+  .menu-popup-content {
+    width: 85%;
   }
 
   .menu-popup-content.slide-left {
-    margin-left: 2.5%;
-  }
-
-  .dish-detail-popup {
-    width: 45%;
-    right: 2.5%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 @media (max-width: 768px) {
   .menu-popup-content {
+    width: 95%;
     padding: 1.5rem;
-    width: 48%;
-    max-height: 90vh;
-  }
-
-  .menu-popup-content.slide-left {
-    margin-left: 1%;
-  }
-
-  .dish-detail-popup {
-    width: 48%;
-    padding: 2rem;
-    right: 1%;
   }
 
   .restaurant-title {
@@ -295,6 +347,16 @@
 
   .menu-title {
     font-size: 1.5rem;
+  }
+
+  .dish-header {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .dish-header-right {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .dish-name {
@@ -307,50 +369,5 @@
 
   .dish-description {
     font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .menu-popup-content {
-    padding: 1rem;
-  }
-
-  /* Stack popups vertically on mobile */
-  .menu-popup-content.slide-left {
-    transform: translateY(-100%);
-    margin-right: 0;
-  }
-
-  .dish-detail-popup {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-    max-height: 60vh;
-    animation: slideInUp 0.3s ease;
-  }
-
-  @keyframes slideInUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  .dish-header {
-    flex-direction: column;
-    align-items: start;
-    gap: 0.25rem;
-  }
-
-  .allergen-badges {
-    margin-top: 0.5rem;
   }
 }
