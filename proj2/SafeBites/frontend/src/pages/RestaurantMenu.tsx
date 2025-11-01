@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './RestaurantMenu.css';
+import DishDetail from './DishDetail';
+
+const API_BASE_URL = 'https://safebites-yu1o.onrender.com';
 
 interface Dish {
   _id: string;
@@ -13,6 +16,19 @@ interface Dish {
     confidence: number;
     why: string;
   }>;
+  explicit_allergens?: Array<{
+    allergen: string;
+  }>;
+  nutrition_facts?: {
+    calories?: { value: number };
+    protein?: { value: number };
+    fat?: { value: number };
+    carbohydrates?: { value: number };
+    sugar?: { value: number };
+    fiber?: { value: number };
+  };
+  availaibility?: boolean; // Note: Using their spelling from the API
+  serving_size?: string;
 }
 
 interface RestaurantMenuProps {
@@ -27,70 +43,43 @@ interface RestaurantMenuProps {
   onClose: () => void;
 }
 
-// Mock dish data - replace with API call later
-const mockDishes: Dish[] = [
-  {
-    _id: "dish_1",
-    restaurant_id: "rest_1",
-    name: "Szechuan Beef",
-    description: "Stir-fried Szechuan-style beef marinated with egg white and cornstarch, cooked with vegetables in soy and oyster sauces and finished with sesame oil.",
-    price: 15.56,
-    ingredients: ["Beef", "Salt", "Sesame Seed Oil", "Pepper", "Egg White", "Starch", "Oil", "Ginger", "Garlic", "Onion"],
-    inferred_allergens: [
-      { allergen: "egg", confidence: 0.99, why: "Egg white is used in the beef marinade." },
-      { allergen: "soy", confidence: 0.99, why: "Soy sauce is listed among the ingredients." }
-    ]
-  },
-  {
-    _id: "dish_2",
-    restaurant_id: "rest_1",
-    name: "Prawn & Fennel Bisque",
-    description: "A creamy seafood bisque of prawns and fennel simmered with aromatics, tomatoes, wine, and fish stock, finished with double cream.",
-    price: 6.84,
-    ingredients: ["Tiger Prawns", "Olive Oil", "Onion", "Fennel", "Carrots", "Dry White Wine"],
-    inferred_allergens: [
-      { allergen: "shellfish", confidence: 0.99, why: "Contains prawns (shellfish)." },
-      { allergen: "dairy", confidence: 0.9, why: "Contains double cream." }
-    ]
-  },
-  {
-    _id: "dish_3",
-    restaurant_id: "rest_1",
-    name: "English Breakfast",
-    description: "A hearty full English breakfast with sausages, bacon, eggs, black pudding, grilled mushrooms and tomatoes, and bread.",
-    price: 17.79,
-    ingredients: ["Sausages", "Bacon", "Mushrooms", "Tomatoes", "Black Pudding", "Eggs", "Bread"],
-    inferred_allergens: [
-      { allergen: "egg", confidence: 0.99, why: "Whole eggs are listed as an ingredient." }
-    ]
-  },
-  {
-    _id: "dish_4",
-    restaurant_id: "rest_1",
-    name: "Shawarma",
-    description: "Yogurt-marinated, spice-rubbed chicken shawarma served in pita with lettuce and tomato.",
-    price: 12.99,
-    ingredients: ["Chicken Thighs", "Coriander", "Cumin", "Greek Yogurt", "Pita Bread"],
-    inferred_allergens: [
-      { allergen: "dairy", confidence: 0.99, why: "Contains Greek yogurt." }
-    ]
-  },
-  {
-    _id: "dish_5",
-    restaurant_id: "rest_1",
-    name: "Moussaka",
-    description: "Greek-style baked casserole of beef, aubergine, tomato and potatoes topped with a yogurt-egg-parmesan layer.",
-    price: 26.21,
-    ingredients: ["Beef", "Aubergine", "Greek Yogurt", "Egg", "Parmesan", "Tomato"],
-    inferred_allergens: [
-      { allergen: "dairy", confidence: 0.98, why: "Contains yogurt and parmesan." }
-    ]
-  }
-];
-
 function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
+  const [dishes, setDishes] = useState<Dish[]>([]);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [isDishDetailOpen, setIsDishDetailOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch dishes for this restaurant
+  useEffect(() => {
+    if (isOpen && restaurant._id) {
+      const fetchDishes = async () => {
+        try {
+          setIsLoading(true);
+          setError(null);
+          
+          // Use the restaurant query parameter to filter dishes
+          const response = await fetch(`${API_BASE_URL}/dishes/?restaurant=${restaurant._id}`);
+          
+          if (!response.ok) {
+            throw new Error(`Failed to fetch dishes: ${response.status}`);
+          }
+          
+          const data = await response.json();
+          console.log('Fetched dishes:', data);
+          
+          setDishes(data);
+        } catch (err) {
+          console.error('Error fetching dishes:', err);
+          setError(err instanceof Error ? err.message : 'Failed to load menu');
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchDishes();
+    }
+  }, [isOpen, restaurant._id]);
 
   if (!isOpen) return null;
 
@@ -119,56 +108,105 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
         <h3 className="menu-title">Menu</h3>
         <hr className="menu-divider" />
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="menu-loading">
+            <p>Loading menu...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="menu-error">
+            <p>Error: {error}</p>
+            <p>Unable to load menu items.</p>
+          </div>
+        )}
+
         {/* Dishes List */}
-        <div className="dishes-list">
-          {mockDishes.map((dish, index) => (
-            <div 
-              key={dish._id} 
-              className={`dish-item ${index % 2 === 0 ? 'highlighted' : ''}`}
-            >
-              <div className="dish-header">
-                <h4 className="dish-name">{dish.name}</h4>
-                <span className="dish-price">${dish.price.toFixed(2)}</span>
-              </div>
-              
-              <p className="dish-description">{dish.description}</p>
-              
-              <div className="dish-footer">
-                <button 
-                  className="ingredients-btn"
-                  onClick={() => handleIngredientsClick(dish)}
+        {!isLoading && !error && (
+          <div className="dishes-list">
+            {dishes.length === 0 ? (
+              <p className="no-dishes">No dishes available for this restaurant yet.</p>
+            ) : (
+              dishes.map((dish, index) => (
+                <div 
+                  key={dish._id} 
+                  className={`dish-item ${index % 2 === 0 ? 'highlighted' : ''}`}
                 >
-                  Ingredients
-                </button>
-                
-                {dish.inferred_allergens && dish.inferred_allergens.length > 0 && (
-                  <div className="allergen-badges">
-                    {dish.inferred_allergens.slice(0, 3).map((allergen, idx) => (
-                      <span key={idx} className="allergen-badge">
-                        {allergen.allergen}
-                      </span>
-                    ))}
+                  <div className="dish-header">
+                    <h4 className="dish-name">{dish.name}</h4>
+                    <div className="dish-header-right">
+                      <span className="dish-price">${dish.price.toFixed(2)}</span>
+                      {/* Availability Badge */}
+                      {dish.availaibility !== undefined && (
+                        <span className={`availability-badge ${dish.availaibility ? 'available' : 'unavailable'}`}>
+                          {dish.availaibility ? '✓ Available' : '✗ Unavailable'}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+                  
+                  <p className="dish-description">{dish.description}</p>
+                  
+                  {/* Serving Size */}
+                  {dish.serving_size && (
+                    <div className="serving-size">
+                      <span className="serving-icon">🍽️</span>
+                      <span className="serving-text">Serving: {dish.serving_size}</span>
+                    </div>
+                  )}
+                  
+                  <div className="dish-footer">
+                    <button 
+                      className="ingredients-btn"
+                      onClick={() => handleIngredientsClick(dish)}
+                    >
+                      Ingredients & Details
+                    </button>
+                    
+                    {/* Show explicit allergens or inferred allergens */}
+                    {((dish.explicit_allergens && dish.explicit_allergens.length > 0) || 
+                      (dish.inferred_allergens && dish.inferred_allergens.length > 0)) && (
+                      <div className="allergen-badges">
+                        {dish.explicit_allergens && dish.explicit_allergens.length > 0 ? (
+                          // Show explicit allergens
+                          dish.explicit_allergens.slice(0, 3).map((allergen, idx) => (
+                            <span key={idx} className="allergen-badge explicit">
+                              {allergen.allergen}
+                            </span>
+                          ))
+                        ) : (
+                          // Fall back to inferred allergens
+                          dish.inferred_allergens?.slice(0, 3).map((allergen, idx) => (
+                            <span key={idx} className="allergen-badge inferred">
+                              {allergen.allergen}
+                            </span>
+                          ))
+                        )}
+                        {/* Show count if there are more allergens */}
+                        {((dish.explicit_allergens?.length || 0) + (dish.inferred_allergens?.length || 0)) > 3 && (
+                          <span className="allergen-badge more">
+                            +{((dish.explicit_allergens?.length || 0) + (dish.inferred_allergens?.length || 0)) - 3} more
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Dish Detail Popup */}
+      {/* Dish Detail Component */}
       {isDishDetailOpen && selectedDish && (
-        <div 
-          className="dish-detail-popup"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button className="popup-close-btn" onClick={handleCloseDishDetail}>
-            ✕
-          </button>
-          
-          <h2 className="dish-detail-title">{selectedDish.name}</h2>
-          <p className="wip-message">Work in progress</p>
-        </div>
+        <DishDetail 
+          dish={selectedDish}
+          isOpen={isDishDetailOpen}
+          onClose={handleCloseDishDetail}
+        />
       )}
     </div>
   );
