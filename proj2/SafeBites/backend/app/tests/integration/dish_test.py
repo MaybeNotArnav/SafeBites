@@ -2,10 +2,12 @@
 import pytest
 
 @pytest.mark.integration
+@pytest.mark.anyio
 def test_dish_create_list_safe_flag(client):
     # create user
-    u = client.post("/users/signup", json={"username":"u_safe","password":"p","name":"U","allergen_preferences":["peanuts"]})
-    uid = u.json()["_id"]
+    u = client.post("/users/signup", json={"username":"u_safe","password":"pswd","name":"U","allergen_preferences":["peanuts"]})
+    print(u.status_code, u.json())
+    uid = u.json()["_id"] 
 
     # create dishes
     d1 = client.post("/dishes/", json={"name":"Peanut Curry","restaurant":"R1","price":10,"explicit_allergens":["peanuts"]})

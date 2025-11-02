@@ -5,7 +5,6 @@ import uvicorn
 
 app = FastAPI(title="SafeBites")
 
-# app.include_router(restaurant_router.router)
 app.include_router(dish_router.router)
 app.include_router(user_router.router)
 

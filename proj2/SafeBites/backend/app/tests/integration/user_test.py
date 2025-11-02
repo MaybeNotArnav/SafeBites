@@ -1,6 +1,7 @@
 import pytest
 
 @pytest.mark.integration
+@pytest.mark.anyio
 def test_user_signup_login_flow(client):
     r = client.post("/users/signup", json={"username":"alice","password":"secret","name":"Alice"})
     assert r.status_code == 200
