@@ -11,8 +11,7 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
-    "test:api": "vitest run --testNamePattern='API Integration'"
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
     "react": "^19.1.1",

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import Dashboard from '../pages/Dashboard'
 
@@ -13,12 +13,30 @@ vi.mock('react-router-dom', async () => {
   }
 })
 
-describe('Dashboard Component', () => {
-  beforeEach(() => {
-    mockNavigate.mockClear()
-  })
+// Mock fetch for Home component (it fetches restaurants)
+beforeEach(() => {
+  mockNavigate.mockClear()
+  
+  // Mock the restaurants API that Home component calls
+  global.fetch = vi.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: async () => ([
+        {
+          _id: '1',
+          name: 'Test Restaurant',
+          location: 'Test Location',
+          cuisine: ['Test'],
+          rating: 4.5
+        }
+      ])
+    } as Response)
+  )
+})
 
-  // Header Tests
+describe('Dashboard Component', () => {
+  // ===== HEADER TESTS =====
+  
   it('renders the SafeBites logo and title', () => {
     render(
       <BrowserRouter>
@@ -28,17 +46,6 @@ describe('Dashboard Component', () => {
     
     expect(screen.getByText('SafeBites')).toBeInTheDocument()
     expect(screen.getByAltText('SafeBites Logo')).toBeInTheDocument()
-  })
-
-  it('renders the search bar in header', () => {
-    render(
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByPlaceholderText('Search for dishes, restaurants...')).toBeInTheDocument()
-    expect(screen.getByAltText('Search')).toBeInTheDocument()
   })
 
   it('renders the profile button', () => {
@@ -52,7 +59,8 @@ describe('Dashboard Component', () => {
     expect(profileButton).toBeInTheDocument()
   })
 
-  // Profile Dropdown Tests
+  // ===== PROFILE DROPDOWN TESTS =====
+  
   it('toggles profile dropdown when profile button is clicked', () => {
     render(
       <BrowserRouter>
@@ -118,7 +126,8 @@ describe('Dashboard Component', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/login')
   })
 
-  // Sidebar Tests
+  // ===== SIDEBAR TESTS =====
+  
   it('renders sidebar with all navigation items', () => {
     render(
       <BrowserRouter>
@@ -126,11 +135,8 @@ describe('Dashboard Component', () => {
       </BrowserRouter>
     )
     
-    // Use getAllByText for items that appear multiple times, or be more specific
     expect(screen.getByAltText('Home')).toBeInTheDocument()
     expect(screen.getByText('Search Chat')).toBeInTheDocument()
-    expect(screen.getByText('Menu')).toBeInTheDocument()
-    expect(screen.getByText('Dish')).toBeInTheDocument()
     expect(screen.getByText('Settings')).toBeInTheDocument()
   })
 
@@ -141,11 +147,8 @@ describe('Dashboard Component', () => {
       </BrowserRouter>
     )
     
-    // Check that sidebar has 'open' class
     const sidebar = document.querySelector('.sidebar')
     expect(sidebar).toHaveClass('open')
-  
-    // Or check for close icon (only visible when open)
     expect(screen.getByText('✕')).toBeInTheDocument()
   })
 
@@ -172,29 +175,19 @@ describe('Dashboard Component', () => {
     expect(screen.getByText('✕')).toBeInTheDocument()
   })
 
-  // Navigation Tests
-  it('displays Home content by default', () => {
+  // ===== NAVIGATION/PAGE SWITCHING TESTS =====
+  
+  it('displays Home content by default', async () => {
     render(
       <BrowserRouter>
         <Dashboard />
       </BrowserRouter>
     )
     
-    expect(screen.getByRole('heading', { name: /home/i })).toBeInTheDocument()
-    expect(screen.getByText(/work in progress/i)).toBeInTheDocument()
-  })
-
-  it('navigates to Menu page when Menu button is clicked', () => {
-    render(
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>
-    )
-    
-    const menuButton = screen.getByText('Menu')
-    fireEvent.click(menuButton)
-    
-    expect(screen.getByRole('heading', { name: /menu/i })).toBeInTheDocument()
+    // Home component shows "Explore Restaurants" heading
+    await waitFor(() => {
+      expect(screen.getByText('Explore Restaurants')).toBeInTheDocument()
+    })
   })
 
   it('navigates to Search Chat page when Search Chat button is clicked', () => {
@@ -207,20 +200,8 @@ describe('Dashboard Component', () => {
     const searchChatButton = screen.getByText('Search Chat')
     fireEvent.click(searchChatButton)
     
-    expect(screen.getByRole('heading', { name: /search chat/i })).toBeInTheDocument()
-  })
-
-  it('navigates to Dish page when Dish button is clicked', () => {
-    render(
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>
-    )
-    
-    const dishButton = screen.getByText('Dish')
-    fireEvent.click(dishButton)
-    
-    expect(screen.getByRole('heading', { name: /dish/i })).toBeInTheDocument()
+    // Check for the heading (more flexible)
+  expect(screen.getByRole('heading', { name: /search chat/i })).toBeInTheDocument()
   })
 
   it('navigates to Settings page when Settings button is clicked', () => {
@@ -233,42 +214,29 @@ describe('Dashboard Component', () => {
     const settingsButton = screen.getByText('Settings')
     fireEvent.click(settingsButton)
     
+    // Settings component shows "Settings" heading
     expect(screen.getByRole('heading', { name: /settings/i })).toBeInTheDocument()
   })
 
-  it('applies active class to current page button', () => {
+  it('applies active class to current page button', async () => {
     render(
       <BrowserRouter>
         <Dashboard />
       </BrowserRouter>
     )
     
-    // Find the Home button by its icon alt text, then get the button
+    // Home button should be active by default
     const homeButton = screen.getByAltText('Home').closest('button')
     expect(homeButton).toHaveClass('active')
   
-    // Click Menu
-    const menuButton = screen.getByText('Menu').closest('button')
-    fireEvent.click(menuButton!)
+    // Click Search Chat
+    const searchChatButton = screen.getByText('Search Chat').closest('button')
+    fireEvent.click(searchChatButton!)
   
-    // Menu should now be active
-    expect(menuButton).toHaveClass('active')
+    // Search Chat should now be active
+    expect(searchChatButton).toHaveClass('active')
     // Home should no longer be active
     expect(homeButton).not.toHaveClass('active')
-  })
-
-  // Search Input Test
-  it('search input accepts user input', () => {
-    render(
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>
-    )
-    
-    const searchInput = screen.getByPlaceholderText('Search for dishes, restaurants...') as HTMLInputElement
-    fireEvent.change(searchInput, { target: { value: 'pizza' } })
-    
-    expect(searchInput.value).toBe('pizza')
   })
 
   it('renders main content area', () => {
