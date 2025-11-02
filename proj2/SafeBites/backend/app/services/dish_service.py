@@ -36,13 +36,13 @@ def list_dishes(filter_query: dict, user_id: str = None):
         if user_id:
             try:
                 user_doc = db.users.find_one({"_id": ObjectId(user_id)})
+                print(user_doc)
                 if user_doc:
                     user_allergens = [a.lower() for a in user_doc.get("allergen_preferences", [])]
             except Exception:
                 pass
         for d in docs:
             d_out = _to_out(d)
-            # safe_for_user flag
             if user_allergens:
                 dish_all = [a.lower() for a in d_out.get("explicit_allergens", [])]
                 d_out["safe_for_user"] = len(set(dish_all) & set(user_allergens)) == 0

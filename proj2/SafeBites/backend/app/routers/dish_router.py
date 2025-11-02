@@ -21,15 +21,6 @@ def create_dish(restaurant_id:str, payload: DishCreate):
     return dish_service.create_dish(restaurant_id, payload)
 
 @router.get("/", response_model=List[DishOut])
-def list_dishes(restaurant: Optional[str] = None, tags: Optional[str] = Query(None)):
-    query = {}
-    if restaurant:
-        query["restaurant_id"] = restaurant
-    if tags:
-        query["ingredients"] = {"$in": tags.split(",")}
-    return dish_service.list_dishes(query)
-
-@router.get("/", response_model=List[DishOut])
 def list_dishes(restaurant: Optional[str] = None, tags: Optional[str] = Query(None), user_id: Optional[str] = None):
     query = {}
     if restaurant:
