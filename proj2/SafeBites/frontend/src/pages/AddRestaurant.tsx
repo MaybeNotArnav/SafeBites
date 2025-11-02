@@ -11,7 +11,6 @@ function AddRestaurant() {
     city: '',
     state: '',
     zipCode: '',
-    phone: '',
     description: ''
   });
 
@@ -201,24 +200,6 @@ function AddRestaurant() {
                     required
                   />
                 </div>
-              </div>
-            </div>
-
-            {/* Contact Information Section */}
-            <div className="form-section">
-              <h2 className="section-title">Contact Information</h2>
-              
-              <div className="form-group">
-                <label htmlFor="phone">Phone Number</label>
-                <p className="field-description">Customer service or reservation line (optional)</p>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="(555) 123-4567"
-                />
               </div>
             </div>
 
