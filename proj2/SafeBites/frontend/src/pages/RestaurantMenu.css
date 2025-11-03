@@ -155,12 +155,38 @@
   background-color: #edf2f7;
 }
 
+/* Safety highlighting for dishes */
+.dish-item.dish-safe {
+  background-color: #e8f8f0;
+  border-left: 4px solid #28a745;
+}
+
+.dish-item.dish-safe:hover {
+  background-color: #d4edda;
+}
+
+.dish-item.dish-unsafe {
+  background-color: #fff5f5;
+  border-left: 4px solid #dc3545;
+}
+
+.dish-item.dish-unsafe:hover {
+  background-color: #f8d7da;
+}
+
 .dish-header {
   display: flex;
   justify-content: space-between;
   align-items: start;
   margin-bottom: 0.5rem;
   gap: 1rem;
+}
+
+.dish-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .dish-header-right {
@@ -204,6 +230,32 @@
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+/* ===== SAFETY BADGE ===== */
+.safety-badge {
+  padding: 0.4rem 0.85rem;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.safety-badge.safe {
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #28a745;
+}
+
+.safety-badge.unsafe {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 2px solid #dc3545;
 }
 
 .dish-description {
@@ -354,6 +406,10 @@
     align-items: start;
   }
 
+  .dish-title-container {
+    width: 100%;
+  }
+
   .dish-header-right {
     width: 100%;
     justify-content: space-between;
@@ -369,5 +425,10 @@
 
   .dish-description {
     font-size: 0.85rem;
+  }
+
+  .safety-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
   }
 }
