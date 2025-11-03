@@ -92,7 +92,12 @@ function AddRestaurant() {
       apiFormData.append('menu_csv', menuCsv);
 
       // Submit to API
-      const response = await fetch('/restaurants', {
+      for (let pair of apiFormData.entries()) {
+  console.log(pair[0] + ':', pair[1]);
+}
+      console.log('Submitting restaurant:', {...formData, location, menuCsvName: menuCsv.name});
+      const response = await fetch('https://safebites-yu1o.onrender.com/restaurants', {
+      
         method: 'POST',
         body: apiFormData,
       });
