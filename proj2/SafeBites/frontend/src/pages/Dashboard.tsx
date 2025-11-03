@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 import Home from './Home';
 import SearchChat from './SearchChat';
-import Menu from './Menu';
-import Dish from './Dish';
 import Settings from './Settings';
 
 function Dashboard() {
@@ -77,14 +75,10 @@ function Dashboard() {
         return <Home />;
       case 'search-chat':
         return <SearchChat />;
-      case 'menu':
-        return <Menu />;
-      case 'dish':
-        return <Dish />;
       case 'settings':
         return <Settings />;
       default:
-        return null;
+        return <Home />;
     }
   };
 
@@ -97,20 +91,6 @@ function Dashboard() {
           <div className="logo">
             <img src="/wolfLogo.png" alt="SafeBites Logo" className="logo-img" />
             <h1>SafeBites</h1>
-          </div>
-        </div>
-
-        {/* Middle: Search Bar */}
-        <div className="header-middle">
-          <div className="search-container">
-            <div className="search-icon-wrapper">
-              <img src="/icons/hugeicons_search.png" alt="Search" className="search-icon" />
-            </div>
-            <input 
-              type="text" 
-              placeholder="Search for dishes, restaurants..." 
-              className="search-input"
-            />
           </div>
         </div>
 
@@ -194,22 +174,6 @@ function Dashboard() {
             >
               <img src="/icons/hugeicon_ai_search.png" alt="Search Chat" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Search Chat</span>}
-            </button>
-            
-            <button 
-              className={`sidebar-item ${currentPage === 'menu' ? 'active' : ''}`}
-              onClick={() => setCurrentPage('menu')}
-            >
-              <img src="/icons/hugeicons_menu_restaurant.png" alt="Menu" className="sidebar-icon" />
-              {isSidebarOpen && <span className="sidebar-text">Menu</span>}
-            </button>
-            
-            <button 
-              className={`sidebar-item ${currentPage === 'dish' ? 'active' : ''}`}
-              onClick={() => setCurrentPage('dish')}
-            >
-              <img src="/icons/hugeicons_dish.png" alt="Dish" className="sidebar-icon" />
-              {isSidebarOpen && <span className="sidebar-text">Dish</span>}
             </button>
             
             <button 
