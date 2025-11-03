@@ -31,6 +31,7 @@ def create_dish(restaurant_id: str, dish_create):
 def list_dishes(filter_query: dict, user_id: str = None):
     try:
         docs = list(db.dishes.find(filter_query).limit(100))
+        print(docs)
         out = []
         user_allergens = []
         if user_id:
@@ -41,10 +42,12 @@ def list_dishes(filter_query: dict, user_id: str = None):
                     user_allergens = [a.lower() for a in user_doc.get("allergen_preferences", [])]
             except Exception:
                 pass
+        print(user_allergens)
         for d in docs:
             d_out = _to_out(d)
             if user_allergens:
-                dish_all = [a.lower() for a in d_out.get("explicit_allergens", [])]
+                dish_all = [a["allergen"].lower() for a in d_out.get("explicit_allergens", [])]
+                print(len(set(dish_all) & set(user_allergens)) == 0)
                 d_out["safe_for_user"] = len(set(dish_all) & set(user_allergens)) == 0
             else:
                 d_out["safe_for_user"] = None

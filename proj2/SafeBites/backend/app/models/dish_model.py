@@ -36,3 +36,4 @@ class DishOut(BaseModel):
     explicit_allergens: Optional[List[Union[str, AllergenInfo]]] = []
     nutrition_facts : Optional[Dict[str, Any]] = None
     availability: bool = True
+    safe_for_user:bool = True

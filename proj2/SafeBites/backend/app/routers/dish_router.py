@@ -24,7 +24,7 @@ def create_dish(restaurant_id:str, payload: DishCreate):
 def list_dishes(restaurant: Optional[str] = None, tags: Optional[str] = Query(None), user_id: Optional[str] = None):
     query = {}
     if restaurant:
-        query["restaurant"] = restaurant
+        query["restaurant_id"] = restaurant
     if tags:
         query["ingredients"] = {"$in": tags.split(",")}
     return dish_service.list_dishes(query, user_id=user_id)
@@ -33,7 +33,7 @@ def list_dishes(restaurant: Optional[str] = None, tags: Optional[str] = Query(No
 def filter_dishes(exclude_allergens: Optional[str] = Query(None), restaurant: Optional[str] = None, user_id: Optional[str] = None):
     query = {}
     if restaurant:
-        query["restaurant"] = restaurant
+        query["restaurant_id"] = restaurant
     docs = dish_service.list_dishes(query, user_id=user_id)
     if not exclude_allergens:
         return docs

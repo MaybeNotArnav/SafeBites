@@ -1,5 +1,10 @@
 # backend/app/tests/integration/test_dish_integration.py
 import pytest
+from fastapi.testclient import TestClient
+from unittest.mock import patch, MagicMock
+from app.main import app
+
+client = TestClient(app)
 
 @pytest.mark.integration
 def test_dish_create_list_safe_flag(client):

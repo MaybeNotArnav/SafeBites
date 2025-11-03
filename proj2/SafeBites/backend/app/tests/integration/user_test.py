@@ -1,4 +1,9 @@
 import pytest
+from fastapi.testclient import TestClient
+from unittest.mock import patch, MagicMock
+from app.main import app
+
+client = TestClient(app)
 
 @pytest.mark.integration
 def test_user_signup_login_flow(client):
