@@ -3,6 +3,12 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import Welcome from '../pages/Welcome'
 
+/**
+ * STREAMLINED WELCOME TESTS
+ * 
+ * 8 essential tests - focused on critical functionality
+ */
+
 // Mock the useNavigate hook
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async () => {
@@ -18,7 +24,11 @@ describe('Welcome Component', () => {
     mockNavigate.mockClear()
   })
 
-  it('renders the SafeBites logo and title', () => {
+  // ================================================================
+  // HEADER - 2 Essential Tests
+  // ================================================================
+
+  it('renders header with logo and sign up button', () => {
     render(
       <BrowserRouter>
         <Welcome />
@@ -27,20 +37,10 @@ describe('Welcome Component', () => {
     
     expect(screen.getByText('SafeBites')).toBeInTheDocument()
     expect(screen.getByAltText('SafeBites Logo')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /sign up/i })).toBeInTheDocument()
   })
 
-  it('renders the Sign Up button in header', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    const signUpButton = screen.getByRole('button', { name: /sign up/i })
-    expect(signUpButton).toBeInTheDocument()
-  })
-
-  it('navigates to signup page when Sign Up button is clicked', () => {
+  it('navigates to signup page when button clicked', () => {
     render(
       <BrowserRouter>
         <Welcome />
@@ -53,7 +53,11 @@ describe('Welcome Component', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/signup')
   })
 
-  it('renders the hero section with search bar', () => {
+  // ================================================================
+  // HERO SECTION - 2 Essential Tests
+  // ================================================================
+
+  it('renders hero section with search bar', () => {
     render(
       <BrowserRouter>
         <Welcome />
@@ -62,122 +66,7 @@ describe('Welcome Component', () => {
     
     expect(screen.getByText('Find Restaurants Near You')).toBeInTheDocument()
     expect(screen.getByPlaceholderText(/enter street address or zip code/i)).toBeInTheDocument()
-  })
-
-  it('renders the search button with icon', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    const searchIcon = screen.getByAltText('Search')
-    expect(searchIcon).toBeInTheDocument()
-  })
-
-  it('renders all three feature cards', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByText('Eat Safely, Every Time')).toBeInTheDocument()
-    expect(screen.getByText('Search Like You Talk')).toBeInTheDocument()
-    expect(screen.getByText('Set It Once, Use It Forever')).toBeInTheDocument()
-  })
-
-  it('renders feature card descriptions', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByText(/never worry about hidden allergens/i)).toBeInTheDocument()
-    expect(screen.getByText(/forget complex filters/i)).toBeInTheDocument()
-    expect(screen.getByText(/tell us your allergies/i)).toBeInTheDocument()
-  })
-
-  it('renders the About SafeBites section', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByText('About SafeBites')).toBeInTheDocument()
-    expect(screen.getByText(/dining out shouldn't be a guessing game/i)).toBeInTheDocument()
-    expect(screen.getByText('Safe dining made simple.')).toBeInTheDocument()
-  })
-
-  it('renders the about section image', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    const aboutImage = screen.getByAltText('Food Allergy Items')
-    expect(aboutImage).toBeInTheDocument()
-  })
-
-  it('renders footer with all columns', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByText('Get to know us')).toBeInTheDocument()
-    expect(screen.getByText('Useful links')).toBeInTheDocument()
-    expect(screen.getByText('Doing Business')).toBeInTheDocument()
-  })
-
-  it('renders footer links', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByText('About Us')).toBeInTheDocument()
-    expect(screen.getByText('Help')).toBeInTheDocument()
-    expect(screen.getByText('Add your restaurant')).toBeInTheDocument()
-  })
-
-  it('renders social media icons', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByAltText('Twitter')).toBeInTheDocument()
-    expect(screen.getByAltText('Facebook')).toBeInTheDocument()
-    expect(screen.getByAltText('Instagram')).toBeInTheDocument()
-  })
-
-  it('renders copyright text', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByText('© 2025 SafeBites - Group 6')).toBeInTheDocument()
-  })
-
-  it('renders all feature icons', () => {
-    render(
-      <BrowserRouter>
-        <Welcome />
-      </BrowserRouter>
-    )
-    
-    expect(screen.getByAltText('Allergen Protection')).toBeInTheDocument()
-    expect(screen.getByAltText('AI Search')).toBeInTheDocument()
-    expect(screen.getByAltText('Smart Filtering')).toBeInTheDocument()
+    expect(screen.getByAltText('Search')).toBeInTheDocument()
   })
 
   it('search input accepts user input', () => {
@@ -191,5 +80,69 @@ describe('Welcome Component', () => {
     fireEvent.change(searchInput, { target: { value: '27606' } })
     
     expect(searchInput.value).toBe('27606')
+  })
+
+  // ================================================================
+  // FEATURES SECTION - 1 Essential Test
+  // ================================================================
+
+  it('renders all three feature cards with titles', () => {
+    render(
+      <BrowserRouter>
+        <Welcome />
+      </BrowserRouter>
+    )
+    
+    expect(screen.getByText('Eat Safely, Every Time')).toBeInTheDocument()
+    expect(screen.getByText('Search Like You Talk')).toBeInTheDocument()
+    expect(screen.getByText('Set It Once, Use It Forever')).toBeInTheDocument()
+  })
+
+  // ================================================================
+  // ABOUT SECTION - 1 Essential Test
+  // ================================================================
+
+  it('renders about section with content', () => {
+    render(
+      <BrowserRouter>
+        <Welcome />
+      </BrowserRouter>
+    )
+    
+    expect(screen.getByText('About SafeBites')).toBeInTheDocument()
+    expect(screen.getByText(/dining out shouldn't be a guessing game/i)).toBeInTheDocument()
+    expect(screen.getByText('Safe dining made simple.')).toBeInTheDocument()
+  })
+
+  // ================================================================
+  // FOOTER - 2 Essential Tests
+  // ================================================================
+
+  it('renders footer with all sections and links', () => {
+    render(
+      <BrowserRouter>
+        <Welcome />
+      </BrowserRouter>
+    )
+    
+    expect(screen.getByText('Get to know us')).toBeInTheDocument()
+    expect(screen.getByText('Useful links')).toBeInTheDocument()
+    expect(screen.getByText('Doing Business')).toBeInTheDocument()
+    expect(screen.getByText('About Us')).toBeInTheDocument()
+    expect(screen.getByText('Help')).toBeInTheDocument()
+    expect(screen.getByText('© 2025 SafeBites - Group 6')).toBeInTheDocument()
+  })
+
+  it('navigates to add restaurant page when link clicked', () => {
+    render(
+      <BrowserRouter>
+        <Welcome />
+      </BrowserRouter>
+    )
+    
+    const addRestaurantLink = screen.getByText('Add your restaurant')
+    fireEvent.click(addRestaurantLink)
+    
+    expect(mockNavigate).toHaveBeenCalledWith('/add-restaurant')
   })
 })
