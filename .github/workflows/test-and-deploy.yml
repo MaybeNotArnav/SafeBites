@@ -14,6 +14,12 @@ jobs:
       run:
         working-directory: proj2/SafeBites/backend  # 👈 relative to repo root
 
+    env:   # 👈 inject env vars here
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
