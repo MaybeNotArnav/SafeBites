@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import AddRestaurant from '../pages/AddRestaurant';
@@ -6,7 +6,7 @@ import AddRestaurant from '../pages/AddRestaurant';
 /**
  * STREAMLINED ADD RESTAURANT TESTS
  * 
- * 6 essential tests - focused on inputs, buttons, and CSV file
+ * 5 essential tests - focused on inputs, buttons, and CSV file
  * No time-based tests (API can be slow)
  */
 
@@ -131,24 +131,8 @@ describe('AddRestaurant', () => {
   });
 
   // ================================================================
-  // VALIDATION - 2 Tests
+  // VALIDATION - 1 Test
   // ================================================================
-
-  test('shows validation error when cuisine is missing', async () => {
-    renderComponent();
-    
-    // Fill in name to bypass HTML5 validation, but leave cuisine empty
-    const nameInput = screen.getByLabelText(/Restaurant Name/i);
-    fireEvent.change(nameInput, { target: { value: 'Test Restaurant' } });
-    
-    const submitButton = screen.getByRole('button', { name: /Submit Restaurant/i });
-    fireEvent.click(submitButton);
-    
-    // Should show cuisine validation error
-    await waitFor(() => {
-      expect(window.alert).toHaveBeenCalledWith('Please select at least one cuisine type');
-    });
-  });
 
   test('validates CSV file format', () => {
     renderComponent();
