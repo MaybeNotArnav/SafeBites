@@ -4,9 +4,9 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Framework-brightgreen?logo=fastapi)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-green?logo=mongodb)
-![GitHub Actions](https://img.shields.io/github/actions/workflow/status/the-Shallow/SE-WOLFCAFE/python-app.yml?label=CI%20Build&logo=githubactions)
+![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
 ![Coverage](https://img.shields.io/codecov/c/github/the-Shallow/SE-WOLFCAFE?label=Coverage&logo=codecov)
-![License](https://img.shields.io/github/license/the-Shallow/SE-WOLFCAFE)
+![License](https://img.shields.io/badge/License-MIT-yellow?logo=opensource-initiative&link=./LICENSE)
 ![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)
 
 ---

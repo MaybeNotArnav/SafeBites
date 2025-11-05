@@ -124,7 +124,9 @@ def delete_dish(dish_id: str):
         obj = ObjectId(dish_id)
     except Exception:
         raise NotFoundException(name="Invalid dish id")
+
     res = db.dishes.delete_one({"_id": obj})
     if res.deleted_count == 0:
         raise NotFoundException(name="Dish not found")
-    return
+
+    return {"detail": "deleted"}
