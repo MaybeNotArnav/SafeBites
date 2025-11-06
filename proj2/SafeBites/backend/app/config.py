@@ -1,3 +1,16 @@
+"""
+Configuration Module for SafeBites
+
+- Loads environment variables using dotenv.
+- Defines MongoDB connection URIs and database names.
+- Sets up JWT secret for authentication.
+- Configures logging with both console and rotating file handlers.
+- Supports colored console logs and separate error log file.
+
+Usage:
+    from app.config import MONGO_URI, DB_NAME, setup_logging
+    setup_logging()
+"""
 import os
 import logging
 import logging.config

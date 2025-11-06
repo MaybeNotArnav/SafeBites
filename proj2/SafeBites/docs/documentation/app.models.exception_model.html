@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -128,6 +128,26 @@
         
 
         
+            <div class="itemName"><code><a href="app.models.exception_model.AuthError.html" class="internal-link" title="app.models.exception_model.AuthError"><wbr></wbr>Auth<wbr></wbr>Error</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.exception_model.ConflictException.html" class="internal-link" title="app.models.exception_model.ConflictException"><wbr></wbr>Conflict<wbr></wbr>Exception</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="app.models.exception_model.BadRequestException.html" class="internal-link" title="app.models.exception_model.BadRequestException"><wbr></wbr>Bad<wbr></wbr>Request<wbr></wbr>Exception</a></code>
             </div>
         
@@ -181,7 +201,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.models.html" class="internal-link" title="The parent of this module">models</a></code> 
       </div>
       
@@ -197,7 +217,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.models.__pycache__.html" class="internal-link" title="app.models.__pycache__">__pycache__</a></code>
+            <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -207,7 +227,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
+            <div class="itemName"><code><a href="app.models.dish_model.html" class="internal-link" title="app.models.dish_model">dish<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -258,6 +278,26 @@
 
         
             <div class="itemName"><code><a href="app.models.restaurant_model.html" class="internal-link" title="app.models.restaurant_model">restaurant<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.session_model.html" class="internal-link" title="app.models.session_model">session<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.user_model.html" class="internal-link" title="app.models.user_model">user<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -313,14 +353,36 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Defines custom exception classes used throughout the SafeBites backend.
+
+These exceptions are used to standardize error handling for API endpoints
+and internal services:
+
+- NotFoundException: Raised when a requested resource is not found in the database.
+- BadRequestException: Raised when a request is malformed or contains invalid data.
+- DatabaseException: Raised for database-related errors.
+- GenericException: Raised for generic or uncategorized exceptions.
+- AuthError: Raised for authentication failures (returns HTTP 401).
+- ConflictException: Raised for resource conflicts, such as duplicate entries (returns HTTP 409).
+
+Using these exceptions allows consistent error responses and better debugging.</p></div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id16">
+          <table class="children sortable" id="id24">
   
   
-  <tr class="exception">
+  <tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="app.models.exception_model.AuthError.html" class="internal-link" title="app.models.exception_model.AuthError"><wbr></wbr>Auth<wbr></wbr>Error</a></code></td>
+    <td>Raised when there is an authentication error.</td>
+  </tr><tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="app.models.exception_model.ConflictException.html" class="internal-link" title="app.models.exception_model.ConflictException"><wbr></wbr>Conflict<wbr></wbr>Exception</a></code></td>
+    <td>Raised for 409 conflicts (duplicate username/dish).</td>
+  </tr><tr class="exception">
     
     <td>Exception</td>
     <td><code><a href="app.models.exception_model.BadRequestException.html" class="internal-link" title="app.models.exception_model.BadRequestException"><wbr></wbr>Bad<wbr></wbr>Request<wbr></wbr>Exception</a></code></td>
@@ -358,9 +420,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>app.services.dish_service</title>
+    <meta name="generator" content="pydoctor 25.10.1"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          SafeBites API <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code class="thisobject"><a href="app.services.dish_service.html" class="internal-link" title="This module">dish<wbr></wbr>_service</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#create_dish" class="internal-link" title="app.services.dish_service.create_dish">create<wbr></wbr>_dish</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#delete_dish" class="internal-link" title="app.services.dish_service.delete_dish">delete<wbr></wbr>_dish</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_dish" class="internal-link" title="app.services.dish_service.get_dish">get<wbr></wbr>_dish</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#list_dishes" class="internal-link" title="app.services.dish_service.list_dishes">list<wbr></wbr>_dishes</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#update_dish" class="internal-link" title="app.services.dish_service.update_dish">update<wbr></wbr>_dish</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_to_out" class="internal-link" title="app.services.dish_service._to_out">_to<wbr></wbr>_out</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Package</span>
+        <code><a href="app.services.html" class="internal-link" title="The parent of this module">services</a></code> 
+      </div>
+      
+      <div>
+        
+
+        <div class="childrenKindTitle">Modules</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.context_resolver.html" class="internal-link" title="app.services.context_resolver">context<wbr></wbr>_resolver</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.dish_info_service.html" class="internal-link" title="app.services.dish_info_service">dish<wbr></wbr>_info<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.dish_service.html" class="internal-link" title="app.services.dish_service">dish<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.exception_service.html" class="internal-link" title="app.services.exception_service">exception<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.faiss_service.html" class="internal-link" title="app.services.faiss_service">faiss<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.intent_service.html" class="internal-link" title="app.services.intent_service">intent<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.orchestrator_service.html" class="internal-link" title="app.services.orchestrator_service">orchestrator<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.response_synthesizer_tool.html" class="internal-link" title="app.services.response_synthesizer_tool">response<wbr></wbr>_synthesizer<wbr></wbr>_tool</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.restaurant_service.html" class="internal-link" title="app.services.restaurant_service">restaurant<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.retrieval_service.html" class="internal-link" title="app.services.retrieval_service">retrieval<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.state_service.html" class="internal-link" title="app.services.state_service">state<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.user_service.html" class="internal-link" title="app.services.user_service">user<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+        
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapse-sidebar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <main class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">app</a></code><wbr></wbr>.<code><a href="app.services.html" class="internal-link" title="app.services">services</a></code><wbr></wbr>.<code><a href="app.services.dish_service.html" class="internal-link" title="app.services.dish_service">dish_service</a></code></code></h1>
+          <div id="show-private">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          module documentation
+        </div>
+
+        <div class="extrasDocstring">
+          
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Dish Service Module</p>
+<p>This module provides CRUD operations for managing dish documents in the database. It integrates MongoDB operations with Pydantic validation and allergen safety checks for users.</p>
+</div>
+        </div>
+
+        <div id="split-tables">
+          <table class="children sortable" id="id73">
+  
+  
+  <tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#create_dish" class="internal-link" title="app.services.dish_service.create_dish">create<wbr></wbr>_dish</a></code></td>
+    <td>Create a new dish entry for a given restaurant.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#delete_dish" class="internal-link" title="app.services.dish_service.delete_dish">delete<wbr></wbr>_dish</a></code></td>
+    <td>Delete a dish document by its ID.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#get_dish" class="internal-link" title="app.services.dish_service.get_dish">get<wbr></wbr>_dish</a></code></td>
+    <td>Retrieve a single dish by its ID and determine if it's safe for a user based on allergens.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#list_dishes" class="internal-link" title="app.services.dish_service.list_dishes">list<wbr></wbr>_dishes</a></code></td>
+    <td>List dishes that match a given filter query. Automatically attaches a `safe_for_user` boolean for each dish based on user allergens.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#update_dish" class="internal-link" title="app.services.dish_service.update_dish">update<wbr></wbr>_dish</a></code></td>
+    <td>Update a dish’s details by its ID. Checks for duplicate dish names within the same restaurant.</td>
+  </tr><tr class="function private">
+    
+    <td>Function</td>
+    <td><code><a href="#_to_out" class="internal-link" title="app.services.dish_service._to_out">_to<wbr></wbr>_out</a></code></td>
+    <td>Convert a MongoDB document to a serializable format by converting the `_id` field to a string. Returns the modified document.</td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="child-list">
+          <div class="basefunction">
+  
+  
+  <a name="app.services.dish_service.create_dish">
+    
+  </a>
+  <a name="create_dish">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">create_dish</span><span class="function-signature">(<span class="rst-sig-param">restaurant_id: <code>str</code>, </span><span class="rst-sig-param">dish_create</span>):</span>
+    
+    <a class="headerLink" href="#create_dish" title="app.services.dish_service.create_dish">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Create a new dish entry for a given restaurant.
+
+Args:
+    restaurant_id (str): The restaurant's unique identifier.
+    dish_create (DishCreate): Pydantic model containing dish creation details.
+
+Raises:
+    BadRequestException: If required fields are missing.
+    ConflictException: If a dish with the same name already exists in the restaurant.
+    DatabaseException: If database insertion fails.
+
+Returns:
+    dict: The created dish document with `safe_for_user` field included.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.dish_service.delete_dish">
+    
+  </a>
+  <a name="delete_dish">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">delete_dish</span><span class="function-signature">(<span class="rst-sig-param">dish_id: <code>str</code></span>):</span>
+    
+    <a class="headerLink" href="#delete_dish" title="app.services.dish_service.delete_dish">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Delete a dish document by its ID.
+
+Args:
+    dish_id (str): The dish's unique identifier.
+
+Raises:
+    NotFoundException: If the dish ID is invalid or not found.
+
+Returns:
+    dict: Confirmation message indicating successful deletion.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.dish_service.get_dish">
+    
+  </a>
+  <a name="get_dish">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">get_dish</span><span class="function-signature">(<span class="rst-sig-param">dish_id: <code>str</code>, </span><span class="rst-sig-param">user_id: <code>str</code> = None</span>):</span>
+    
+    <a class="headerLink" href="#get_dish" title="app.services.dish_service.get_dish">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Retrieve a single dish by its ID and determine if it's safe for a user based on allergens.
+
+Args:
+    dish_id (str): The unique dish identifier.
+    user_id (str, optional): The user's ID for allergen safety check. Defaults to None.
+
+Raises:
+    NotFoundException: If the dish does not exist or invalid ID is provided.
+
+Returns:
+    dict: The dish document with `safe_for_user` field attached.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.dish_service.list_dishes">
+    
+  </a>
+  <a name="list_dishes">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">list_dishes</span><span class="function-signature">(<span class="rst-sig-param">filter_query: <code>dict</code>, </span><span class="rst-sig-param">user_id: <code>str</code> = None</span>):</span>
+    
+    <a class="headerLink" href="#list_dishes" title="app.services.dish_service.list_dishes">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">List dishes that match a given filter query.
+Automatically attaches a `safe_for_user` boolean for each dish based on user allergens.
+
+Args:
+    filter_query (dict): MongoDB filter criteria.
+    user_id (str, optional): User ID to check allergen safety. Defaults to None.
+
+Raises:
+    DatabaseException: If there is an issue fetching dishes from the database.
+
+Returns:
+    list[dict]: List of dish documents, each including `safe_for_user` status.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.dish_service.update_dish">
+    
+  </a>
+  <a name="update_dish">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">update_dish</span><span class="function-signature">(<span class="rst-sig-param">dish_id: <code>str</code>, </span><span class="rst-sig-param">update_data: <code>dict</code></span>):</span>
+    
+    <a class="headerLink" href="#update_dish" title="app.services.dish_service.update_dish">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Update a dish’s details by its ID. Checks for duplicate dish names within the same restaurant.
+
+Args:
+    dish_id (str): Unique identifier of the dish to update.
+    update_data (dict): Fields to update with their new values.
+
+Raises:
+    BadRequestException: If no update data is provided.
+    NotFoundException: If the dish does not exist.
+    ConflictException: If another dish with the same name exists in the restaurant.
+
+Returns:
+    dict: The updated dish document including `safe_for_user`.</p></div>
+  </div>
+</div><div class="basefunction private">
+  
+  
+  <a name="app.services.dish_service._to_out">
+    
+  </a>
+  <a name="_to_out">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">_to_out</span><span class="function-signature">(<span class="rst-sig-param">doc: <code>dict</code></span>) -&gt; <code>dict</code>:</span>
+    
+    <a class="headerLink" href="#_to_out" title="app.services.dish_service._to_out">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Convert a MongoDB document to a serializable format by converting the `_id` field to a string. Returns the modified document.</p></div>
+  </div>
+</div>
+        </div>
+      
+      </main>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">API Documentation</a> for SafeBites API,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    25.10.1 at 2025-11-06 11:58:58.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

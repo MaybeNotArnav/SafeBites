@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -144,6 +144,16 @@
         
 
         
+            <div class="itemName"><code><a href="#chat_history" class="internal-link" title="app.routers.restaurant_router.chat_history">chat<wbr></wbr>_history</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#chat_search" class="internal-link" title="app.routers.restaurant_router.chat_search">chat<wbr></wbr>_search</a></code>
             </div>
         
@@ -213,6 +223,16 @@
         
 
         
+            <div class="itemName"><code><a href="#logger" class="internal-link" title="app.routers.restaurant_router.logger">logger</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#router" class="internal-link" title="app.routers.restaurant_router.router">router</a></code>
             </div>
         
@@ -227,7 +247,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.routers.html" class="internal-link" title="The parent of this module">routers</a></code> 
       </div>
       
@@ -243,7 +263,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.routers.__pycache__.html" class="internal-link" title="app.routers.__pycache__">__pycache__</a></code>
+            <div class="itemName"><code><a href="app.routers.dish_router.html" class="internal-link" title="app.routers.dish_router">dish<wbr></wbr>_router</a></code>
             </div>
         
 
@@ -254,6 +274,16 @@
 
         
             <div class="itemName"><code><a href="app.routers.restaurant_router.html" class="internal-link" title="app.routers.restaurant_router">restaurant<wbr></wbr>_router</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.routers.user_router.html" class="internal-link" title="app.routers.user_router">user<wbr></wbr>_router</a></code>
             </div>
         
 
@@ -309,11 +339,22 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p>Defines API endpoints for managing restaurants and handling user menu queries.</p>
+<p>Endpoints include:</p>
+<ul class="rst-simple">
+<li>POST /restaurants/ : Create a new restaurant entry (with optional menu CSV upload).</li>
+<li>GET /restaurants/ : Retrieve a list of all restaurants.</li>
+<li>GET /restaurants/{restaurant_id} : Retrieve a specific restaurant by ID.</li>
+<li>PATCH /restaurants/{restaurant_id} : Update details of an existing restaurant.</li>
+<li>DELETE /restaurants/{restaurant_id} : Delete a restaurant by ID.</li>
+<li>POST /restaurants/search : Perform user menu queries using multi-agent pipeline.</li>
+<li>GET /restaurants/history/{user_id}/{restaurant_id} : Retrieve chat history for a user and restaurant.</li>
+</ul>
+</div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id50">
+          <table class="children sortable" id="id67">
   
   
   <tr class="class">
@@ -323,12 +364,17 @@
     <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="function">
     
+    <td>Function</td>
+    <td><code><a href="#chat_history" class="internal-link" title="app.routers.restaurant_router.chat_history">chat<wbr></wbr>_history</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="function">
+    
     <td>Async Function</td>
     <td><code><a href="#chat_search" class="internal-link" title="app.routers.restaurant_router.chat_search">chat<wbr></wbr>_search</a></code></td>
     <td>Endpoint to handle user menu queries using the multi-agent pipeline. Returns a structured JSON suitable for frontend rendering.</td>
   </tr><tr class="function">
     
-    <td>Function</td>
+    <td>Async Function</td>
     <td><code><a href="#create_restaurant" class="internal-link" title="app.routers.restaurant_router.create_restaurant">create<wbr></wbr>_restaurant</a></code></td>
     <td>Create a new restaurant entry in the database. If allergen information is not provided,  it will be inferred using an external service.</td>
   </tr><tr class="function">
@@ -354,6 +400,11 @@
   </tr><tr class="variable">
     
     <td>Variable</td>
+    <td><code><a href="#logger" class="internal-link" title="app.routers.restaurant_router.logger">logger</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
     <td><code><a href="#router" class="internal-link" title="app.routers.restaurant_router.router">router</a></code></td>
     <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
@@ -365,6 +416,30 @@
 
         <div id="child-list">
           <div class="basefunction">
+  
+  
+  <a name="app.routers.restaurant_router.chat_history">
+    
+  </a>
+  <a name="chat_history">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <div><span class="decorator">@router.get(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">/history/{user_id}/{restaurant_id}</span><span class="rst-variable-quote">'</span>)<br /></span></div>
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">chat_history</span><span class="function-signature">(<span class="rst-sig-param">user_id: <code>str</code>, </span><span class="rst-sig-param">restaurant_id: <code>str</code></span>):</span>
+    
+    <a class="headerLink" href="#chat_history" title="app.routers.restaurant_router.chat_history">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basefunction">
   
   
   <a name="app.routers.restaurant_router.chat_search">
@@ -400,7 +475,7 @@
   <div class="functionHeader">
     
     <div><span class="decorator">@router.post(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">/</span><span class="rst-variable-quote">'</span>, <wbr></wbr>response_model=<a href="app.models.restaurant_model.RestaurantInDB.html" class="internal-link" title="app.models.restaurant_model.RestaurantInDB">RestaurantInDB</a>)<br /></span></div>
-    <span class="py-keyword">def</span>&#160;<span class="py-defname">create_restaurant</span><span class="function-signature">(<span class="rst-sig-param">restaurant: <code><a href="app.models.restaurant_model.RestaurantCreate.html" class="internal-link" title="app.models.restaurant_model.RestaurantCreate">RestaurantCreate</a></code></span>):</span>
+    <span class="py-keyword">async&#160;def</span>&#160;<span class="py-defname">create_restaurant</span><span class="function-signature long-signature">(<span class="rst-sig-param">background_tasks: <code>BackgroundTasks</code>, </span><span class="rst-sig-param">restaurant_name: <code>str</code> = Form(<wbr></wbr><span class="rst-variable-ellipsis">...</span>), </span><span class="rst-sig-param">location: <code>str</code> = Form(<wbr></wbr><span class="rst-variable-ellipsis">...</span>), </span><span class="rst-sig-param">cuisine: <code>str</code> = Form(<wbr></wbr><span class="rst-variable-ellipsis">...</span>), </span><span class="rst-sig-param">rating: <code>float</code> = Form(<wbr></wbr><span class="rst-variable-ellipsis">...</span>), </span><span class="rst-sig-param">menu_csv: <code>UploadFile</code> = File(<wbr></wbr><span class="rst-variable-ellipsis">...</span>)</span>):</span>
     
     <a class="headerLink" href="#create_restaurant" title="app.routers.restaurant_router.create_restaurant">
       
@@ -550,6 +625,30 @@ Raises:
 </div><div class="basevariable">
   
   
+  <a name="app.routers.restaurant_router.logger">
+    
+  </a>
+  <a name="logger">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">logger</span> =
+    
+    <a class="headerLink" href="#logger" title="app.routers.restaurant_router.logger">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
   <a name="app.routers.restaurant_router.router">
     
   </a>
@@ -581,9 +680,9 @@ Raises:
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

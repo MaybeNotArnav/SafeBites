@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -261,7 +261,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.models.html" class="internal-link" title="The parent of this module">models</a></code> 
       </div>
       
@@ -277,7 +277,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.models.__pycache__.html" class="internal-link" title="app.models.__pycache__">__pycache__</a></code>
+            <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -287,7 +287,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
+            <div class="itemName"><code><a href="app.models.dish_model.html" class="internal-link" title="app.models.dish_model">dish<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -338,6 +338,26 @@
 
         
             <div class="itemName"><code><a href="app.models.restaurant_model.html" class="internal-link" title="app.models.restaurant_model">restaurant<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.session_model.html" class="internal-link" title="app.models.session_model">session<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.user_model.html" class="internal-link" title="app.models.user_model">user<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -393,73 +413,92 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Defines Pydantic models for handling restaurant and menu-related data
+in the SafeBites backend.
+
+Models:
+
+- RestaurantBase: Basic restaurant information.
+- RestaurantCreate: Schema for creating a new restaurant.
+- RestaurantUpdate: Schema for updating an existing restaurant.
+- RestaurantInDB: Database representation of a restaurant.
+- PriceFilter: Filter for dish prices.
+- IngredientFilter: Include/exclude ingredient filters.
+- AllergenFilter: Exclude allergen filters.
+- NutritionFilter: Nutritional constraints for dishes.
+- DishFilterModel: Aggregates all dish filters.
+- DishValidationResult: Outcome of validating a dish against filters.
+- MenuQueryResults: Result of a menu search query.
+- MenuResultResponse: Structured response for menu retrieval.
+
+These models are used throughout the backend for validation, data exchange,
+and API responses.</p></div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id34">
+          <table class="children sortable" id="id44">
   
   
   <tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.AllergenFilter.html" class="internal-link" title="app.models.restaurant_model.AllergenFilter"><wbr></wbr>Allergen<wbr></wbr>Filter</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents allergen-based filters for dishes.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.DishFilterModel.html" class="internal-link" title="app.models.restaurant_model.DishFilterModel"><wbr></wbr>Dish<wbr></wbr>Filter<wbr></wbr>Model</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a comprehensive model for applying multiple filters (price, ingredients, allergens, and nutrition) to dish queries.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.DishValidationResult.html" class="internal-link" title="app.models.restaurant_model.DishValidationResult"><wbr></wbr>Dish<wbr></wbr>Validation<wbr></wbr>Result</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents the result of dish validation against given filters.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.IngredientFilter.html" class="internal-link" title="app.models.restaurant_model.IngredientFilter"><wbr></wbr>Ingredient<wbr></wbr>Filter</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents ingredient-based filters for dishes.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.MenuQueryResults.html" class="internal-link" title="app.models.restaurant_model.MenuQueryResults"><wbr></wbr>Menu<wbr></wbr>Query<wbr></wbr>Results</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents the result of a menu query containing matched dishes.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.MenuResultResponse.html" class="internal-link" title="app.models.restaurant_model.MenuResultResponse"><wbr></wbr>Menu<wbr></wbr>Result<wbr></wbr>Response</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a structured response for menu retrieval queries.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.NutritionFilter.html" class="internal-link" title="app.models.restaurant_model.NutritionFilter"><wbr></wbr>Nutrition<wbr></wbr>Filter</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents nutritional filters to refine dish recommendations.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.PriceFilter.html" class="internal-link" title="app.models.restaurant_model.PriceFilter"><wbr></wbr>Price<wbr></wbr>Filter</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents filtering criteria for dish prices.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.RestaurantBase.html" class="internal-link" title="app.models.restaurant_model.RestaurantBase"><wbr></wbr>Restaurant<wbr></wbr>Base</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents basic information about a restaurant.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.RestaurantCreate.html" class="internal-link" title="app.models.restaurant_model.RestaurantCreate"><wbr></wbr>Restaurant<wbr></wbr>Create</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents the schema used for creating a new restaurant entry.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.RestaurantInDB.html" class="internal-link" title="app.models.restaurant_model.RestaurantInDB"><wbr></wbr>Restaurant<wbr></wbr>In<wbr></wbr>DB</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a restaurant record stored in the database.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.restaurant_model.RestaurantUpdate.html" class="internal-link" title="app.models.restaurant_model.RestaurantUpdate"><wbr></wbr>Restaurant<wbr></wbr>Update</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents the schema used for updating an existing restaurant record.</td>
   </tr>
 </table>
           
@@ -478,9 +517,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

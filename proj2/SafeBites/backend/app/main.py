@@ -1,9 +1,24 @@
+"""
+FastAPI Application Entry Point for SafeBites
+
+Sets up:
+- API metadata and FastAPI instance
+- CORS middleware for front-end integration
+- Logging configuration
+- Routers for restaurants, dishes, and user management
+- Custom exception handlers
+- Startup tasks (FAISS index initialization)
+
+Key Features:
+- On startup, checks if FAISS index exists; rebuilds asynchronously if missing.
+- Provides a root endpoint returning a welcome message.
+"""
 import logging, os
 import threading
 from fastapi import FastAPI
-from app.routers import restaurant_router,dish_router, user_router
-from app.services.faiss_service import build_faiss_from_db
-from app.services.exception_service import register_exception_handlers
+from .routers import restaurant_router,dish_router, user_router
+from .services.faiss_service import build_faiss_from_db
+from .services.exception_service import register_exception_handlers
 from fastapi.middleware.cors import CORSMiddleware
 from .config import setup_logging
 

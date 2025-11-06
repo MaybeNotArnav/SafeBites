@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -161,6 +161,16 @@
         
 
         
+            <div class="itemName"><code><a href="#enrich_dish_info" class="internal-link" title="app.services.restaurant_service.enrich_dish_info">enrich<wbr></wbr>_dish<wbr></wbr>_info</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#get_restaurant_by_id" class="internal-link" title="app.services.restaurant_service.get_restaurant_by_id">get<wbr></wbr>_restaurant<wbr></wbr>_by<wbr></wbr>_id</a></code>
             </div>
         
@@ -172,6 +182,26 @@
 
         
             <div class="itemName"><code><a href="#get_restaurants" class="internal-link" title="app.services.restaurant_service.get_restaurants">get<wbr></wbr>_restaurants</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#parse_menu_csv" class="internal-link" title="app.services.restaurant_service.parse_menu_csv">parse<wbr></wbr>_menu<wbr></wbr>_csv</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#process_menu_file" class="internal-link" title="app.services.restaurant_service.process_menu_file">process<wbr></wbr>_menu<wbr></wbr>_file</a></code>
             </div>
         
 
@@ -244,6 +274,16 @@
             </div>
         
 
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#tmp_dir" class="internal-link" title="app.services.restaurant_service.tmp_dir">tmp<wbr></wbr>_dir</a></code>
+            </div>
+        
+
     </li>
 </ul> 
 
@@ -254,7 +294,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.services.html" class="internal-link" title="The parent of this module">services</a></code> 
       </div>
       
@@ -270,7 +310,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.services.__pycache__.html" class="internal-link" title="app.services.__pycache__">__pycache__</a></code>
+            <div class="itemName"><code><a href="app.services.context_resolver.html" class="internal-link" title="app.services.context_resolver">context<wbr></wbr>_resolver</a></code>
             </div>
         
 
@@ -281,6 +321,16 @@
 
         
             <div class="itemName"><code><a href="app.services.dish_info_service.html" class="internal-link" title="app.services.dish_info_service">dish<wbr></wbr>_info<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.dish_service.html" class="internal-link" title="app.services.dish_service">dish<wbr></wbr>_service</a></code>
             </div>
         
 
@@ -354,6 +404,26 @@
             </div>
         
 
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.state_service.html" class="internal-link" title="app.services.state_service">state<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.user_service.html" class="internal-link" title="app.services.user_service">user<wbr></wbr>_service</a></code>
+            </div>
+        
+
     </li>
 </ul> 
 
@@ -406,11 +476,13 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p>Restaurant Service Module</p>
+<p>This module provides core functionality for managing restaurants and their menus, including CRUD operations, menu CSV ingestion, dish enrichment, filtering, and validation.</p>
+</div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id60">
+          <table class="children sortable" id="id80">
   
   
   <tr class="function">
@@ -420,7 +492,7 @@
     <td>Extract and apply filters (price, ingredients, allergens, nutrition) to a list of dishes.</td>
   </tr><tr class="function">
     
-    <td>Function</td>
+    <td>Async Function</td>
     <td><code><a href="#create_restaurant" class="internal-link" title="app.services.restaurant_service.create_restaurant">create<wbr></wbr>_restaurant</a></code></td>
     <td>Creates a new restaurant in the database.</td>
   </tr><tr class="function">
@@ -431,6 +503,11 @@
   </tr><tr class="function">
     
     <td>Function</td>
+    <td><code><a href="#enrich_dish_info" class="internal-link" title="app.services.restaurant_service.enrich_dish_info">enrich<wbr></wbr>_dish<wbr></wbr>_info</a></code></td>
+    <td>Enrich a dish with missing information using an LLM.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
     <td><code><a href="#get_restaurant_by_id" class="internal-link" title="app.services.restaurant_service.get_restaurant_by_id">get<wbr></wbr>_restaurant<wbr></wbr>_by<wbr></wbr>_id</a></code></td>
     <td>Retrieves a restaurant by ID.</td>
   </tr><tr class="function">
@@ -438,6 +515,16 @@
     <td>Async Function</td>
     <td><code><a href="#get_restaurants" class="internal-link" title="app.services.restaurant_service.get_restaurants">get<wbr></wbr>_restaurants</a></code></td>
     <td>Retrieves all restaurants from the database. Args:     None Returns:     List[RestaurantInDB]: A list of all restaurants.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#parse_menu_csv" class="internal-link" title="app.services.restaurant_service.parse_menu_csv">parse<wbr></wbr>_menu<wbr></wbr>_csv</a></code></td>
+    <td>Parse a CSV file of dishes into a list of DishCreate objects.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#process_menu_file" class="internal-link" title="app.services.restaurant_service.process_menu_file">process<wbr></wbr>_menu<wbr></wbr>_file</a></code></td>
+    <td>Process a restaurant menu CSV file and insert dishes into the database.</td>
   </tr><tr class="function">
     
     <td>Function</td>
@@ -467,6 +554,11 @@
     
     <td>Variable</td>
     <td><code><a href="#restaurant_collection" class="internal-link" title="app.services.restaurant_service.restaurant_collection">restaurant<wbr></wbr>_collection</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#tmp_dir" class="internal-link" title="app.services.restaurant_service.tmp_dir">tmp<wbr></wbr>_dir</a></code></td>
     <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -519,7 +611,7 @@ Returns:
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span>&#160;<span class="py-defname">create_restaurant</span><span class="function-signature">(<span class="rst-sig-param">restaurant: <code><a href="app.models.restaurant_model.RestaurantCreate.html" class="internal-link" title="app.models.restaurant_model.RestaurantCreate">RestaurantCreate</a></code></span>):</span>
+    <span class="py-keyword">async&#160;def</span>&#160;<span class="py-defname">create_restaurant</span><span class="function-signature">(<span class="rst-sig-param">restaurant: <code><a href="app.models.restaurant_model.RestaurantCreate.html" class="internal-link" title="app.models.restaurant_model.RestaurantCreate">RestaurantCreate</a></code>, </span><span class="rst-sig-param">menu_csv, </span><span class="rst-sig-param">background_tasks</span>):</span>
     
     <a class="headerLink" href="#create_restaurant" title="app.services.restaurant_service.create_restaurant">
       
@@ -572,6 +664,51 @@ Args:
         Example: "60c72b2f9b1d4c3f8c8e4b1a"
 Returns:
     dict: A message indicating successful deletion.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.restaurant_service.enrich_dish_info">
+    
+  </a>
+  <a name="enrich_dish_info">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">enrich_dish_info</span><span class="function-signature">(<span class="rst-sig-param">dish: <code><a href="app.models.dish_model.DishCreate.html" class="internal-link" title="app.models.dish_model.DishCreate">DishCreate</a></code></span>):</span>
+    
+    <a class="headerLink" href="#enrich_dish_info" title="app.services.restaurant_service.enrich_dish_info">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Enrich a dish with missing information using an LLM.
+
+Fills in the following fields if they are missing:
+- ingredients
+- inferred allergens (with confidence and reasoning)
+- nutrition facts (calories, protein, fat, carbohydrates, sugar, fiber)
+- summary description (one-line)
+
+Parameters
+----------
+dish : DishCreate
+    Dish object to enrich.
+
+Returns
+-------
+DishCreate
+    Updated dish object with enriched fields.
+
+Notes
+-----
+Uses a GPT-5 model (via LangChain) to generate structured JSON output.
+Does not modify existing dish metadata like name, price, or availability.</p></div>
   </div>
 </div><div class="basefunction">
   
@@ -630,6 +767,89 @@ Args:
     None
 Returns:
     List[RestaurantInDB]: A list of all restaurants.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.restaurant_service.parse_menu_csv">
+    
+  </a>
+  <a name="parse_menu_csv">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">parse_menu_csv</span><span class="function-signature">(<span class="rst-sig-param">file_path: <code>str</code>, </span><span class="rst-sig-param">restaurant_id: <code>str</code></span>):</span>
+    
+    <a class="headerLink" href="#parse_menu_csv" title="app.services.restaurant_service.parse_menu_csv">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Parse a CSV file of dishes into a list of DishCreate objects.
+
+Parameters
+----------
+file_path : str
+    Path to the CSV file containing dish data.
+restaurant_id : str
+    The restaurant ID to assign to each dish.
+
+Returns
+-------
+list[DishCreate]
+    List of DishCreate objects parsed from the CSV.
+
+Notes
+-----
+- Handles different encodings (UTF-8, Latin1) automatically.
+- Converts fields such as ingredients, allergens, nutrition facts, availability.
+- Logs and skips rows with parsing errors without stopping the process.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.restaurant_service.process_menu_file">
+    
+  </a>
+  <a name="process_menu_file">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">process_menu_file</span><span class="function-signature">(<span class="rst-sig-param">file_path: <code>str</code>, </span><span class="rst-sig-param">restaurant_id: <code>str</code></span>):</span>
+    
+    <a class="headerLink" href="#process_menu_file" title="app.services.restaurant_service.process_menu_file">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Process a restaurant menu CSV file and insert dishes into the database.
+
+Steps:
+1. Parse the CSV file to create DishCreate objects.
+2. Enrich dish information with ingredients, allergens, and nutrition facts if missing.
+3. Insert each dish into the database.
+4. Update FAISS index with newly created dishes.
+
+Parameters
+----------
+file_path : str
+    Path to the menu CSV file.
+restaurant_id : str
+    The unique ID of the restaurant to associate the dishes with.
+
+Notes
+-----
+Logs any errors encountered during processing without stopping the entire batch.</p></div>
   </div>
 </div><div class="basefunction">
   
@@ -789,6 +1009,30 @@ Returns:
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.restaurant_service.tmp_dir">
+    
+  </a>
+  <a name="tmp_dir">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">tmp_dir</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#tmp_dir" title="app.services.restaurant_service.tmp_dir">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
 </div>
         </div>
       
@@ -799,9 +1043,9 @@ Returns:
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

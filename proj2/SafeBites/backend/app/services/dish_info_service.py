@@ -1,3 +1,12 @@
+"""
+Dish Information Service Module
+
+This module provides functionality for retrieving, filtering, and summarizing
+dish-related information for a food delivery assistant application. It integrates
+semantic search, LLM-based intent analysis, and structured output formatting
+to answer user queries about dishes, ingredients, allergens, calories, and general
+food knowledge.
+"""
 import logging
 from typing import Dict
 from langchain_openai import ChatOpenAI
@@ -128,6 +137,40 @@ def handle_food_item_query(query, restaurant_id=None):
 
 
 def get_dish_info(state):
+    """
+    Extracts and summarizes detailed dish information for one or more user queries.
+
+    This function orchestrates a multi-step retrieval and reasoning pipeline:
+      1. **Intent Derivation:** Determines whether the query is food-related, factual,
+         or general knowledge.
+      2. **Data Retrieval:** Fetches dishes from the target restaurant based on the query.
+      3. **Filtering & Validation:** Applies user- or query-based filters (e.g., allergens, price)
+         and ensures retrieved dishes meet relevance criteria.
+      4. **LLM Summarization:** Passes dish data and the user query to a language model to
+         generate a structured JSON response.
+
+    Args:
+        state: An object containing:
+            - `restaurant_id` (str): The target restaurant to query.
+            - `query_parts` (dict): Parsed user intents grouped by category.
+            - `current_context` (str, optional): Prior summarized conversation context.
+
+    Returns:
+        dict: A mapping with a single key `"info_results"` containing a `DishInfoResult`
+        object, which includes structured results per query:
+        {
+            "info_results": {
+                "What is in the pasta?": DishInfoResponse(
+                    dish_name="Penne Alfredo",
+                    requested_info="It includes pasta, cream, garlic, and cheese.",
+                    source_data=[...]
+                )
+            }
+        }
+
+    Raises:
+        Logs errors internally and continues for each query. Does not raise exceptions outward.
+    """
     results = {}
     restaurant_id = state.restaurant_id
     for query in state.query_parts.get("dish_info",[]):

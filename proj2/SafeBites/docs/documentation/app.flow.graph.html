@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -145,36 +145,6 @@
             </div>
         
 
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#last_node" class="internal-link" title="app.flow.graph.last_node">last<wbr></wbr>_node</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#route_to_dish_info" class="internal-link" title="app.flow.graph.route_to_dish_info">route<wbr></wbr>_to<wbr></wbr>_dish<wbr></wbr>_info</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="#route_to_menu_search" class="internal-link" title="app.flow.graph.route_to_menu_search">route<wbr></wbr>_to<wbr></wbr>_menu<wbr></wbr>_search</a></code>
-            </div>
-        
-
     </li>
 </ul> 
 
@@ -204,7 +174,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.flow.html" class="internal-link" title="The parent of this module">flow</a></code> 
       </div>
       
@@ -214,17 +184,7 @@
         <div class="childrenKindTitle">Modules</div>
         <ul>
     
-    <li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="app.flow.__pycache__.html" class="internal-link" title="app.flow.__pycache__">__pycache__</a></code>
-            </div>
-        
-
-    </li><li class=" thisobject">
+    <li class=" thisobject">
         
         
         
@@ -241,6 +201,16 @@
 
         
             <div class="itemName"><code><a href="app.flow.state.html" class="internal-link" title="app.flow.state">state</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.flow.state_store.html" class="internal-link" title="app.flow.state_store">state<wbr></wbr>_store</a></code>
             </div>
         
 
@@ -296,38 +266,35 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Defines the conversational flow graph for the SafeBites chat assistant using LangGraph.
+
+This module constructs a directed graph of nodes that represent each step
+in processing a user's chat query. It integrates context resolution,
+intent extraction, query part generation, data retrieval (menu and dish info),
+and response synthesis into a cohesive pipeline.
+
+Key Functions:
+- generate_query_parts(state): Organizes extracted intents into structured query parts.
+- create_chat_graph(): Builds and compiles the full LangGraph conversational flow.
+
+The graph operates on ChatState objects, allowing stateful management of
+user context, intents, queries, and responses throughout the conversation.</p></div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id5">
+          <table class="children sortable" id="id6">
   
   
   <tr class="function">
     
     <td>Function</td>
     <td><code><a href="#create_chat_graph" class="internal-link" title="app.flow.graph.create_chat_graph">create<wbr></wbr>_chat<wbr></wbr>_graph</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Construct and compile the LangGraph-based conversational flow for the chat system.</td>
   </tr><tr class="function">
     
     <td>Function</td>
     <td><code><a href="#generate_query_parts" class="internal-link" title="app.flow.graph.generate_query_parts">generate<wbr></wbr>_query<wbr></wbr>_parts</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
-  </tr><tr class="function">
-    
-    <td>Function</td>
-    <td><code><a href="#last_node" class="internal-link" title="app.flow.graph.last_node">last<wbr></wbr>_node</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
-  </tr><tr class="function">
-    
-    <td>Function</td>
-    <td><code><a href="#route_to_dish_info" class="internal-link" title="app.flow.graph.route_to_dish_info">route<wbr></wbr>_to<wbr></wbr>_dish<wbr></wbr>_info</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
-  </tr><tr class="function">
-    
-    <td>Function</td>
-    <td><code><a href="#route_to_menu_search" class="internal-link" title="app.flow.graph.route_to_menu_search">route<wbr></wbr>_to<wbr></wbr>_menu<wbr></wbr>_search</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Generate structured query parts from identified user intents.</td>
   </tr><tr class="variable">
     
     <td>Variable</td>
@@ -363,7 +330,32 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p class="pre">Construct and compile the LangGraph-based conversational flow for the chat system.
+
+This function defines a directed graph of conversation processing nodes
+that represent each stage of the dialogue handling pipeline — from
+context resolution to final response synthesis.
+
+The pipeline flow:
+    1. **context_resolver** – Resolves conversation context and user state.
+    2. **intent_classifier** – Extracts user intents from their input.
+    3. **query_part_generator** – Organizes intents into structured queries.
+    4. **menu_retriever** – Retrieves menu or restaurant data based on queries.
+    5. **informative_retriever** – Fetches detailed dish information.
+    6. **format_final_response** – Synthesizes a natural language response.
+
+The graph uses `ChatState` to store and update intermediate information
+throughout the conversation.
+
+Returns:
+    langgraph.graph.CompiledGraph: A compiled conversation graph that
+    orchestrates all service nodes and their transitions.
+
+Example:
+    &gt;&gt;&gt; graph = create_chat_graph()
+    &gt;&gt;&gt; response = graph.invoke(ChatState(user_message="Tell me about pizza"))
+    &gt;&gt;&gt; print(response.output)
+    "Pizza is a popular Italian dish available at..."</p></div>
   </div>
 </div><div class="basefunction">
   
@@ -387,79 +379,32 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
-  </div>
-</div><div class="basefunction">
-  
-  
-  <a name="app.flow.graph.last_node">
-    
-  </a>
-  <a name="last_node">
-    
-  </a>
-  <div class="functionHeader">
-    
-    
-    <span class="py-keyword">def</span>&#160;<span class="py-defname">last_node</span><span class="function-signature">(<span class="rst-sig-param">state</span>):</span>
-    
-    <a class="headerLink" href="#last_node" title="app.flow.graph.last_node">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="docstring functionBody">
-    
-    <div><p class="undocumented">Undocumented</p></div>
-  </div>
-</div><div class="basefunction">
-  
-  
-  <a name="app.flow.graph.route_to_dish_info">
-    
-  </a>
-  <a name="route_to_dish_info">
-    
-  </a>
-  <div class="functionHeader">
-    
-    
-    <span class="py-keyword">def</span>&#160;<span class="py-defname">route_to_dish_info</span><span class="function-signature">(<span class="rst-sig-param">state</span>):</span>
-    
-    <a class="headerLink" href="#route_to_dish_info" title="app.flow.graph.route_to_dish_info">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="docstring functionBody">
-    
-    <div><p class="undocumented">Undocumented</p></div>
-  </div>
-</div><div class="basefunction">
-  
-  
-  <a name="app.flow.graph.route_to_menu_search">
-    
-  </a>
-  <a name="route_to_menu_search">
-    
-  </a>
-  <div class="functionHeader">
-    
-    
-    <span class="py-keyword">def</span>&#160;<span class="py-defname">route_to_menu_search</span><span class="function-signature">(<span class="rst-sig-param">state</span>):</span>
-    
-    <a class="headerLink" href="#route_to_menu_search" title="app.flow.graph.route_to_menu_search">
-      
-      
-      ¶
-    </a>
-  </div>
-  <div class="docstring functionBody">
-    
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p class="pre">Generate structured query parts from identified user intents.
+
+This function processes the intents extracted from the user's input
+and organizes them into categorized query parts (e.g., dish info,
+restaurant menu). These query parts are later used by the retrieval
+services to fetch the relevant data.
+
+Args:
+    state (ChatState): The current state of the chat, which includes
+        user intents and contextual information.
+
+Returns:
+    ChatState: The updated state with `query_parts` populated, mapping
+    intent types to their corresponding query strings.
+
+Example:
+    If the extracted intents are:
+        [
+            {"type": "menu", "query": "show me Italian restaurants"},
+            {"type": "dish_info", "query": "what is pasta carbonara"}
+        ]
+    Then the resulting `query_parts` in state will be:
+        {
+            "menu": ["show me Italian restaurants"],
+            "dish_info": ["what is pasta carbonara"]
+        }</p></div>
   </div>
 </div><div class="basevariable">
   
@@ -495,9 +440,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

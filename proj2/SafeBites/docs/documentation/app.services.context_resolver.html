@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>app.services.context_resolver</title>
+    <meta name="generator" content="pydoctor 25.10.1"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          SafeBites API <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code class="thisobject"><a href="app.services.context_resolver.html" class="internal-link" title="This module">context<wbr></wbr>_resolver</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#resolve_context" class="internal-link" title="app.services.context_resolver.resolve_context">resolve<wbr></wbr>_context</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#llm" class="internal-link" title="app.services.context_resolver.llm">llm</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#logger" class="internal-link" title="app.services.context_resolver.logger">logger</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Package</span>
+        <code><a href="app.services.html" class="internal-link" title="The parent of this module">services</a></code> 
+      </div>
+      
+      <div>
+        
+
+        <div class="childrenKindTitle">Modules</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.context_resolver.html" class="internal-link" title="app.services.context_resolver">context<wbr></wbr>_resolver</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.dish_info_service.html" class="internal-link" title="app.services.dish_info_service">dish<wbr></wbr>_info<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.dish_service.html" class="internal-link" title="app.services.dish_service">dish<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.exception_service.html" class="internal-link" title="app.services.exception_service">exception<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.faiss_service.html" class="internal-link" title="app.services.faiss_service">faiss<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.intent_service.html" class="internal-link" title="app.services.intent_service">intent<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.orchestrator_service.html" class="internal-link" title="app.services.orchestrator_service">orchestrator<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.response_synthesizer_tool.html" class="internal-link" title="app.services.response_synthesizer_tool">response<wbr></wbr>_synthesizer<wbr></wbr>_tool</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.restaurant_service.html" class="internal-link" title="app.services.restaurant_service">restaurant<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.retrieval_service.html" class="internal-link" title="app.services.retrieval_service">retrieval<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.state_service.html" class="internal-link" title="app.services.state_service">state<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.user_service.html" class="internal-link" title="app.services.user_service">user<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+        
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapse-sidebar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <main class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">app</a></code><wbr></wbr>.<code><a href="app.services.html" class="internal-link" title="app.services">services</a></code><wbr></wbr>.<code><a href="app.services.context_resolver.html" class="internal-link" title="app.services.context_resolver">context_resolver</a></code></code></h1>
+          <div id="show-private">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          module documentation
+        </div>
+
+        <div class="extrasDocstring">
+          
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="pre">This module provides functionality to resolve contextual references in user queries
+for a food delivery assistant. It uses a large language model (LLM) to:
+
+1. Rewrite queries that contain implicit references (e.g., "that dish", "it") 
+   into self-contained queries.
+2. Summarize prior conversation context relevant to the current query, 
+   producing a concise factual summary.</p></div>
+        </div>
+
+        <div id="split-tables">
+          <table class="children sortable" id="id71">
+  
+  
+  <tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#resolve_context" class="internal-link" title="app.services.context_resolver.resolve_context">resolve<wbr></wbr>_context</a></code></td>
+    <td>Resolves contextual references in the user's query using prior conversation history.</td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#llm" class="internal-link" title="app.services.context_resolver.llm">llm</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#logger" class="internal-link" title="app.services.context_resolver.logger">logger</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="child-list">
+          <div class="basefunction">
+  
+  
+  <a name="app.services.context_resolver.resolve_context">
+    
+  </a>
+  <a name="resolve_context">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">resolve_context</span><span class="function-signature">(<span class="rst-sig-param">state</span>):</span>
+    
+    <a class="headerLink" href="#resolve_context" title="app.services.context_resolver.resolve_context">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Resolves contextual references in the user's query using prior conversation history.
+
+This function performs two major LLM tasks:
+  1. **Query Rewriting:** Identifies implicit references in the user query
+     (e.g., “that dish”, “those options”, “it”) and rewrites it into a
+     self-contained query.
+  2. **Context Summarization:** Summarizes the relevant prior context so
+     the next model can respond accurately and efficiently.
+
+Args:
+    state: A `ChatState` object containing the user's query and previous context.
+
+Returns:
+    dict: A dictionary with:
+        - `query` (str): The rewritten, self-contained query.
+        - `current_context` (str): A concise, factual summary of prior context relevant to the query.
+
+Example:
+    &gt;&gt;&gt; state.query = "What about that pasta?"
+    &gt;&gt;&gt; state.context = {"previous_dishes": ["creamy mushroom pasta", "chicken alfredo"]}
+    &gt;&gt;&gt; resolve_context(state)
+    {
+        "query": "Tell me about creamy mushroom pasta",
+        "current_context": "User previously viewed creamy mushroom pasta and chicken alfredo dishes."
+    }
+
+Raises:
+    Exception: Propagates any LLM invocation or API errors.</p></div>
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.context_resolver.llm">
+    
+  </a>
+  <a name="llm">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">llm</span> =
+    
+    <a class="headerLink" href="#llm" title="app.services.context_resolver.llm">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.context_resolver.logger">
+    
+  </a>
+  <a name="logger">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">logger</span> =
+    
+    <a class="headerLink" href="#logger" title="app.services.context_resolver.logger">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+        </div>
+      
+      </main>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">API Documentation</a> for SafeBites API,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    25.10.1 at 2025-11-06 11:58:58.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

@@ -1,5 +1,10 @@
-import logging
+"""
+Menu Retrieval Service
 
+This module handles retrieving and filtering menu items for restaurants
+based on user queries, semantic search, and applied filters.
+"""
+import logging
 from ..models.dish_info_model import DishData
 from .faiss_service import semantic_retrieve_with_negation
 from .restaurant_service import apply_filters, validate_retrieved_dishes

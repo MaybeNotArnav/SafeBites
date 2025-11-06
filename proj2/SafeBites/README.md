@@ -5,9 +5,10 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-Framework-brightgreen?logo=fastapi)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-green?logo=mongodb)
 ![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
-![Coverage](https://img.shields.io/codecov/c/github/the-Shallow/SE-WOLFCAFE?label=Coverage&logo=codecov)
-![License](https://img.shields.io/badge/License-MIT-yellow?logo=opensource-initiative&link=./LICENSE)
-![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)
+[![Coverage](https://img.shields.io/codecov/c/github/the-Shallow/SE-WOLFCAFE?label=Coverage&logo=codecov)](https://se-wolfcafe.onrender.com/index.html)
+[![License](https://img.shields.io/badge/License-MIT-yellow?logo=opensource-initiative)](LICENSE)
+[![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
+[![Rubric](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](docs/SELF_ASSESSMENT.md)
 
 ---
 
@@ -128,24 +129,10 @@ Frontend runs on http://localhost:5173
 To run backend tests:
 ```
 pytest
-To view coverage (automatically uploaded to Codecov):
+To view coverage:
 
 pytest --cov=app
 ```
-<!-- 🧱 Development Notes -->
-<!-- All backend routes are namespaced under /api/v1 -->
-
-<!-- Maintain consistent naming: -->
-
-<!-- snake_case → backend -->
-
-<!-- camelCase → frontend -->
-
-<!-- Embeddings and FAISS index files are stored in backend/app/vector_store/ -->
-
-<!-- Logs and test outputs are structured using Python’s logging module -->
-
-<!-- CI/CD pipeline uses GitHub Actions -->
 
 ## 🤝 Contributing  
 

@@ -1,3 +1,10 @@
+"""
+Dish Service Module
+
+This module provides CRUD operations for managing dish documents in the
+database. It integrates MongoDB operations with Pydantic validation and
+allergen safety checks for users.
+"""
 from ..db import db
 from bson import ObjectId
 from fastapi import HTTPException
@@ -6,12 +13,31 @@ from app.models.exception_model import NotFoundException, BadRequestException, D
 
 
 def _to_out(doc: dict) -> dict:
+    """
+    Convert a MongoDB document to a serializable format by converting
+    the `_id` field to a string. Returns the modified document.
+    """
     if not doc:
         return doc
     doc["_id"] = str(doc["_id"])
     return doc
 
 def create_dish(restaurant_id: str, dish_create):
+    """
+    Create a new dish entry for a given restaurant.
+
+    Args:
+        restaurant_id (str): The restaurant's unique identifier.
+        dish_create (DishCreate): Pydantic model containing dish creation details.
+
+    Raises:
+        BadRequestException: If required fields are missing.
+        ConflictException: If a dish with the same name already exists in the restaurant.
+        DatabaseException: If database insertion fails.
+
+    Returns:
+        dict: The created dish document with `safe_for_user` field included.
+    """
     if not dish_create.name or not dish_create.restaurant_id:
         raise BadRequestException(message="Missing required dish fields")
     # enforce unique dish name per restaurant
@@ -33,7 +59,18 @@ def create_dish(restaurant_id: str, dish_create):
 
 def list_dishes(filter_query: dict, user_id: str = None):
     """
-    ALWAYS attach safe_for_user boolean.
+    List dishes that match a given filter query.
+    Automatically attaches a `safe_for_user` boolean for each dish based on user allergens.
+
+    Args:
+        filter_query (dict): MongoDB filter criteria.
+        user_id (str, optional): User ID to check allergen safety. Defaults to None.
+
+    Raises:
+        DatabaseException: If there is an issue fetching dishes from the database.
+
+    Returns:
+        list[dict]: List of dish documents, each including `safe_for_user` status.
     """
     try:
         docs = list(db.dishes.find(filter_query).limit(100))
@@ -67,6 +104,19 @@ def list_dishes(filter_query: dict, user_id: str = None):
         raise DatabaseException(message=f"Failed to list dishes: {e}")
 
 def get_dish(dish_id: str, user_id: str = None):
+    """
+    Retrieve a single dish by its ID and determine if it's safe for a user based on allergens.
+
+    Args:
+        dish_id (str): The unique dish identifier.
+        user_id (str, optional): The user's ID for allergen safety check. Defaults to None.
+
+    Raises:
+        NotFoundException: If the dish does not exist or invalid ID is provided.
+
+    Returns:
+        dict: The dish document with `safe_for_user` field attached.
+    """
     try:
         obj = ObjectId(dish_id)
     except Exception:
@@ -92,6 +142,21 @@ def get_dish(dish_id: str, user_id: str = None):
     return d_out
 
 def update_dish(dish_id: str, update_data: dict):
+    """
+    Update a dish’s details by its ID. Checks for duplicate dish names within the same restaurant.
+
+    Args:
+        dish_id (str): Unique identifier of the dish to update.
+        update_data (dict): Fields to update with their new values.
+
+    Raises:
+        BadRequestException: If no update data is provided.
+        NotFoundException: If the dish does not exist.
+        ConflictException: If another dish with the same name exists in the restaurant.
+
+    Returns:
+        dict: The updated dish document including `safe_for_user`.
+    """
     if not update_data:
         raise BadRequestException(message="No fields to update")
 
@@ -120,6 +185,18 @@ def update_dish(dish_id: str, update_data: dict):
 
 
 def delete_dish(dish_id: str):
+    """
+    Delete a dish document by its ID.
+
+    Args:
+        dish_id (str): The dish's unique identifier.
+
+    Raises:
+        NotFoundException: If the dish ID is invalid or not found.
+
+    Returns:
+        dict: Confirmation message indicating successful deletion.
+    """
     try:
         obj = ObjectId(dish_id)
     except Exception:

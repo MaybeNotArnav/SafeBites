@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -201,7 +201,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.models.html" class="internal-link" title="The parent of this module">models</a></code> 
       </div>
       
@@ -217,7 +217,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.models.__pycache__.html" class="internal-link" title="app.models.__pycache__">__pycache__</a></code>
+            <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -227,7 +227,7 @@
         
 
         
-            <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
+            <div class="itemName"><code><a href="app.models.dish_model.html" class="internal-link" title="app.models.dish_model">dish<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -278,6 +278,26 @@
 
         
             <div class="itemName"><code><a href="app.models.restaurant_model.html" class="internal-link" title="app.models.restaurant_model">restaurant<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.session_model.html" class="internal-link" title="app.models.session_model">session<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.user_model.html" class="internal-link" title="app.models.user_model">user<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -333,43 +353,56 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Defines Pydantic models for handling dish and menu-related information
+in the SafeBites backend.
+
+Models:
+
+- AllergenInfo: Details about potential allergens in a dish.
+- NutritionFacts: Nutritional information for a dish.
+- DishResult: Represents a dish retrieved from the database or service.
+- InfoResult: Contains requested information about a specific dish.
+- QueryResponse: Wraps a single query and its corresponding result(s).
+- FinalResponse: Aggregates all query responses for a user session.
+
+These models standardize the data passed between services and responses
+returned to clients in the chat and menu system.</p></div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id27">
+          <table class="children sortable" id="id37">
   
   
   <tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.responder_model.AllergenInfo.html" class="internal-link" title="app.models.responder_model.AllergenInfo"><wbr></wbr>Allergen<wbr></wbr>Info</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents detailed information about an allergen detected or specified in a dish.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.responder_model.DishResult.html" class="internal-link" title="app.models.responder_model.DishResult"><wbr></wbr>Dish<wbr></wbr>Result</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a dish item retrieved from the database or a retrieval service.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.responder_model.FinalResponse.html" class="internal-link" title="app.models.responder_model.FinalResponse"><wbr></wbr>Final<wbr></wbr>Response</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents the complete structured response for a user session, combining all processed queries and their results.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.responder_model.InfoResult.html" class="internal-link" title="app.models.responder_model.InfoResult"><wbr></wbr>Info<wbr></wbr>Result</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a response containing requested information about a specific dish.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.responder_model.NutritionFacts.html" class="internal-link" title="app.models.responder_model.NutritionFacts"><wbr></wbr>Nutrition<wbr></wbr>Facts</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents nutritional details of a dish, including macronutrient and caloric breakdown.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.responder_model.QueryResponse.html" class="internal-link" title="app.models.responder_model.QueryResponse"><wbr></wbr>Query<wbr></wbr>Response</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a single query-response pair for a user's input.</td>
   </tr>
 </table>
           
@@ -388,9 +421,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

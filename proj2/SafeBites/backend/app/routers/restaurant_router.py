@@ -1,8 +1,20 @@
+"""
+Defines API endpoints for managing restaurants and handling user menu queries.
+
+Endpoints include:
+    - POST /restaurants/ : Create a new restaurant entry (with optional menu CSV upload).
+    - GET /restaurants/ : Retrieve a list of all restaurants.
+    - GET /restaurants/{restaurant_id} : Retrieve a specific restaurant by ID.
+    - PATCH /restaurants/{restaurant_id} : Update details of an existing restaurant.
+    - DELETE /restaurants/{restaurant_id} : Delete a restaurant by ID.
+    - POST /restaurants/search : Perform user menu queries using multi-agent pipeline.
+    - GET /restaurants/history/{user_id}/{restaurant_id} : Retrieve chat history for a user and restaurant.
+"""
 from fastapi import APIRouter,HTTPException, Depends,Form,UploadFile,File,BackgroundTasks
 from bson import ObjectId
 from fastapi.responses import JSONResponse
-from app.models.restaurant_model import RestaurantCreate, RestaurantUpdate, RestaurantBase, RestaurantInDB
-from app.services import restaurant_service, state_service
+from ..models.restaurant_model import RestaurantCreate, RestaurantUpdate, RestaurantBase, RestaurantInDB
+from ..services import restaurant_service, state_service
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from ..services.orchestrator_service import agents

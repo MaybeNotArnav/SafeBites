@@ -1,3 +1,9 @@
+"""
+Chat Session and State Management
+
+This module provides utilities for handling user chat sessions and persisting
+conversation states in the database.
+"""
 from datetime import datetime
 from bson import ObjectId
 from fastapi.encoders import jsonable_encoder
@@ -9,6 +15,26 @@ chat_states = db["chat_states"]
 sessions = db["sessions"]
 
 def get_or_create_session(user_id:str, restaurant_id:str):
+    """
+    Retrieve an existing active session for a user and restaurant, or create a new one.
+
+    Parameters
+    ----------
+    user_id : str
+        Unique identifier of the user.
+    restaurant_id : str
+        Unique identifier of the restaurant.
+
+    Returns
+    -------
+    str
+        The session ID of the existing or newly created session.
+
+    Notes
+    -----
+    - Only one active session per user per restaurant is maintained.
+    - New session IDs are prefixed with 'sess_' followed by a 10-character UUID.
+    """
     existing_session = sessions.find_one({"user_id": user_id, "restaurant_id": restaurant_id,"active":True})
 
     if existing_session:
@@ -27,13 +53,60 @@ def get_or_create_session(user_id:str, restaurant_id:str):
 
 
 def save_chat_state(state:ChatState):
+    """
+    Save a chat state object to the database.
+
+    Parameters
+    ----------
+    state : ChatState
+        The chat state to be persisted.
+
+    Notes
+    -----
+    - Stores the state in the 'chat_states' collection.
+    - Uses FastAPI's `jsonable_encoder` to serialize Pydantic models.
+    """
     chat_states.insert_one(jsonable_encoder(state))
 
 def get_all_chat_states(session_id:str):
+    """
+    Retrieve all chat states associated with a given session, ordered by timestamp.
+
+    Parameters
+    ----------
+    session_id : str
+        The session ID to fetch chat states for.
+
+    Returns
+    -------
+    list[dict]
+        List of chat state documents sorted chronologically by timestamp.
+    """
     docs = list(chat_states.find({"session_id":session_id}).sort("timestamp",1))
     return docs
 
 def rebuild_context(session_id:str,last_n:int=5):
+    """
+    Reconstruct the conversation context from the last N chat states of a session.
+
+    Parameters
+    ----------
+    session_id : str
+        The session ID to rebuild context for.
+    last_n : int, optional
+        Number of most recent chat states to include in the context (default is 5).
+
+    Returns
+    -------
+    list[dict]
+        List of dictionaries containing query, intents, menu results, and info results,
+        representing the reconstructed context for LLM processing.
+
+    Notes
+    -----
+    - Helps provide context for LLM-based query resolution.
+    - Only includes the most recent `last_n` chat states to limit context size.
+    """
     chat_states = get_all_chat_states(session_id)
     print(f"Chat States for context rebuild: {chat_states}")
     context = []

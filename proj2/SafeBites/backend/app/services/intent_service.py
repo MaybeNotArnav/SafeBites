@@ -1,3 +1,9 @@
+"""
+Intent Extraction Module
+
+This module uses a language model (LLM) to parse complex user queries
+into structured intents relevant to a food or restaurant assistant.
+"""
 import logging
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate

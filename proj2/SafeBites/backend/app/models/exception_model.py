@@ -1,3 +1,18 @@
+"""
+Defines custom exception classes used throughout the SafeBites backend.
+
+These exceptions are used to standardize error handling for API endpoints
+and internal services:
+
+- NotFoundException: Raised when a requested resource is not found in the database.
+- BadRequestException: Raised when a request is malformed or contains invalid data.
+- DatabaseException: Raised for database-related errors.
+- GenericException: Raised for generic or uncategorized exceptions.
+- AuthError: Raised for authentication failures (returns HTTP 401).
+- ConflictException: Raised for resource conflicts, such as duplicate entries (returns HTTP 409).
+
+Using these exceptions allows consistent error responses and better debugging.
+"""
 from fastapi import HTTPException
 
 class NotFoundException(Exception):

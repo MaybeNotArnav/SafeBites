@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -191,7 +191,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="app.models.html" class="internal-link" title="The parent of this module">models</a></code> 
       </div>
       
@@ -201,23 +201,23 @@
         <div class="childrenKindTitle">Modules</div>
         <ul>
     
-    <li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="app.models.__pycache__.html" class="internal-link" title="app.models.__pycache__">__pycache__</a></code>
-            </div>
-        
-
-    </li><li class=" thisobject">
+    <li class=" thisobject">
         
         
         
 
         
             <div class="itemName"><code><a href="app.models.dish_info_model.html" class="internal-link" title="app.models.dish_info_model">dish<wbr></wbr>_info<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.dish_model.html" class="internal-link" title="app.models.dish_model">dish<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -268,6 +268,26 @@
 
         
             <div class="itemName"><code><a href="app.models.restaurant_model.html" class="internal-link" title="app.models.restaurant_model">restaurant<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.session_model.html" class="internal-link" title="app.models.session_model">session<wbr></wbr>_model</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.models.user_model.html" class="internal-link" title="app.models.user_model">user<wbr></wbr>_model</a></code>
             </div>
         
 
@@ -323,38 +343,51 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Defines Pydantic models for representing dish-level data and
+responses for the SafeBites conversational system.
+
+This module includes structures for:
+- DishData: Core details about a specific dish, including ingredients, allergens,
+  and nutritional information.
+- DishInfoResponse: Encapsulates the response to a user's dish query.
+- DishInfoResult: Aggregates multiple DishInfoResponse objects for multi-dish queries.
+- IntentResponse: Represents basic intent classification results.
+- GeneralKnowledgeResponse: Handles responses for general or non-dish-specific queries.
+
+These models are used throughout the chat pipeline to ensure consistent
+data representation between retrieval, processing, and response synthesis
+stages.</p></div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id10">
+          <table class="children sortable" id="id13">
   
   
   <tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.dish_info_model.DishData.html" class="internal-link" title="app.models.dish_info_model.DishData"><wbr></wbr>Dish<wbr></wbr>Data</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents structured information about a specific dish.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.dish_info_model.DishInfoResponse.html" class="internal-link" title="app.models.dish_info_model.DishInfoResponse"><wbr></wbr>Dish<wbr></wbr>Info<wbr></wbr>Response</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Encapsulates the response data for a dish information query.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.dish_info_model.DishInfoResult.html" class="internal-link" title="app.models.dish_info_model.DishInfoResult"><wbr></wbr>Dish<wbr></wbr>Info<wbr></wbr>Result</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Aggregates multiple dish information responses for a given request.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.dish_info_model.GeneralKnowledgeResponse.html" class="internal-link" title="app.models.dish_info_model.GeneralKnowledgeResponse"><wbr></wbr>General<wbr></wbr>Knowledge<wbr></wbr>Response</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents responses generated for general or non-specific user queries.</td>
   </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="app.models.dish_info_model.IntentResponse.html" class="internal-link" title="app.models.dish_info_model.IntentResponse"><wbr></wbr>Intent<wbr></wbr>Response</a></code></td>
-    <td><span class="rst-undocumented">Undocumented</span></td>
+    <td>Represents a basic intent classification result.</td>
   </tr>
 </table>
           
@@ -373,9 +406,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

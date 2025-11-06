@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -138,6 +138,16 @@
 
         
             <div class="itemName"><code><a href="#context" class="internal-link" title="app.flow.state.ChatState.context">context</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#current_context" class="internal-link" title="app.flow.state.ChatState.current_context">current<wbr></wbr>_context</a></code>
             </div>
         
 
@@ -343,17 +353,78 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Represents the conversational state for a single chat interaction.
+
+This model encapsulates all contextual, intent-related, and response data
+required to process a user query through the conversation pipeline.
+It acts as a shared data structure passed between different nodes in the
+LangGraph conversation graph.
+
+Each field represents a step or piece of information derived or produced
+during the chat processing lifecycle — including user metadata, extracted
+intents, retrieved menu and dish information, and the final system response.
+
+Attributes:
+    user_id (str): Unique identifier of the user initiating the chat.
+    session_id (str): Identifier for the chat session, used to track
+        conversation continuity across multiple turns.
+    restaurant_id (str): The ID of the restaurant currently being queried
+        or discussed in the conversation.
+    query (str): The raw input text provided by the user.
+
+    intents (Optional[IntentExtractionResult]): 
+        Output of the intent classification stage, containing a structured
+        list of extracted intents and their associated queries.
+
+    context (Optional[List[Dict[str, Any]]]): 
+        Contextual metadata or entities from previous interactions that
+        can help resolve ambiguous queries or maintain dialogue continuity.
+
+    current_context (Optional[str]): 
+        A textual summary of the active context used during intent or
+        retrieval processing.
+
+    query_parts (Optional[Dict[str, Any]]): 
+        A structured mapping of intent types (e.g., "menu", "dish_info") 
+        to their corresponding query fragments, used by retrieval modules.
+
+    menu_results (Optional[MenuResultResponse]): 
+        Data structure holding results retrieved from the menu retrieval
+        service (restaurant or dish listings).
+
+    info_results (Optional[DishInfoResult]): 
+        Contains detailed dish-level information returned by the dish
+        information service.
+
+    data (Dict[str, Any]): 
+        A general-purpose container for intermediate computation results,
+        cache data, or node-specific metadata during chat flow execution.
+
+    response (str): 
+        The final formatted response generated for the user.
+
+    status (str): 
+        Indicates the current state of the chat processing pipeline.
+        Possible values include `"pending"`, `"processing"`, or `"completed"`.
+
+    timestamp (str): 
+        ISO 8601 UTC timestamp marking when the state was created.
+        Useful for session tracking and debugging.</p></div>
         </div>
 
         <div id="split-tables">
-          <table class="children sortable" id="id7">
+          <table class="children sortable" id="id8">
   
   
   <tr class="classvariable">
     
     <td>Class Variable</td>
     <td><code><a href="#context" class="internal-link" title="app.flow.state.ChatState.context">context</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="classvariable">
+    
+    <td>Class Variable</td>
+    <td><code><a href="#current_context" class="internal-link" title="app.flow.state.ChatState.current_context">current<wbr></wbr>_context</a></code></td>
     <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="classvariable">
     
@@ -434,9 +505,33 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">context</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>Any] | None</code> =
+    <span class="py-defname">context</span>: <code>list[<wbr></wbr>dict[<wbr></wbr>str, <wbr></wbr>Any]] | None</code> =
     
     <a class="headerLink" href="#context" title="app.flow.state.ChatState.context">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseclassvariable">
+  
+  
+  <a name="app.flow.state.ChatState.current_context">
+    
+  </a>
+  <a name="current_context">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">current_context</span>: <code>str | None</code> =
+    
+    <a class="headerLink" href="#current_context" title="app.flow.state.ChatState.current_context">
       
       
       ¶
@@ -482,7 +577,7 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">info_results</span>: <code>dict[<wbr></wbr>str, <wbr></wbr><a href="app.models.dish_info_model.DishInfoResponse.html" class="internal-link" title="app.models.dish_info_model.DishInfoResponse">DishInfoResponse</a>] | None</code> =
+    <span class="py-defname">info_results</span>: <code><a href="app.models.dish_info_model.DishInfoResult.html" class="internal-link" title="app.models.dish_info_model.DishInfoResult">DishInfoResult</a> | None</code> =
     
     <a class="headerLink" href="#info_results" title="app.flow.state.ChatState.info_results">
       
@@ -745,9 +840,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

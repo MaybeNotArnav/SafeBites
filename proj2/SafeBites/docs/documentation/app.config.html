@@ -32,7 +32,7 @@
       
       <div class="navlinks">
         <span class="navbar-brand">
-          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+          SafeBites API <a href="index.html">API Documentation</a>
         </span>
 
         <a href="moduleIndex.html">
@@ -170,6 +170,16 @@
         
 
         
+            <div class="itemName"><code><a href="#JWT_SECRET" class="internal-link" title="app.config.JWT_SECRET">JWT<wbr></wbr>_SECRET</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#LOG_DIR" class="internal-link" title="app.config.LOG_DIR">LOG<wbr></wbr>_DIR</a></code>
             </div>
         
@@ -204,6 +214,16 @@
             </div>
         
 
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#TEST_DB_NAME" class="internal-link" title="app.config.TEST_DB_NAME">TEST<wbr></wbr>_DB<wbr></wbr>_NAME</a></code>
+            </div>
+        
+
     </li>
 </ul> 
 
@@ -214,7 +234,7 @@
   </div><div>
 
       <div class="thingTitle">
-        <span>Namespace Package</span>
+        <span>Package</span>
         <code><a href="index.html" class="internal-link" title="The parent of this module">app</a></code> 
       </div>
       
@@ -224,23 +244,23 @@
         <div class="childrenKindTitle">Modules</div>
         <ul>
     
-    <li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="app.__pycache__.html" class="internal-link" title="app.__pycache__">__pycache__</a></code>
-            </div>
-        
-
-    </li><li class=" thisobject">
+    <li class=" thisobject">
         
         
         
 
         
             <div class="itemName"><code><a href="app.config.html" class="internal-link" title="app.config">config</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.create_indexes.html" class="internal-link" title="app.create_indexes">create<wbr></wbr>_indexes</a></code>
             </div>
         
 
@@ -261,16 +281,6 @@
 
         
             <div class="itemName"><code><a href="app.flow.html" class="internal-link" title="app.flow">flow</a></code>
-            </div>
-        
-
-    </li><li class="">
-        
-        
-        
-
-        
-            <div class="itemName"><code><a href="app.logs.html" class="internal-link" title="app.logs">logs</a></code>
             </div>
         
 
@@ -386,7 +396,17 @@
         </div>
 
         <div class="moduleDocstring">
-          <div><p class="undocumented">Undocumented</p></div>
+          <div><p class="pre">Configuration Module for SafeBites
+
+- Loads environment variables using dotenv.
+- Defines MongoDB connection URIs and database names.
+- Sets up JWT secret for authentication.
+- Configures logging with both console and rotating file handlers.
+- Supports colored console logs and separate error log file.
+
+Usage:
+    from app.config import MONGO_URI, DB_NAME, setup_logging
+    setup_logging()</p></div>
         </div>
 
         <div id="split-tables">
@@ -411,6 +431,11 @@
   </tr><tr class="constant">
     
     <td>Constant</td>
+    <td><code><a href="#JWT_SECRET" class="internal-link" title="app.config.JWT_SECRET">JWT<wbr></wbr>_SECRET</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="constant">
+    
+    <td>Constant</td>
     <td><code><a href="#LOG_DIR" class="internal-link" title="app.config.LOG_DIR">LOG<wbr></wbr>_DIR</a></code></td>
     <td><span class="rst-undocumented">Undocumented</span></td>
   </tr><tr class="constant">
@@ -427,6 +452,11 @@
     
     <td>Constant</td>
     <td><code><a href="#MONGO_URI" class="internal-link" title="app.config.MONGO_URI">MONGO<wbr></wbr>_URI</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="constant">
+    
+    <td>Constant</td>
+    <td><code><a href="#TEST_DB_NAME" class="internal-link" title="app.config.TEST_DB_NAME">TEST<wbr></wbr>_DB<wbr></wbr>_NAME</a></code></td>
     <td><span class="rst-undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -507,6 +537,30 @@
     
     <div><p class="undocumented">Undocumented</p></div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>os.path.join(<wbr></wbr><a href="#LOG_DIR" class="internal-link" title="app.config.LOG_DIR">LOG_DIR</a>, <wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">errors.log</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
+  </div>
+</div><div class="baseconstant">
+  
+  
+  <a name="app.config.JWT_SECRET">
+    
+  </a>
+  <a name="JWT_SECRET">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">JWT_SECRET</span> =
+    
+    <a class="headerLink" href="#JWT_SECRET" title="app.config.JWT_SECRET">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>os.getenv(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">JWT_SECRET</span><span class="rst-variable-quote">'</span>, <wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">change_me</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
   </div>
 </div><div class="baseconstant">
   
@@ -605,6 +659,30 @@
     <div><p class="undocumented">Undocumented</p></div>
     <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>os.getenv(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">MONGO_URI</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
   </div>
+</div><div class="baseconstant">
+  
+  
+  <a name="app.config.TEST_DB_NAME">
+    
+  </a>
+  <a name="TEST_DB_NAME">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">TEST_DB_NAME</span> =
+    
+    <a class="headerLink" href="#TEST_DB_NAME" title="app.config.TEST_DB_NAME">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>os.getenv(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">TEST_DB_NAME</span><span class="rst-variable-quote">'</span>, <wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">foodapp_test</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
+  </div>
 </div>
         </div>
       
@@ -615,9 +693,9 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+    <a href="index.html">API Documentation</a> for SafeBites API,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    25.10.1 at 2025-10-17 21:53:53.
+    25.10.1 at 2025-11-06 11:58:58.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

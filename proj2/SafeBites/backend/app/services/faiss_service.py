@@ -1,3 +1,9 @@
+"""
+FAISS Vector Store & Semantic Retrieval Module
+
+This module provides functionality to embed, index, and semantically search
+dish data using OpenAI embeddings and FAISS.
+"""
 import logging
 from datetime import datetime
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
@@ -343,5 +349,5 @@ def semantic_retrieve_with_negation(query,restaurant_id=None):
 
 
 
-if __name__ == "__main__":
-    create_faiss_index()
+# if __name__ == "__main__":
+#     create_faiss_index()

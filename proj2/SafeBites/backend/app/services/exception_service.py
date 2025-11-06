@@ -1,3 +1,10 @@
+"""
+Exception Handlers Module
+
+This module defines centralized exception handlers for FastAPI applications.
+It maps custom application exceptions to appropriate HTTP responses with
+status codes and structured JSON content.
+"""
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException,AuthError, ConflictException,GenericException

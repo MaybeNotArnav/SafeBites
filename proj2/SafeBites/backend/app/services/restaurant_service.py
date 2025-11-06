@@ -1,3 +1,9 @@
+"""
+Restaurant Service Module
+
+This module provides core functionality for managing restaurants and their menus,
+including CRUD operations, menu CSV ingestion, dish enrichment, filtering, and validation.
+"""
 import csv
 import pandas as pd
 import logging
@@ -65,6 +71,26 @@ async def create_restaurant(restaurant:RestaurantCreate, menu_csv, background_ta
     
 
 def process_menu_file(file_path:str,restaurant_id:str):
+    """
+    Process a restaurant menu CSV file and insert dishes into the database.
+
+    Steps:
+    1. Parse the CSV file to create DishCreate objects.
+    2. Enrich dish information with ingredients, allergens, and nutrition facts if missing.
+    3. Insert each dish into the database.
+    4. Update FAISS index with newly created dishes.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the menu CSV file.
+    restaurant_id : str
+        The unique ID of the restaurant to associate the dishes with.
+
+    Notes
+    -----
+    Logs any errors encountered during processing without stopping the entire batch.
+    """
     try:
         dishes = parse_menu_csv(file_path,restaurant_id)
         created_dish = []
@@ -82,6 +108,30 @@ def process_menu_file(file_path:str,restaurant_id:str):
         logger.error(f"Error processing menu file for restaurant {restaurant_id}: {str(e)}")
 
 def enrich_dish_info(dish:DishCreate):
+    """
+    Enrich a dish with missing information using an LLM.
+
+    Fills in the following fields if they are missing:
+    - ingredients
+    - inferred allergens (with confidence and reasoning)
+    - nutrition facts (calories, protein, fat, carbohydrates, sugar, fiber)
+    - summary description (one-line)
+
+    Parameters
+    ----------
+    dish : DishCreate
+        Dish object to enrich.
+
+    Returns
+    -------
+    DishCreate
+        Updated dish object with enriched fields.
+
+    Notes
+    -----
+    Uses a GPT-5 model (via LangChain) to generate structured JSON output.
+    Does not modify existing dish metadata like name, price, or availability.
+    """
     llm = ChatOpenAI(model="gpt-5", api_key=os.environ.get("OPENAI_KEY"))
     prompt_template = ChatPromptTemplate.from_template("""
 You are an allergen annotator for a restaurant dish database.
@@ -161,6 +211,27 @@ Output JSON ONLY:
 
 
 def parse_menu_csv(file_path:str,restaurant_id:str):
+    """
+    Parse a CSV file of dishes into a list of DishCreate objects.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the CSV file containing dish data.
+    restaurant_id : str
+        The restaurant ID to assign to each dish.
+
+    Returns
+    -------
+    list[DishCreate]
+        List of DishCreate objects parsed from the CSV.
+
+    Notes
+    -----
+    - Handles different encodings (UTF-8, Latin1) automatically.
+    - Converts fields such as ingredients, allergens, nutrition facts, availability.
+    - Logs and skips rows with parsing errors without stopping the process.
+    """
     dishes = []
     try:
         df = pd.read_csv(file_path, encoding='utf-8')

@@ -1,3 +1,10 @@
+"""
+Response Formatter Module
+
+This module aggregates results from different stages of the chat pipeline
+(menu search, dish info, and unrecognized queries) into a structured
+FinalResponse object for the end user.
+"""
 import os
 import logging
 from dotenv import load_dotenv
@@ -10,6 +17,37 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 def format_final_response(state:ChatState):
+    """
+    Aggregate and format the final response from a given chat state.
+
+    This function collects results from different sources in the chat state:
+    - Menu search results (`menu_results`)
+    - Dish information results (`info_results`)
+    - Gibberish or unrecognized queries (`query_parts["gibberish"]`)
+
+    It combines all results into a structured `FinalResponse` object.
+
+    Parameters
+    ----------
+    state : ChatState
+        The current state of the chat, containing user info, queries,
+        menu results, dish info, and other context.
+
+    Returns
+    -------
+    FinalResponse
+        A Pydantic model representing the aggregated response to the user,
+        including:
+        - `user_id`, `session_id`, `restaurant_id`, `original_query`
+        - `responses`: list of `QueryResponse` objects for each query type
+        - `status`: "success" if any response was generated, "failed" otherwise
+
+    Raises
+    ------
+    Exception
+        Re-raises any exception that occurs during formatting, while logging
+        detailed error information.
+    """
     try:
         logger.debug(f"Formatting final response from the state {state}")
         responses : List[QueryResponse] = []
