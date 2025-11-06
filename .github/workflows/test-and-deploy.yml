@@ -48,11 +48,22 @@ jobs:
         run: |
           echo "🚀 All tests passed! Deploying backend to Render..."
           json='{"clearCache": false}'
-          curl -s -o response.json -w "%{http_code}" \
+          
+          http_code=$(curl -s -o response.json -w "%{http_code}" \
             -X POST \
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${RENDER_API_KEY}" \
             -d "$json" \
-            "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys"
-            
+            "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys")
+          
+          echo "HTTP Status: $http_code"
+          echo "Response Body:"
+          cat response.json
+          
+          if [ "$http_code" -ne 201 ]; then
+            echo "❌ Deployment failed"
+            exit 1
+          fi
+          
+          echo "✅ Deployment triggered successfully"
