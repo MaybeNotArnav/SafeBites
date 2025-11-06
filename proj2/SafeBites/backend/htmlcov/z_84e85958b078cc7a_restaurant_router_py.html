@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for app\routers\restaurant_router.py: 63%</title>
+    <title>Coverage for app\routers\restaurant_router.py: 66%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
     <link rel="stylesheet" href="style_cb_dca529e9.css" type="text/css">
     <script src="coverage_html_cb_497bf287.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>app\routers\restaurant_router.py</b>:
-            <span class="pc_cov">63%</span>
+            <span class="pc_cov">66%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">59 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">37<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">22<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">39<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">20<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_84e85958b078cc7a_user_router_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.11.0">coverage.py v7.11.0</a>,
-            created at 2025-11-01 22:38 -0400
+            created at 2025-11-05 23:00 -0500
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -117,8 +117,8 @@
     <p class="pln"><span class="n"><a id="t35" href="#t35">35</a></span><span class="t"><span class="str">        Returns:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t"><span class="str">            RestaurantInDB: The created restaurant entry with its unique ID.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t37" href="#t37">37</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t38" href="#t38">38</a></span><span class="t">    <span class="nam">cuisine</span> <span class="op">=</span> <span class="nam">cuisine</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">","</span><span class="op">)</span> <span class="key">if</span> <span class="nam">cuisine</span> <span class="key">else</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t">    <span class="key">return</span> <span class="key">await</span> <span class="nam">restaurant_service</span><span class="op">.</span><span class="nam">create_restaurant</span><span class="op">(</span><span class="nam">RestaurantCreate</span><span class="op">(</span><span class="nam">name</span><span class="op">=</span><span class="nam">restaurant_name</span><span class="op">,</span><span class="nam">location</span><span class="op">=</span><span class="nam">location</span><span class="op">,</span><span class="nam">cuisine</span><span class="op">=</span><span class="nam">cuisine</span><span class="op">,</span><span class="nam">rating</span><span class="op">=</span><span class="nam">rating</span><span class="op">)</span><span class="op">,</span><span class="nam">menu_csv</span><span class="op">,</span><span class="nam">background_tasks</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t38" href="#t38">38</a></span><span class="t">    <span class="nam">cuisine</span> <span class="op">=</span> <span class="nam">cuisine</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">","</span><span class="op">)</span> <span class="key">if</span> <span class="nam">cuisine</span> <span class="key">else</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t">    <span class="key">return</span> <span class="key">await</span> <span class="nam">restaurant_service</span><span class="op">.</span><span class="nam">create_restaurant</span><span class="op">(</span><span class="nam">RestaurantCreate</span><span class="op">(</span><span class="nam">name</span><span class="op">=</span><span class="nam">restaurant_name</span><span class="op">,</span><span class="nam">location</span><span class="op">=</span><span class="nam">location</span><span class="op">,</span><span class="nam">cuisine</span><span class="op">=</span><span class="nam">cuisine</span><span class="op">,</span><span class="nam">rating</span><span class="op">=</span><span class="nam">rating</span><span class="op">)</span><span class="op">,</span><span class="nam">menu_csv</span><span class="op">,</span><span class="nam">background_tasks</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t40" href="#t40">40</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t41" href="#t41">41</a></span><span class="t"><span class="op">@</span><span class="nam">router</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"/"</span><span class="op">,</span><span class="nam">response_model</span><span class="op">=</span><span class="nam">list</span><span class="op">[</span><span class="nam">RestaurantInDB</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t42" href="#t42">42</a></span><span class="t"><span class="key">async</span> <span class="key">def</span> <span class="nam">list_restaurants</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -229,7 +229,7 @@
             <a class="nav" href="z_84e85958b078cc7a_user_router_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.11.0">coverage.py v7.11.0</a>,
-            created at 2025-11-01 22:38 -0400
+            created at 2025-11-05 23:00 -0500
         </p>
     </div>
 </footer>

@@ -1,6 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch, MagicMock
+from io import BytesIO
 from app.main import app
 
 client = TestClient(app)
@@ -19,7 +20,16 @@ def test_create_restaurant(mock_collection, sample_restaurant):
     mock_result = MagicMock()
     mock_result.inserted_id = "abc12345" 
     mock_collection.insert_one.return_value = mock_result
-    response = client.post("/restaurants/",json=sample_restaurant)
+    data = {
+        "restaurant_name": sample_restaurant["name"],
+        "location": sample_restaurant["location"],
+        "cuisine": ",".join(sample_restaurant["cuisine"]),
+        "rating": str(sample_restaurant["rating"])
+    }
+    file = {"menu_csv": ("menu.csv", BytesIO(b"name,price\nPizza,10")), "content_type": "text/csv"}
+
+    response = client.post("/restaurants/", data=data, files=file)
+    print(response)
     assert response.status_code == 201
     data = response.json()
     assert "id" in data
