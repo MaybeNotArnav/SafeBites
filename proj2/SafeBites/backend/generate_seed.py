@@ -4,6 +4,9 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
+import logging
+
+logger = logging.getLogger(__name__)
 
 fake = Faker()
 
@@ -24,7 +27,7 @@ for i in range(1,num_restaurants + 1):
 
 def get_random_meal():
     r = requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
-    print("Fetching random meal...")
+    logger.info("Fetching random meal...")
     j = r.json()
     m = j["meals"][0]
     ingredients = []
@@ -71,6 +74,7 @@ You are an allergen annotator for a restaurant dish database.
 Given a dish name and description,ingredients(maybe) infer ONLY:
 - ingredients (as a list of words/phrases) only if they are not present,
 - allergens (list of {{allergen, confidence [0–1], why}}),
+- nutrition_facts: object with approximate nutritional numeric values
 - a one-line summary of the dish.
 
 Do NOT return any other fields. 
@@ -89,6 +93,15 @@ Output JSON ONLY:
   "inferred_allergens": [
     {{"allergen": "...", "confidence": 0.95, "why": "..."}}
   ],
+    "nutrition_facts": object with approximate numeric values and confidences for:
+    {{
+      "calories": "value": number (kcal),
+      "protein":"value": number (grams),
+      "fat":"value": number (grams),
+      "carbohydrates":"value": number (grams),
+      "sugar":"value": number (grams),
+      "fiber":"value": number (grams)
+    }}
   "summary": "..."
 }}
 """)
@@ -99,13 +112,13 @@ Output JSON ONLY:
         ingredients=dish.get("ingredients","")
     )
 
-    print(prompt)
+    logger.debug(f"Printing generated prompt {prompt}")
     response = llm.invoke(prompt)
 
     try:
         refined = json.loads(response.content)
     except Exception as e:
-        print(e)
+        logger.error(str(e))
         return dish
     
     if "ingredients" not in dish or not dish["ingredients"]:
@@ -113,6 +126,9 @@ Output JSON ONLY:
     
     if "inferred_allergens" not in dish or not dish["inferred_allergens"]:
         dish["inferred_allergens"] = refined.get("inferred_allergens",[])
+
+    if "nutrition_facts" not in dish or not dish.get("nutrition_facts"):
+        dish["nutrition_facts"] = refined.get("nutrition_facts", {})
 
     if "summary" not in dish or not dish["summary"]:
         dish["description"] = refined.get("summary","")
@@ -123,12 +139,16 @@ Output JSON ONLY:
 
     return dish
 
-print(f"Generated {len(restaurants)} restaurants and {len(dishes)} dishes")
+logger.info(f"Generated {len(restaurants)} restaurants and {len(dishes)} dishes")
 
-# print(dishes[0]["name"],dishes[0]["description"],dishes[0]["ingredients"])
-refined_dishes = [generate_refined_res_data(d) for d in dishes]
+refined_dishes = []
+for i in range(len(dishes)):
+    refined_dishes.append(generate_refined_res_data(dishes[i]))
+    if i == 15:
+        break
+# refined_dishes = [generate_refined_res_data(dishes[i]) for i in range(len(dishes))]
 
 with open("./backend/seed_data/dishes_refined.json","w") as f:
     json.dump(refined_dishes,f,indent=2)
 
-print("Refined dish data with inferred ingredients and allergens")
+logger.info("Refined dish data with inferred ingredients and allergens")

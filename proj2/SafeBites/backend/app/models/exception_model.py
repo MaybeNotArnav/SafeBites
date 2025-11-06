@@ -14,6 +14,11 @@ class DatabaseException(Exception):
     """Raised when there is a database-related error."""
     def __init__(self, message: str):
         self.message = message
+    
+class GenericException(Exception):
+    """Raised for any other generic exceptions."""
+    def __init__(self, message: str):
+        self.message = message
 
 class AuthError(HTTPException):
     """Raised when there is an authentication error."""

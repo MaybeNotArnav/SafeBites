@@ -4,6 +4,7 @@ from app.models.user_model import UserCreate, UserUpdate, UserOut
 from app.services import user_service
 from app.models.exception_model import AuthError, BadRequestException
 
+
 router = APIRouter(prefix="/users", tags=["users"])
 
 def get_current_user(authorization: Optional[str] = Header(None)):

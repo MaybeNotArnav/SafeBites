@@ -2,6 +2,7 @@ import pytest
 from app.services import user_service
 from app.models.user_model import UserCreate
 from app.models.exception_model import ConflictException,BadRequestException,NotFoundException
+from bson import ObjectId
 
 def test_create_user_conflict(monkeypatch):
     class FakeCollection:
@@ -43,22 +44,51 @@ def test_password_hashing(monkeypatch):
     uc = UserCreate(username="u1", password="pass", name="U")
     res = user_service.create_user(uc)
 
-    # ✅ expectations
+    # expectations
     assert "_id" in res
     assert res["username"] == "u1"
     assert called["doc"]["password"] != "pass"  # hashed
 
-    def test_update_user_no_fields(monkeypatch):
-        def fake_update_one(q, u):
-            pass
-        monkeypatch.setattr(user_service.db.users, "update_one", fake_update_one)
+def test_update_user_no_fields(monkeypatch):
+    def fake_update_one(q, u):
+        pass
+    monkeypatch.setattr(user_service.db.users, "update_one", fake_update_one)
 
-        # Provide empty payload
-        with pytest.raises(BadRequestException):
-            user_service.update_user("64d2323c9f7c", {})
+    with pytest.raises(BadRequestException):
+        user_service.update_user("64d2323c9f7c", {})
 
-    def test_delete_user_not_found(monkeypatch):
-        class R: deleted_count = 0
-        monkeypatch.setattr(user_service.db.users, "delete_one", lambda q: R())
-        with pytest.raises(NotFoundException):
-            user_service.delete_user("64d2323c9f7c")
+
+def test_delete_user_not_found(monkeypatch):
+    class R: deleted_count = 0
+    monkeypatch.setattr(user_service.db.users, "delete_one", lambda q: R())
+    with pytest.raises(NotFoundException):
+        user_service.delete_user("64d2323c9f7c")
+
+# Test normal successful user creation
+def test_create_user_success(monkeypatch):
+    called = {}
+
+    def fake_find_one(q):
+        return None  # No existing user
+
+    def fake_insert_one(doc):
+        called['doc'] = doc
+        class R:
+            inserted_id = "new_id"
+        return R()
+
+    def fake_find_by_id(q):
+        if q == {"_id": "new_id"}:
+            return {**called['doc'], "_id": "new_id"}
+        return None
+
+    monkeypatch.setattr(user_service.db.users, "find_one", fake_find_one)
+    monkeypatch.setattr(user_service.db.users, "insert_one", fake_insert_one)
+    monkeypatch.setattr(user_service.db.users, "find_one", fake_find_by_id)
+
+    uc = UserCreate(username="alice", password="mypassword", name="Alice")
+    res = user_service.create_user(uc)
+
+    assert res["_id"] == "new_id"
+    assert res["username"] == "alice"
+    assert called["doc"]["password"] != "mypassword"

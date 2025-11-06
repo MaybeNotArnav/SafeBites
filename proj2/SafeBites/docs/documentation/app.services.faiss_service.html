@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>app.services.faiss_service</title>
+    <meta name="generator" content="pydoctor 25.10.1"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          <a href="." class="projecthome">Food Delivery System</a> <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code class="thisobject"><a href="app.services.faiss_service.html" class="internal-link" title="This module">faiss<wbr></wbr>_service</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#create_faiss_index" class="internal-link" title="app.services.faiss_service.create_faiss_index">create<wbr></wbr>_faiss<wbr></wbr>_index</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#extract_query_intent" class="internal-link" title="app.services.faiss_service.extract_query_intent">extract<wbr></wbr>_query<wbr></wbr>_intent</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#refine_with_centroid" class="internal-link" title="app.services.faiss_service.refine_with_centroid">refine<wbr></wbr>_with<wbr></wbr>_centroid</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#search_dishes" class="internal-link" title="app.services.faiss_service.search_dishes">search<wbr></wbr>_dishes</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#semantic_retrieve_with_negation" class="internal-link" title="app.services.faiss_service.semantic_retrieve_with_negation">semantic<wbr></wbr>_retrieve<wbr></wbr>_with<wbr></wbr>_negation</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#DB_NAME" class="internal-link" title="app.services.faiss_service.DB_NAME">DB<wbr></wbr>_NAME</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#MONGO_URI" class="internal-link" title="app.services.faiss_service.MONGO_URI">MONGO<wbr></wbr>_URI</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#client" class="internal-link" title="app.services.faiss_service.client">client</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#db" class="internal-link" title="app.services.faiss_service.db">db</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#dish_collection" class="internal-link" title="app.services.faiss_service.dish_collection">dish<wbr></wbr>_collection</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#embedding_dim" class="internal-link" title="app.services.faiss_service.embedding_dim">embedding<wbr></wbr>_dim</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#embeddings" class="internal-link" title="app.services.faiss_service.embeddings">embeddings</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#llm" class="internal-link" title="app.services.faiss_service.llm">llm</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#logger" class="internal-link" title="app.services.faiss_service.logger">logger</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Namespace Package</span>
+        <code><a href="app.services.html" class="internal-link" title="The parent of this module">services</a></code> 
+      </div>
+      
+      <div>
+        
+
+        <div class="childrenKindTitle">Modules</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.__pycache__.html" class="internal-link" title="app.services.__pycache__">__pycache__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.dish_info_service.html" class="internal-link" title="app.services.dish_info_service">dish<wbr></wbr>_info<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.exception_service.html" class="internal-link" title="app.services.exception_service">exception<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.faiss_service.html" class="internal-link" title="app.services.faiss_service">faiss<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.intent_service.html" class="internal-link" title="app.services.intent_service">intent<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.orchestrator_service.html" class="internal-link" title="app.services.orchestrator_service">orchestrator<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.response_synthesizer_tool.html" class="internal-link" title="app.services.response_synthesizer_tool">response<wbr></wbr>_synthesizer<wbr></wbr>_tool</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.restaurant_service.html" class="internal-link" title="app.services.restaurant_service">restaurant<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="app.services.retrieval_service.html" class="internal-link" title="app.services.retrieval_service">retrieval<wbr></wbr>_service</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+        
+
+        
+         
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapse-sidebar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <main class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">app</a></code><wbr></wbr>.<code><a href="app.services.html" class="internal-link" title="app.services">services</a></code><wbr></wbr>.<code><a href="app.services.faiss_service.html" class="internal-link" title="app.services.faiss_service">faiss_service</a></code></code></h1>
+          <div id="show-private">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          module documentation
+        </div>
+
+        <div class="extrasDocstring">
+          
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="undocumented">Undocumented</p></div>
+        </div>
+
+        <div id="split-tables">
+          <table class="children sortable" id="id55">
+  
+  
+  <tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#create_faiss_index" class="internal-link" title="app.services.faiss_service.create_faiss_index">create<wbr></wbr>_faiss<wbr></wbr>_index</a></code></td>
+    <td>Build a FAISS vector store from dish data JSON.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#extract_query_intent" class="internal-link" title="app.services.faiss_service.extract_query_intent">extract<wbr></wbr>_query<wbr></wbr>_intent</a></code></td>
+    <td>Extract positive and negative intents from a user query.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#refine_with_centroid" class="internal-link" title="app.services.faiss_service.refine_with_centroid">refine<wbr></wbr>_with<wbr></wbr>_centroid</a></code></td>
+    <td>Refine retrieved dishes by comparing centroid similarity of positive intents.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#search_dishes" class="internal-link" title="app.services.faiss_service.search_dishes">search<wbr></wbr>_dishes</a></code></td>
+    <td>Perform similarity search using FAISS vector store.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#semantic_retrieve_with_negation" class="internal-link" title="app.services.faiss_service.semantic_retrieve_with_negation">semantic<wbr></wbr>_retrieve<wbr></wbr>_with<wbr></wbr>_negation</a></code></td>
+    <td>Retrieve dishes semantically, respecting positive and negative query intents.</td>
+  </tr><tr class="constant">
+    
+    <td>Constant</td>
+    <td><code><a href="#DB_NAME" class="internal-link" title="app.services.faiss_service.DB_NAME">DB<wbr></wbr>_NAME</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="constant">
+    
+    <td>Constant</td>
+    <td><code><a href="#MONGO_URI" class="internal-link" title="app.services.faiss_service.MONGO_URI">MONGO<wbr></wbr>_URI</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#client" class="internal-link" title="app.services.faiss_service.client">client</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#db" class="internal-link" title="app.services.faiss_service.db">db</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#dish_collection" class="internal-link" title="app.services.faiss_service.dish_collection">dish<wbr></wbr>_collection</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#embedding_dim" class="internal-link" title="app.services.faiss_service.embedding_dim">embedding<wbr></wbr>_dim</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#embeddings" class="internal-link" title="app.services.faiss_service.embeddings">embeddings</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#llm" class="internal-link" title="app.services.faiss_service.llm">llm</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr><tr class="variable">
+    
+    <td>Variable</td>
+    <td><code><a href="#logger" class="internal-link" title="app.services.faiss_service.logger">logger</a></code></td>
+    <td><span class="rst-undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="child-list">
+          <div class="basefunction">
+  
+  
+  <a name="app.services.faiss_service.create_faiss_index">
+    
+  </a>
+  <a name="create_faiss_index">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">create_faiss_index</span><span class="function-signature">(<span class="rst-sig-param">json_path=<span class="rst-variable-quote">'</span><span class="rst-variable-string">./seed_data/dishes_refined.json</span><span class="rst-variable-quote">'</span></span>):</span>
+    
+    <a class="headerLink" href="#create_faiss_index" title="app.services.faiss_service.create_faiss_index">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Build a FAISS vector store from dish data JSON.
+
+Args:
+    json_path (str): Path to the dish JSON data.
+
+Raises:
+    FileNotFoundError: If JSON file does not exist.
+    GenericException: If index creation fails.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.faiss_service.extract_query_intent">
+    
+  </a>
+  <a name="extract_query_intent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">extract_query_intent</span><span class="function-signature">(<span class="rst-sig-param">query</span>):</span>
+    
+    <a class="headerLink" href="#extract_query_intent" title="app.services.faiss_service.extract_query_intent">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Extract positive and negative intents from a user query.
+
+Args:
+    query (str): User natural language query.
+
+Returns:
+    QueryIntents: Positive and negative intents.
+
+Notes:
+    Falls back to {"positive": [query], "negative": []} if LLM fails.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.faiss_service.refine_with_centroid">
+    
+  </a>
+  <a name="refine_with_centroid">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">refine_with_centroid</span><span class="function-signature">(<span class="rst-sig-param">dish_hits, </span><span class="rst-sig-param">positive_intents, </span><span class="rst-sig-param">dish_embeddings</span>):</span>
+    
+    <a class="headerLink" href="#refine_with_centroid" title="app.services.faiss_service.refine_with_centroid">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Refine retrieved dishes by comparing centroid similarity of positive intents.
+
+Args:
+    dish_hits (List[DishHit]): Initial dish hits.
+    positive_intents (List[str]): Positive intents extracted from query.
+    dish_embeddings (Dict[str, np.ndarray]): Precomputed embeddings of dishes.
+
+Returns:
+    List[DishHit]: Refined and sorted dish hits.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.faiss_service.search_dishes">
+    
+  </a>
+  <a name="search_dishes">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">search_dishes</span><span class="function-signature">(<span class="rst-sig-param">query, </span><span class="rst-sig-param">restaurant_id=None, </span><span class="rst-sig-param">top_k=20, </span><span class="rst-sig-param">threshold=0.8</span>):</span>
+    
+    <a class="headerLink" href="#search_dishes" title="app.services.faiss_service.search_dishes">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Perform similarity search using FAISS vector store.
+
+Args:
+    query (str): Search query.
+    restaurant_id (Optional[str]): Filter dishes by restaurant.
+    top_k (int): Max number of results.
+    threshold (float): Minimum similarity score to include.
+
+Returns:
+    List[DishHit]: Filtered and structured dish hits.</p></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="app.services.faiss_service.semantic_retrieve_with_negation">
+    
+  </a>
+  <a name="semantic_retrieve_with_negation">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span>&#160;<span class="py-defname">semantic_retrieve_with_negation</span><span class="function-signature">(<span class="rst-sig-param">query, </span><span class="rst-sig-param">restaurant_id=None</span>):</span>
+    
+    <a class="headerLink" href="#semantic_retrieve_with_negation" title="app.services.faiss_service.semantic_retrieve_with_negation">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Retrieve dishes semantically, respecting positive and negative query intents.
+
+Args:
+    query (str): User query text.
+    restaurant_id (Optional[str]): Filter by restaurant ID.
+
+Returns:
+    List[DishHit]: Refined and filtered dish hits.</p></div>
+  </div>
+</div><div class="baseconstant">
+  
+  
+  <a name="app.services.faiss_service.DB_NAME">
+    
+  </a>
+  <a name="DB_NAME">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">DB_NAME</span> =
+    
+    <a class="headerLink" href="#DB_NAME" title="app.services.faiss_service.DB_NAME">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>os.getenv(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">DB_NAME</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
+  </div>
+</div><div class="baseconstant">
+  
+  
+  <a name="app.services.faiss_service.MONGO_URI">
+    
+  </a>
+  <a name="MONGO_URI">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">MONGO_URI</span> =
+    
+    <a class="headerLink" href="#MONGO_URI" title="app.services.faiss_service.MONGO_URI">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>os.getenv(<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">MONGO_URI</span><span class="rst-variable-quote">'</span>)</code></pre></td></tr></table>
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.client">
+    
+  </a>
+  <a name="client">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">client</span> =
+    
+    <a class="headerLink" href="#client" title="app.services.faiss_service.client">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.db">
+    
+  </a>
+  <a name="db">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">db</span> =
+    
+    <a class="headerLink" href="#db" title="app.services.faiss_service.db">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.dish_collection">
+    
+  </a>
+  <a name="dish_collection">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">dish_collection</span> =
+    
+    <a class="headerLink" href="#dish_collection" title="app.services.faiss_service.dish_collection">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.embedding_dim">
+    
+  </a>
+  <a name="embedding_dim">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">embedding_dim</span>: <code>int</code> =
+    
+    <a class="headerLink" href="#embedding_dim" title="app.services.faiss_service.embedding_dim">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.embeddings">
+    
+  </a>
+  <a name="embeddings">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">embeddings</span> =
+    
+    <a class="headerLink" href="#embeddings" title="app.services.faiss_service.embeddings">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.llm">
+    
+  </a>
+  <a name="llm">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">llm</span> =
+    
+    <a class="headerLink" href="#llm" title="app.services.faiss_service.llm">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basevariable">
+  
+  
+  <a name="app.services.faiss_service.logger">
+    
+  </a>
+  <a name="logger">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">logger</span> =
+    
+    <a class="headerLink" href="#logger" title="app.services.faiss_service.logger">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+        </div>
+      
+      </main>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">API Documentation</a> for <a href="." class="projecthome">Food Delivery System</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    25.10.1 at 2025-10-17 21:53:53.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

@@ -1,65 +1,214 @@
-# 🍴 Food Delivery System – Local Development Setup
-## Badges
+<!-- # 🍴 Food Delivery System   -->
+<!-- **AI-powered meal recommendation and delivery platform using FastAPI, LangGraph, and MongoDB.** -->
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Framework-brightgreen?logo=fastapi)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-green?logo=mongodb)
-![Docker](https://img.shields.io/badge/Container-Docker-blue?logo=docker)
-![GitHub Actions](https://img.shields.io/github/actions/workflow/status/the-Shallow/SE-WOLFCAFE/python-app.yml?label=CI%20Build&logo=githubactions)
+![React](https://img.shields.io/badge/Frontend-React-blue?logo=react)
 ![Coverage](https://img.shields.io/codecov/c/github/the-Shallow/SE-WOLFCAFE?label=Coverage&logo=codecov)
-![License](https://img.shields.io/github/license/the-Shallow/SE-WOLFCAFE)
+![License](https://img.shields.io/badge/License-MIT-yellow?logo=opensource-initiative&link=./LICENSE)
 ![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)
 
+---
 
-This repo contains both **frontend** (React + Tailwind) and **backend** (FastAPI + LangChain + MongoDB).  
-Follow the steps below to run locally.  
+## 🏗️ Overview  
+**SafeBites** is a full-stack application that leverages **AI-driven natural language understanding** to simplify how users find, customize, and order food.  
+It integrates **LangGraph + FAISS** for semantic search, enabling users to query menus conversationally (e.g., “Find vegan dishes under $10”).  
+
+This system is designed for **scalability, modularity, and sustainability**, aligning with the *Software Engineering Project 2* guidelines.
 
 ---
 
-## 🛠 Prerequisites
-
-Make sure you have the following installed:
-
-- **Python** 3.10+ → [Download](https://www.python.org/downloads/)  
-- **pip** or **uv** (for dependency management)  
-- **Node.js** (>=18) + npm (for frontend only) → [Download](https://nodejs.org/en/)  
-- **MongoDB** (local or Atlas cloud) → [Docs](https://www.mongodb.com/docs/manual/installation/)  
-<!-- - **Redis** (for Celery background tasks, optional at this stage)   -->
-- **Git**  
+## 🚀 Features
+- 🍽️ **Restaurant & Menu Search** – Semantic retrieval using LangGraph + FAISS  
+- 🤖 **AI Query Understanding** – Extracts intents and filters structured data  
+- 🧠 **Allergen Detection** – Considers user preferences and allergens  
+- 💾 **MongoDB Integration** – Persistent storage for restaurants, dishes, and users  
+- ⚡ **FastAPI Backend** – Modular REST API with async support  
+- 🎨 **React Frontend** – Responsive UI styled with TailwindCSS  
 
 ---
 
-## 📂 Project Structure
-/frontend → React  app
-/backend → FastAPI app with LangChain, MongoDB, FAISS
+## 🧠 Architecture Overview
+```plaintext
+food-delivery-system/
+├── frontend/          # React + Tailwind app
+├── backend/           # FastAPI + LangGraph + MongoDB + FAISS
+├── docs/              # Documentation, self-assessment, poster
+└── README.md
+🧩 Backend orchestrates LLM-based reasoning, semantic retrieval, and structured filtering.
+🖥️ Frontend provides intuitive interactions for browsing and ordering.
+```
+
+## 👥 Intended Users
+
+**SafeBites** is designed for:
+
+- **End-users / Customers:** People who want to find, customize, and order food easily using AI-driven search.
+- **Restaurant Owners:** Who want to manage menus, dishes, and customer preferences efficiently.
+- **Developers / Researchers:** Interested in exploring AI-based semantic search, LangGraph integrations, and scalable food delivery systems.
+
+## 📖 Example Use Cases
+
+1. **Finding Vegan Dishes under $10:**  
+   A user searches, "Find vegan dishes under $10," and the system returns relevant dishes using semantic search via FAISS and LangGraph.
+
+2. **Custom Allergen Filtering:**  
+   Users can input allergens, and the system will exclude dishes containing those ingredients, ensuring safe meal selection.
+
+3. **Restaurant Menu Exploration:**  
+   Users can browse menus by category, price, or cuisine type and see recommendations tailored to their preferences.
+
+4. **Developer Exploration:**  
+   Developers can test AI query understanding, embeddings, and modular FastAPI endpoints for building similar projects.
 
 
----
+## 🧰 Tech Stack  
+
+| **Layer** | **Technology** | **Description** |
+|------------|----------------|-----------------|
+| Frontend | React, TailwindCSS, Vite | Responsive user interface |
+| Backend | FastAPI, LangGraph, LangChain | Modular async API services |
+| Database | MongoDB | Stores users, dishes, and restaurant metadata |
+| Vector Search | FAISS | Efficient semantic similarity search |
+| AI Model | OpenAI / Local | Natural language understanding |
+| Deployment | Local & Cloud | Consistent runtime environments |
+
+
+## ⚙️ Local Setup  
+
+### 🛠️ Prerequisites  
+
+| **Tool** | **Required Version** | **Purpose** |
+|-----------|----------------------|--------------|
+| Python | 3.10+ | Backend runtime |
+| pip / uv | latest | Dependency manager |
+| Node.js | ≥ 18 | Frontend runtime |
+| MongoDB | latest | Database |
+| Git | — | Version control |
+
+## 🧩 Backend Setup  
+```
+cd backend
+python -m venv venv
+# Activate virtual environment
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+```
+
+### 🔧 Install Dependencies  
+```
+pip install -r requirements.txt
+```
+
+### Create a .env file:
+```
+MONGO_URI=your_mongodb_uri
+OPENAI_API_KEY=your_openai_key
+JWT_SECRET=your_secret_key
+```
+
+### Run the API server:
+```
+uvicorn app.main:app --reload
+Backend available at http://localhost:8000
+```
 
 ## 🎨 Frontend Setup
-   cd frontend
-   npm install
-   npm run dev
+```
+cd frontend
+npm install
+npm run dev
+Frontend runs on http://localhost:5173
+```
 
-## Backend Setup
-    cd backend
-    python -m venv venv
-    venv\Scripts\activate
-    pip install -r requirements.txt
-    Create .env file for storing private variables such as database urls, openAI api keys, jwt_secret.
-    uvicorn app.main:app --reload
+## 🧪 Testing
+To run backend tests:
+```
+pytest
+To view coverage (automatically uploaded to Codecov):
 
-## Dish CRUD APIs implemented:
-   1. POST   /dishes/               → Create a new dish
-   2. GET    /dishes/{dish_id}      → Get dish by ID
-   3. GET    /dishes/               → Get all dishes
-   4. PUT    /dishes/{dish_id}      → Update a dish
-   5. DELETE /dishes/{dish_id}      → Delete a dish
+pytest --cov=app
+```
+<!-- 🧱 Development Notes -->
+<!-- All backend routes are namespaced under /api/v1 -->
 
-## User CRUD APIs implemented:
-   1. POST   /users/signup          → Create new user
-   2. POST   /users/login           → Login & get token
-   3. GET    /users/me              → Get logged-in user profile
-   4. PUT    /users/me              → Update profile
-   5. DELETE /users/me              → Delete user
-   6. GET    /users/{id}            → Get user by ID
+<!-- Maintain consistent naming: -->
+
+<!-- snake_case → backend -->
+
+<!-- camelCase → frontend -->
+
+<!-- Embeddings and FAISS index files are stored in backend/app/vector_store/ -->
+
+<!-- Logs and test outputs are structured using Python’s logging module -->
+
+<!-- CI/CD pipeline uses GitHub Actions -->
+
+## 🤝 Contributing  
+
+We welcome new contributors!  
+
+To contribute:  
+```
+git checkout -b feature/your-feature
+# Make your changes
+git push origin feature/your-feature
+Then open a Pull Request to the main branch.
+
+📘 See the full CONTRIBUTING.md for setup, style guide, and testing conventions.
+```
+
+## 📜 License
+This project is licensed under the MIT License.
+See LICENSE for details.
+
+## 🗂️ Additional Documents
+
+| Document | Purpose |
+|-----------|----------|
+| **CONTRIBUTING.md** | Development and PR guidelines |
+| **CODE_OF_CONDUCT.md** | Behavioral standards |
+| **docs/SELF_ASSESSMENT.md** | Rubric evidence (Q1–Q16) |
+| **docs/API_DOCS.md** | API endpoints and schema documentation |
+| **docs/POSTER.pdf** | Visual project summary and future roadmap |
+
+## 🧾 Rubric Reference:
+Detailed mapping of rubric criteria to repository artifacts can be found in
+docs/SELF_ASSESSMENT.md.
+
+## 🚀 Future Roadmap (for Project 3)
+
+| Feature | Description | Status |
+|---------|------------|--------|
+| 🧠 Personalized Dish Recommender | ML-based recommendations using user profile embeddings | Planned |
+| 💬 Chat-based Ordering | Conversational ordering assistant using LLMs | Planned |
+| 📦 Delivery Tracking | Real-time order tracking dashboard | Planned |
+| 🧾 Admin Analytics Dashboard | Restaurant and order analytics visualization | Planned |
+
+
+## 🧑‍💻 Contributors
+
+| Name | Role | Contributions |
+|------|------|---------------|
+| Khush Patel & Ria Jha | Backend Developer | FastAPI, LangGraph, FAISS Integration |
+| Mia Glen & Ishwarya | Frontend Developer | React + Tailwind UI |
+
+
+## 💬 Contact
+
+For inquiries or collaboration, reach out via GitHub **Issues** or **Discussions**:  
+
+🔗 [Project Discussions](https://github.com/the-Shallow/SE-WOLFCAFE/discussions)
+
+
+## ⭐ Support  
+
+If you find this project useful, please give it a **star** on GitHub!  
+
+Your support helps future teams continue development and improvement.
+
+
+---

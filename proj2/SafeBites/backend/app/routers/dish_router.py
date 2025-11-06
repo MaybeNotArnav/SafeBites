@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Query
 from typing import Optional, List
-from app.models.dish_model import DishCreate, DishUpdate, DishOut
-from app.services import dish_service
+from ..models.dish_model import DishCreate, DishUpdate, DishOut
+from ..services import dish_service
 
 router = APIRouter(prefix="/dishes", tags=["dishes"])
 
-@router.post("/", response_model=DishOut, status_code=201)
-def create_dish(payload: DishCreate):
-    return dish_service.create_dish(payload)
+@router.post("/{restaurant_id}", response_model=DishOut, status_code=201)
+def create_dish(restaurant_id:str, payload: DishCreate):
+    payload.restaurant_id = restaurant_id
+    return dish_service.create_dish(restaurant_id, payload)
 
 @router.get("/", response_model=List[DishOut])
 def list_dishes(
@@ -20,7 +21,7 @@ def list_dishes(
     """
     query = {}
     if restaurant:
-        query["restaurant"] = restaurant
+        query["restaurant_id"] = restaurant
     if tags:
         query["ingredients"] = {"$in": tags.split(",")}
     return dish_service.list_dishes(query, user_id=user_id)
@@ -33,7 +34,7 @@ def filter_dishes(
 ):
     query = {}
     if restaurant:
-        query["restaurant"] = restaurant
+        query["restaurant_id"] = restaurant
     docs = dish_service.list_dishes(query, user_id=user_id)
 
     if not exclude_allergens:

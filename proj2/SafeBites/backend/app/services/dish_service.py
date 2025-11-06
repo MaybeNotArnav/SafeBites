@@ -1,6 +1,9 @@
-from app.db import db
+from ..db import db
+from bson import ObjectId
+from fastapi import HTTPException
 from bson.objectid import ObjectId
 from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException, ConflictException
+
 
 def _to_out(doc: dict) -> dict:
     if not doc:
@@ -8,11 +11,11 @@ def _to_out(doc: dict) -> dict:
     doc["_id"] = str(doc["_id"])
     return doc
 
-def create_dish(dish_create):
-    if not dish_create.name or not dish_create.restaurant:
+def create_dish(restaurant_id: str, dish_create):
+    if not dish_create.name or not dish_create.restaurant_id:
         raise BadRequestException(message="Missing required dish fields")
-
-    existing = db.dishes.find_one({"name": dish_create.name, "restaurant": dish_create.restaurant})
+    # enforce unique dish name per restaurant
+    existing = db.dishes.find_one({"name": dish_create.name, "restaurant_id": dish_create.restaurant_id})
     if existing:
         raise ConflictException(detail="Dish with same name already exists for this restaurant")
 
@@ -26,6 +29,7 @@ def create_dish(dish_create):
         return out
     except Exception as e:
         raise DatabaseException(message=f"Failed to create dish: {e}")
+    
 
 def list_dishes(filter_query: dict, user_id: str = None):
     """
@@ -33,6 +37,7 @@ def list_dishes(filter_query: dict, user_id: str = None):
     """
     try:
         docs = list(db.dishes.find(filter_query).limit(100))
+        print(docs)
         out = []
         user_allergens = []
 
@@ -40,6 +45,7 @@ def list_dishes(filter_query: dict, user_id: str = None):
         if user_id:
             try:
                 user_doc = db.users.find_one({"_id": ObjectId(user_id)})
+                print(user_doc)
                 if user_doc:
                     user_allergens = [a.lower() for a in user_doc.get("allergen_preferences", [])]
             except Exception:
@@ -93,7 +99,6 @@ def update_dish(dish_id: str, update_data: dict):
         obj = ObjectId(dish_id)
     except Exception:
         raise NotFoundException(name="Invalid dish id")
-
     if "name" in update_data or "restaurant" in update_data:
         current = db.dishes.find_one({"_id": obj})
         if not current:
@@ -113,12 +118,15 @@ def update_dish(dish_id: str, update_data: dict):
     out["safe_for_user"] = True
     return out
 
+
 def delete_dish(dish_id: str):
     try:
         obj = ObjectId(dish_id)
     except Exception:
         raise NotFoundException(name="Invalid dish id")
+
     res = db.dishes.delete_one({"_id": obj})
     if res.deleted_count == 0:
         raise NotFoundException(name="Dish not found")
-    return
+
+    return {"detail": "deleted"}

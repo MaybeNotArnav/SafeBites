@@ -1,26 +1,26 @@
 [
   {
     "_id": "rest_1",
-    "name": "Shaw-QuinnDiner",
-    "address": "41243 Jacobson Mount, New Jenniferfort, PW 71996",
+    "name": "Coleman, Knapp and SerranoTrattoria",
+    "address": "08525 Campbell Villages Suite 625, East Amy, MT 85100",
     "cuisine": [
-      "Thai"
+      "Mexican"
     ]
   },
   {
     "_id": "rest_2",
-    "name": "Fowler, Riley and OrtizBistro",
-    "address": "496 Kaitlyn Lock Suite 101, North Ericamouth, AZ 03188",
+    "name": "Rodriguez-ShawKitchen",
+    "address": "9256 Thompson Pike Suite 751, Newmanshire, AS 52518",
     "cuisine": [
-      "American"
+      "Italian"
     ]
   },
   {
     "_id": "rest_3",
-    "name": "Williams IncTrattoria",
-    "address": "701 Greene Landing Apt. 478, South Luisberg, AL 93056",
+    "name": "Parks-JohnsonCafe",
+    "address": "8012 Stephanie Mount, Lake Adrianville, OH 44373",
     "cuisine": [
-      "Mexican"
+      "Japanese"
     ]
   }
 ]
