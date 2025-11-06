@@ -10,7 +10,7 @@
 [![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
 [![Rubric](https://img.shields.io/badge/rubric-brightgreen.svg)](docs/SELF_ASSESSMENT.md)
 [![Project Poster](https://img.shields.io/badge/poster-brightgreen.svg)](docs/POSTER.pdf)
-[![Chat System Flowchart](https://img.shields.io/badge/chat-system-flowchart-brightgreen.svg)](docs/CHAT_SYSTEM_FLOWCHART.pdf)
+[![Chat System Flowchart](https://img.shields.io/badge/chatsystem-brightgreen.svg)](docs/CHAT_SYSTEM_FLOWCHART.pdf)
 ---
 
 ## 🏗️ Overview  
