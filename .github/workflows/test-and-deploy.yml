@@ -46,12 +46,12 @@ jobs:
           RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
-            echo "🚀 All tests passed! Deploying backend to Render..."
-            json='{"clearCache": false}'
-            curl -s -o response.json -w "%{http_code}" \
-              -X POST \
-              -H "Accept: application/json" \
-              -H "Content-Type: application/json" \
-              -H "Authorization: Bearer ${RENDER_API_KEY}" \
-              -d "$json" \
-              "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys"
+          echo "🚀 All tests passed! Deploying backend to Render..."
+          json='{"clearCache": false}'
+          curl -s -o response.json -w "%{http_code}" \
+            -X POST \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${RENDER_API_KEY}" \
+            -d "$json" \
+            "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys"
