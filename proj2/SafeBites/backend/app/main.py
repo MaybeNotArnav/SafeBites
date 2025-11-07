@@ -26,7 +26,7 @@ app = FastAPI(title="SafeBites")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080","http://localhost:8000","http://localhost:5173"],
+    allow_origins=["http://localhost:8080","http://localhost:8000","http://localhost:5173","https://se-wolfcafe.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
