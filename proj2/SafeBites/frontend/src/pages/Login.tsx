@@ -14,7 +14,7 @@ function Login() {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch(`https://safebites-yu1o.onrender.com/users/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
+            const response = await fetch(`http://127.0.0.1:8000/users/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`, {
                 method: 'POST',
             });
 

@@ -10,7 +10,9 @@ food knowledge.
 import logging
 from typing import Dict
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
+
 import os, json
 from dotenv import load_dotenv
 from ..models.dish_info_model import DishInfoResponse, DishData, DishInfoResult, GeneralKnowledgeResponse, IntentResponse
@@ -24,8 +26,13 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
-
+# llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=1,
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    callbacks=[LLMUsageTracker()]
+)
 def derive_dish_info_intent(query):
     """
     Determine whether a user query requires restaurant-specific menu data or general food knowledge.
@@ -63,7 +70,9 @@ def derive_dish_info_intent(query):
     response = llm.invoke(prompt.format_messages(query=query))
     logging.debug(f"LLM Intent Response: {response.content}")
     try:
-        intent_json = json.loads(response.content)
+        content = response.content.strip().replace("```json", "").replace("```", "")
+        intent_json = json.loads(content)
+        # intent_json = json.loads(response.content)
         return IntentResponse(**intent_json)
     except Exception as e:
         logging.error(str(e))
@@ -92,11 +101,12 @@ def handle_general_knowledge(query):
     response = llm.invoke(prompt.format_messages(query=query))
     logging.debug(f"LLM Response: {response.content}")
     try:
-        answer_json = json.loads(response.content)
+        content = response.content.strip().replace("```json", "").replace("```", "")
+        answer_json = json.loads(content)
         return GeneralKnowledgeResponse(**answer_json)
     except Exception as e:
         raise GenericException(str(e))
-
+    
 def handle_food_item_query(query, restaurant_id=None):
     """
         Retrieve and structure dish data from the semantic search.
@@ -238,19 +248,33 @@ def get_dish_info(state):
     You are a food information assistant.
         Using ONLY the following dish data, answer the user's query.
         Format the response as JSON:
-        - "dish_name" - name of the dish being referred to.
-        - "requested_info" - string answer to the user's query.
-        - "source_data" - list of relevant dish data used to answer the query.
+        {{
+            "dish_name": "name or null",
+            "requested_info": "answer string",
+            "source_data": []
+        }}
 
         User Query: {query}
 
         Dish Data: {context}
         """)
-        response = llm.invoke(prompt.format_messages(query=query,context=context))
+        # response = llm.invoke(prompt.format_messages(query=query,context=context))
+        response = llm.invoke(prompt.format_messages(query=query, context=context))
         logging.debug(f"LLM Response: {response.content}")
         
+        # try:
+        #     response_json = json.loads(response.content)
+        #     results[query] = DishInfoResponse(**response_json)
+        # except Exception as e:
+        #     logger.error(str(e))
+        #     results[query] = DishInfoResponse(
+        #         dish_name=None,
+        #         requested_info="Could not parse LLM Response",
+        #         source_data=[]
+        #     )
         try:
-            response_json = json.loads(response.content)
+            content = response.content.strip().replace("```json", "").replace("```", "")
+            response_json = json.loads(content)
             results[query] = DishInfoResponse(**response_json)
         except Exception as e:
             logger.error(str(e))

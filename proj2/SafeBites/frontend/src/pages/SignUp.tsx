@@ -51,7 +51,7 @@ function SignUp() {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('https://safebites-yu1o.onrender.com/users/signup', {
+            const response = await fetch('http://127.0.0.1:8000/users/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

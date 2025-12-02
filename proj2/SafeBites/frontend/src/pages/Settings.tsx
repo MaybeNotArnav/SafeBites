@@ -37,7 +37,7 @@ function Settings() {
         return;
       }
 
-      const response = await fetch('https://safebites-yu1o.onrender.com/users/me', {
+      const response = await fetch('http://localhost:8000/users/me', {
         headers: {
           'Authorization': `Bearer ${authToken || 'token'}`
         }
@@ -120,7 +120,7 @@ function Settings() {
     try {
       const authToken = localStorage.getItem('authToken');
       
-      const response = await fetch('https://safebites-yu1o.onrender.com/users/me', {
+      const response = await fetch('http://localhost:8000/users/me', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

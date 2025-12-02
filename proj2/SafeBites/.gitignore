@@ -1,6 +1,6 @@
 # --- Root-level .gitignore ---
 
-# General
+# General (Recursively ignores these everywhere)
 __pycache__/
 *.py[cod]
 *$py.class
@@ -12,17 +12,13 @@ Thumbs.db
 !.env.example
 
 # Python backend
-/backend/__pycache__/
-/backend/app/*.__pycache__/
 /backend/venv/
 /backend/.venv/
-/backend/*.py[cod]
 /backend/.mypy_cache/
 /backend/.pytest_cache/
 /backend/.coverage
 # /backend/htmlcov/
 /backend/*.db
-/backend/*.env
 
 # Node frontend
 /frontend/node_modules/
@@ -33,7 +29,6 @@ Thumbs.db
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
 /frontend/.pnpm-debug.log*
-/frontend/*.env
 
 # IDE/editor
 .vscode/
