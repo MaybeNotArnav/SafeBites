@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './Home.css';
 import RestaurantMenu from './RestaurantMenu';
 
-const API_BASE_URL = 'https://safebites-yu1o.onrender.com';
+const API_BASE_URL = 'http://localhost:8000/';
 
 interface Restaurant {
   _id: string;
@@ -29,7 +29,7 @@ function Home() {
         setIsLoading(true);
         setError(null);
         
-        const response = await fetch(`${API_BASE_URL}/restaurants/`);
+        const response = await fetch(`${API_BASE_URL}restaurants/`);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch restaurants: ${response.status}`);

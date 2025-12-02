@@ -5,7 +5,7 @@ This module uses a language model (LLM) to parse complex user queries
 into structured intents relevant to a food or restaurant assistant.
 """
 import logging
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 import os, json
 from typing import List
@@ -17,7 +17,13 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+# llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=1,
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    callbacks=[LLMUsageTracker()]
+)
 
 def extract_query_intent(state):
     """
@@ -117,9 +123,32 @@ def extract_query_intent(state):
 
                   {query}
     """)
+    # try:
+    #     response = llm.invoke(prompt.format_messages(query=query))
+    #     data = json.loads(response.content)
+    #     logging.debug(f"Extracted intents: {data}")
+
+    #     intents: List[IntentQuery] = []
+    #     for intent_type, queries in data.items():
+    #         for q in queries:
+    #             intents.append(IntentQuery(type=intent_type, query=q))
+    
+    #     return {"intents":IntentExtractionResult(intents=intents)}
+    # except Exception as e:
+    #     return {"intents":IntentExtractionResult(
+    #         intents=[IntentQuery(type="irrelevant",query=query)]
+    #     )}
     try:
         response = llm.invoke(prompt.format_messages(query=query))
-        data = json.loads(response.content)
+        
+        # Clean response if Gemini wraps it in markdown blocks (e.g. ```json ... ```)
+        content = response.content.strip()
+        if content.startswith("```json"):
+            content = content[7:-3]
+        elif content.startswith("```"):
+            content = content[3:-3]
+            
+        data = json.loads(content)
         logging.debug(f"Extracted intents: {data}")
 
         intents: List[IntentQuery] = []
@@ -127,8 +156,9 @@ def extract_query_intent(state):
             for q in queries:
                 intents.append(IntentQuery(type=intent_type, query=q))
     
-        return {"intents":IntentExtractionResult(intents=intents)}
+        return {"intents": IntentExtractionResult(intents=intents)}
     except Exception as e:
-        return {"intents":IntentExtractionResult(
-            intents=[IntentQuery(type="irrelevant",query=query)]
+        logger.error(f"Intent extraction failed: {e}")
+        return {"intents": IntentExtractionResult(
+            intents=[IntentQuery(type="irrelevant", query=query)]
         )}

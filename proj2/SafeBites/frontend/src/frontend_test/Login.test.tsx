@@ -93,7 +93,7 @@ describe('Login', () => {
     
     // Verify API call
     const fetchCall = (global.fetch as any).mock.calls[0];
-    expect(fetchCall[0]).toContain('https://safebites-yu1o.onrender.com/users/login');
+    expect(fetchCall[0]).toContain('http://localhost:8000/users/login');
     expect(fetchCall[0]).toContain('username=testuser');
     expect(fetchCall[1].method).toBe('POST');
     

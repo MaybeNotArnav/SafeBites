@@ -1,26 +1,29 @@
 [
   {
     "_id": "rest_1",
-    "name": "Coleman, Knapp and SerranoTrattoria",
-    "address": "08525 Campbell Villages Suite 625, East Amy, MT 85100",
+    "name": "Shepherd Inc Bistro",
+    "location": "080 Elizabeth Village Apt. 127, Port Brett, MO 24318",
     "cuisine": [
-      "Mexican"
-    ]
+      "Thai"
+    ],
+    "rating": 4.8
   },
   {
     "_id": "rest_2",
-    "name": "Rodriguez-ShawKitchen",
-    "address": "9256 Thompson Pike Suite 751, Newmanshire, AS 52518",
+    "name": "Ross Inc Cafe",
+    "location": "559 Smith Garden, East Victoria, MA 66009",
     "cuisine": [
-      "Italian"
-    ]
+      "Thai"
+    ],
+    "rating": 4.9
   },
   {
     "_id": "rest_3",
-    "name": "Parks-JohnsonCafe",
-    "address": "8012 Stephanie Mount, Lake Adrianville, OH 44373",
+    "name": "Lane, Kelly and Martinez Bistro",
+    "location": "7554 Tina Trail, Kennethmouth, VI 17109",
     "cuisine": [
-      "Japanese"
-    ]
+      "Italian"
+    ],
+    "rating": 3.7
   }
 ]

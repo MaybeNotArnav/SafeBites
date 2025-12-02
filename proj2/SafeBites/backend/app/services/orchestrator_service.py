@@ -1,5 +1,6 @@
 from langchain.agents import initialize_agent, Tool, AgentType
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.memory import ConversationBufferMemory
 from langchain.tools import StructuredTool
 # from fastapi import HTTPException
@@ -12,7 +13,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4-turbo",temperature=0.7,openai_api_key=os.getenv("OPENAI_KEY"))
+# llm = ChatOpenAI(model="gpt-4-turbo",temperature=0.7,openai_api_key=os.getenv("OPENAI_KEY"))
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=0.7,
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 class MenuQuery(BaseModel):
     query: str

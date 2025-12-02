@@ -33,7 +33,9 @@ function Dashboard() {
         return;
       }
 
-      const response = await fetch('https://safebites-yu1o.onrender.com/users/me', {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+      
+      const response = await fetch(`${API_BASE_URL}/users/me`, {
         headers: {
           'Authorization': `Bearer ${authToken}`
         }

@@ -2,109 +2,144 @@ import requests, json, random
 from faker import Faker
 import os
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
+import google.generativeai as genai
 import logging
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 fake = Faker()
 
+# Load Environment Variables
 base_dir = os.path.dirname(os.path.abspath(__file__))
 env_path = os.path.join(base_dir, '.env')
 load_dotenv(env_path)
 
-# generate restaurant data
+
+# Initialize Gemini LLM
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=1,
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
+
+
+def clean_json_response(content: str) -> str:
+    """Helper to strip markdown code blocks from LLM response"""
+    content = content.strip()
+    if content.startswith("```json"):
+        content = content[7:]
+    elif content.startswith("```"):
+        content = content[3:]
+    if content.endswith("```"):
+        content = content[:-3]
+    return content.strip()
+
+# --- 1. Generate Restaurants ---
+logger.info("Generating restaurant data...")
 restaurants = []
 num_restaurants = 3
-for i in range(1,num_restaurants + 1):
+
+for i in range(1, num_restaurants + 1):
     restaurants.append({
-        "_id":f"rest_{i}",
-        "name":fake.company() + random.choice(["Kitchen","Bistro","Cafe","Trattoria","Diner"]),
-        "address":fake.address().replace("\n",", "),
-        "cuisine":[random.choice(["Italian","Thai","Indian","Mexican","American","Japanese"])]
+        "_id": f"rest_{i}",
+        "name": fake.company() + " " + random.choice(["Kitchen", "Bistro", "Cafe", "Trattoria", "Diner"]),
+        "location": fake.address().replace("\n", ", "), # Fixed: used fake.address() and key "location"
+        "cuisine": [random.choice(["Italian", "Thai", "Indian", "Mexican", "American", "Japanese"])],
+        "rating": round(random.uniform(3.5, 5.0), 1)
     })
 
+# --- 2. Generate Dishes (Raw) ---
 def get_random_meal():
-    r = requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
-    logger.info("Fetching random meal...")
-    j = r.json()
-    m = j["meals"][0]
-    ingredients = []
-    for n in range(1,21):
-        ing = m.get(f"strIngredient{n}")
-        if ing and ing.strip():
-            ingredients.append(ing)
+    try:
+        r = requests.get("https://www.themealdb.com/api/json/v1/1/random.php")
+        j = r.json()
+        m = j["meals"][0]
+        ingredients = []
+        for n in range(1, 21):
+            ing = m.get(f"strIngredient{n}")
+            if ing and ing.strip():
+                ingredients.append(ing)
         
-    return {
-        "name":m.get("strMeal") or "random_meal",
-        "description":m.get("strInstructions")[:240] if m.get("strInstructions") else "",
-        "ingredients":ingredients,
-    }
-    
+        return {
+            "name": m.get("strMeal") or "random_meal",
+            "description": m.get("strInstructions")[:240] if m.get("strInstructions") else "",
+            "ingredients": ingredients,
+        }
+    except Exception as e:
+        logger.error(f"Error fetching meal: {e}")
+        return {
+            "name": "Generic Dish",
+            "description": "A delicious random meal.",
+            "ingredients": ["Salt", "Pepper", "Oil"]
+        }
 
+logger.info("Fetching dish data...")
 dishes = []
 dish_id = 1
 for r in restaurants:
-    for _ in range(20):
+    for _ in range(5): # Reduced count for speed testing, increase to 20 later
         meal = get_random_meal()
-        price = round(random.uniform(6.0,28.0),2)
+        price = round(random.uniform(6.0, 28.0), 2)
         dishes.append({
-            "_id":f"dish_{dish_id}",
-            "restaurant_id":r["_id"],
-            "name":meal["name"],
-            "description":meal["description"],
-            "price":price,
-            "ingredients":meal["ingredients"],
+            "_id": f"dish_{dish_id}",
+            "restaurant_id": r["_id"],
+            "name": meal["name"],
+            "description": meal["description"],
+            "price": price,
+            "ingredients": meal["ingredients"],
         })
         dish_id += 1
 
+# Ensure seed_data directory exists
+seed_dir = os.path.join(base_dir, "seed_data")
+os.makedirs(seed_dir, exist_ok=True)
 
-with open("./backend/seed_data/restaurants.json","w") as f:
-    json.dump(restaurants,f,indent=2)
-with open("./backend/seed_data/dishes.json","w") as f:
-    json.dump(dishes,f,indent=2)
+# Write Intermediate Data
+with open(os.path.join(seed_dir, "restaurants.json"), "w") as f:
+    json.dump(restaurants, f, indent=2)
+with open(os.path.join(seed_dir, "dishes.json"), "w") as f:
+    json.dump(dishes, f, indent=2)
 
-
+# --- 3. Refine Data with LLM ---
 def generate_refined_res_data(dish):
-    llm = ChatOpenAI(model="gpt-5", api_key=os.environ.get("OPENAI_KEY"))
     prompt_template = ChatPromptTemplate.from_template("""
-You are an allergen annotator for a restaurant dish database.
+    You are an allergen annotator for a restaurant dish database.
 
-Given a dish name and description,ingredients(maybe) infer ONLY:
-- ingredients (as a list of words/phrases) only if they are not present,
-- allergens (list of {{allergen, confidence [0–1], why}}),
-- nutrition_facts: object with approximate nutritional numeric values
-- a one-line summary of the dish.
+    Given a dish name, description, and ingredients, infer ONLY:
+    - ingredients (clean up the list)
+    - allergens (list of {{allergen, confidence [0–1], why}})
+    - nutrition_facts: object with approximate nutritional numeric values
+    - a one-line summary of the dish.
 
-Do NOT return any other fields. 
-Do NOT change dish name, description, price, or other metadata.
+    Do NOT return any other fields. 
+    Allowed allergens: peanuts, tree_nuts, dairy, egg, soy, wheat_gluten, fish, shellfish, sesame.
 
-Allowed allergens: peanuts, tree_nuts, dairy, egg, soy, wheat_gluten, fish, shellfish, sesame.
+    Dish input:
+    Name: "{name}"
+    Description: "{description}"
+    Ingredients: "{ingredients}"
 
-Dish input:
-Name: "{name}"
-Description: "{description}"
-Ingredients: "{ingredients}"
-
-Output JSON ONLY:
-{{
-  "ingredients": [...],
-  "inferred_allergens": [
-    {{"allergen": "...", "confidence": 0.95, "why": "..."}}
-  ],
-    "nutrition_facts": object with approximate numeric values and confidences for:
+    Output JSON ONLY:
     {{
-      "calories": "value": number (kcal),
-      "protein":"value": number (grams),
-      "fat":"value": number (grams),
-      "carbohydrates":"value": number (grams),
-      "sugar":"value": number (grams),
-      "fiber":"value": number (grams)
+      "ingredients": ["list", "of", "ingredients"],
+      "inferred_allergens": [
+        {{"allergen": "dairy", "confidence": 0.95, "why": "contains cheese"}}
+      ],
+      "nutrition_facts": {{
+          "calories": {{"value": 500}},
+          "protein": {{"value": 20}},
+          "fat": {{"value": 15}},
+          "carbohydrates": {{"value": 50}},
+          "sugar": {{"value": 5}},
+          "fiber": {{"value": 3}}
+      }},
+      "summary": "A brief summary..."
     }}
-  "summary": "..."
-}}
-""")
+    """)
     
     prompt = prompt_template.format_messages(
         name=dish.get("name",""),
@@ -112,43 +147,44 @@ Output JSON ONLY:
         ingredients=dish.get("ingredients","")
     )
 
-    logger.debug(f"Printing generated prompt {prompt}")
-    response = llm.invoke(prompt)
-
     try:
-        refined = json.loads(response.content)
-    except Exception as e:
-        logger.error(str(e))
-        return dish
-    
-    if "ingredients" not in dish or not dish["ingredients"]:
-        dish["ingredients"] = refined.get("ingredients",[])
-    
-    if "inferred_allergens" not in dish or not dish["inferred_allergens"]:
-        dish["inferred_allergens"] = refined.get("inferred_allergens",[])
-
-    if "nutrition_facts" not in dish or not dish.get("nutrition_facts"):
+        response = llm.invoke(prompt)
+        content = clean_json_response(response.content)
+        refined = json.loads(content)
+        
+        # Merge refined data
+        if "ingredients" not in dish or not dish["ingredients"]:
+            dish["ingredients"] = refined.get("ingredients", [])
+        
+        # Overwrite/Update inferred fields
+        dish["inferred_allergens"] = refined.get("inferred_allergens", [])
         dish["nutrition_facts"] = refined.get("nutrition_facts", {})
+        
+        # Use summary as description if original is too long or empty
+        dish["description"] = refined.get("summary", dish["description"])
 
-    if "summary" not in dish or not dish["summary"]:
-        dish["description"] = refined.get("summary","")
+    except Exception as e:
+        logger.error(f"Error refining dish {dish.get('name')}: {e}")
+        # Fallback defaults
+        dish.setdefault("inferred_allergens", [])
+        dish.setdefault("nutrition_facts", {})
 
-    dish.setdefault("availaibility",True)
+    dish.setdefault("availability", True)
     dish.setdefault("serving_size", "single")
     dish.setdefault("explicit_allergens", [])
 
     return dish
 
-logger.info(f"Generated {len(restaurants)} restaurants and {len(dishes)} dishes")
+logger.info(f"Refining {len(dishes)} dishes with Gemini...")
 
 refined_dishes = []
-for i in range(len(dishes)):
-    refined_dishes.append(generate_refined_res_data(dishes[i]))
-    if i == 15:
-        break
-# refined_dishes = [generate_refined_res_data(dishes[i]) for i in range(len(dishes))]
+for i, dish in enumerate(dishes):
+    logger.info(f"Refining dish {i+1}/{len(dishes)}: {dish['name']}")
+    refined_dishes.append(generate_refined_res_data(dish))
+    # Limit for testing? remove break to process all
+    if i == 15: break 
 
-with open("./backend/seed_data/dishes_refined.json","w") as f:
-    json.dump(refined_dishes,f,indent=2)
+with open(os.path.join(seed_dir, "dishes_refined.json"), "w") as f:
+    json.dump(refined_dishes, f, indent=2)
 
-logger.info("Refined dish data with inferred ingredients and allergens")
+logger.info("✅ Seed generation complete. Files saved to backend/seed_data/")

@@ -105,7 +105,7 @@ describe('SignUp', () => {
     
     // Verify API call
     const fetchCall = (global.fetch as any).mock.calls[0];
-    expect(fetchCall[0]).toBe('https://safebites-yu1o.onrender.com/users/signup');
+    expect(fetchCall[0]).toBe('http://localhost:8000/users/signup');
     expect(fetchCall[1].method).toBe('POST');
     
     // Verify navigation to login

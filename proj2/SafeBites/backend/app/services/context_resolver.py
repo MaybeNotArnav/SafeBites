@@ -8,6 +8,7 @@ for a food delivery assistant. It uses a large language model (LLM) to:
    producing a concise factual summary.
 """
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 import os, json
 import logging
@@ -19,8 +20,13 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
-
+# llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=1,
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    callbacks=[LLMUsageTracker()]
+)
 def resolve_context(state):
     """
     Resolves contextual references in the user's query using prior conversation history.
@@ -75,10 +81,12 @@ def resolve_context(state):
             query=state.query,
             context=state.context or {}
         ))
-        logger.debug("Rewritten Query:", response.content)
-        # return {"query": response.content.strip()}
+        # logger.debug("Rewritten Query:", response.content)
+        # # return {"query": response.content.strip()}
 
-        rewritten_query = response.content.strip().strip()
+        # rewritten_query = response.content.strip().strip()
+        rewritten_query = response.content.strip().replace("```", "")
+        logger.debug(f"Rewritten Query: {rewritten_query}")
 
         if not rewritten_query:
             raise GenericException("LLM returned an empty rewritten query.")
@@ -98,7 +106,8 @@ def resolve_context(state):
             query=rewritten_query
         ))
 
-        current_context = summary_response.content.strip()
+        # current_context = summary_response.content.strip()
+        current_context = summary_response.content.strip().replace("```", "")
 
         logger.debug(f"Resolved Context Response: {current_context}")
 
