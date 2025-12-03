@@ -28,6 +28,8 @@ This system is designed for **scalability, modularity, and sustainability**, ali
 - 💾 **MongoDB Integration** – Persistent storage for restaurants, dishes, and users  
 - ⚡ **FastAPI Backend** – Modular REST API with async support  
 - 🎨 **React Frontend** – Responsive UI styled with TailwindCSS  
+- 🛒 **Cart & Checkout** – Build a cart, confirm checkout, and submit orders  
+- 📦 **Order History** – View previous purchases per user account  
 
 ---
 
@@ -125,6 +127,12 @@ npm install
 npm run dev
 Frontend runs on http://localhost:5173
 ```
+
+### 🛍️ Cart & Orders API
+- `POST /cart/items` – Add dishes to the active cart
+- `PATCH /cart/items/{dish_id}` – Update quantities
+- `POST /orders/checkout` – Convert the cart into an order
+- `GET /orders` – List past orders for the logged-in user
 
 ## 🧪 Testing
 To run backend tests:

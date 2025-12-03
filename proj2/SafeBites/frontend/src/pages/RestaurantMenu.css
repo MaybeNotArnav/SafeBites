@@ -154,6 +154,43 @@
 .dish-item:hover {
   background-color: #edf2f7;
 }
+.inline-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff5f5;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  flex: 1;
+  justify-content: center;
+  border: 1px solid #fecaca;
+}
+
+.inline-quantity span {
+  font-weight: 700;
+  min-width: 1.5rem;
+  text-align: center;
+  color: #b91c1c;
+}
+
+.qty-btn {
+  background: #fff;
+  color: #e11d48;
+  border: 1px solid #fecaca;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.qty-btn:hover {
+  background: #fee2e2;
+  color: #be123c;
+}
+
 
 /* Safety highlighting for dishes */
 .dish-item.dish-safe {
@@ -301,19 +338,42 @@
   flex-wrap: wrap;
 }
 
+.dish-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .ingredients-btn {
   padding: 0.5rem 1.25rem;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
+  background-color: #fff;
+  color: #c53030;
+  border: 1.5px solid #feb2b2;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .ingredients-btn:hover {
+  background-color: #fff5f5;
+  color: #9b2c2c;
+  border-color: #fc8181;
+}
+
+.add-cart-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff6b6b;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-cart-btn:hover {
   background-color: #e53e3e;
 }
 
@@ -348,6 +408,23 @@
   background-color: #edf2f7;
   color: #4a5568;
   border: 1px solid #cbd5e0;
+}
+
+.cart-status {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.cart-status.success {
+  background-color: #e6fffa;
+  color: #065666;
+}
+
+.cart-status.error {
+  background-color: #fff5f5;
+  color: #9b2c2c;
 }
 
 /* ===== SCROLLBAR STYLING ===== */
@@ -400,35 +477,40 @@
   .menu-title {
     font-size: 1.5rem;
   }
-
-  .dish-header {
-    flex-direction: column;
-    align-items: start;
+  .inline-quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff5f5;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    flex: 1;
+    justify-content: center;
+    border: 1px solid #fecaca;
   }
 
-  .dish-title-container {
-    width: 100%;
+  .inline-quantity span {
+    font-weight: 700;
+    min-width: 1.5rem;
+    text-align: center;
+    color: #b91c1c;
   }
 
-  .dish-header-right {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .dish-name {
+  .qty-btn {
+    background: #fff;
+    color: #e11d48;
+    border: 1px solid #fecaca;
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
     font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
   }
 
-  .dish-price {
-    font-size: 1rem;
-  }
-
-  .dish-description {
-    font-size: 0.85rem;
-  }
-
-  .safety-badge {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.7rem;
+  .qty-btn:hover {
+    background: #fee2e2;
+    color: #be123c;
   }
 }

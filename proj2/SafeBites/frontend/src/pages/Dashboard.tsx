@@ -4,6 +4,8 @@ import './Dashboard.css';
 import Home from './Home';
 import SearchChat from './SearchChat';
 import Settings from './Settings';
+import Cart from './Cart';
+import Orders from './Orders';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -79,6 +81,10 @@ function Dashboard() {
         return <SearchChat />;
       case 'settings':
         return <Settings />;
+      case 'cart':
+        return <Cart />;
+      case 'orders':
+        return <Orders />;
       default:
         return <Home />;
     }
@@ -184,6 +190,22 @@ function Dashboard() {
             >
               <img src="/icons/hugeicons_setting.png" alt="Settings" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Settings</span>}
+            </button>
+
+            <button 
+              className={`sidebar-item ${currentPage === 'cart' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('cart')}
+            >
+              <img src="/icons/icons8-shopping-cart-24.png" alt="Cart" className="sidebar-icon" />
+              {isSidebarOpen && <span className="sidebar-text">Cart & Checkout</span>}
+            </button>
+
+            <button 
+              className={`sidebar-item ${currentPage === 'orders' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('orders')}
+            >
+              <img src="/icons/icons8-purchase-order-24.png" alt="Orders" className="sidebar-icon" />
+              {isSidebarOpen && <span className="sidebar-text">Past Orders</span>}
             </button>
           </nav>
         </aside>
