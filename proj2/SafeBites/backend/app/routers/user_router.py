@@ -14,34 +14,14 @@ Authentication:
 - `Authorization: Bearer <token>` header is used for protected routes (`/me` endpoints).
 - Auth token is validated using `get_current_user` dependency.
 """
-from fastapi import APIRouter, Header, Depends
-from typing import Optional
+from fastapi import APIRouter, Depends
 from app.models.user_model import UserCreate, UserUpdate, UserOut
 from app.services import user_service
-from app.models.exception_model import AuthError, BadRequestException
+from app.models.exception_model import BadRequestException
+from app.dependencies.auth import get_current_user
 
 
 router = APIRouter(prefix="/users", tags=["users"])
-
-def get_current_user(authorization: Optional[str] = Header(None)):
-    """
-    Extract and validate the Bearer token from the `Authorization` header.
-
-    Args:
-        authorization (Optional[str]): The value of the `Authorization` header (e.g. "Bearer <token>").
-
-    Returns:
-        dict: The current user data from the database.
-
-    Raises:
-        AuthError: If the header is missing or invalid.
-    """
-    if not authorization:
-        raise AuthError(detail="Missing Authorization header")
-    scheme, _, token = authorization.partition(" ")
-    if scheme.lower() != "bearer" or not token:
-        raise AuthError(detail="Invalid auth header")
-    return user_service.get_user_by_id(token)
 
 @router.post("/signup", response_model=UserOut)
 def signup(payload: UserCreate):

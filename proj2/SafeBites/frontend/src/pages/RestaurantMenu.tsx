@@ -1,8 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './RestaurantMenu.css';
 import DishDetail from './DishDetail';
 
 const API_BASE_URL = 'http://127.0.0.1:8000';
+
+const extractDishId = (value: unknown): string | null => {
+  if (!value) {
+    return null;
+  }
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (typeof value === 'object' && '$oid' in (value as Record<string, unknown>)) {
+    const maybeOid = (value as { $oid?: unknown }).$oid;
+    return typeof maybeOid === 'string' ? maybeOid : null;
+  }
+  try {
+    return String(value);
+  } catch (err) {
+    console.error('Unable to normalize dish id', err);
+    return null;
+  }
+};
 
 interface Dish {
   _id: string;
@@ -50,6 +69,23 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
   const [isDishDetailOpen, setIsDishDetailOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cartStatus, setCartStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [cartQuantities, setCartQuantities] = useState<Record<string, number>>({});
+
+  const updateQuantitiesFromCart = useCallback((items: Array<{ dish_id?: unknown; quantity?: number }>) => {
+    const mapping: Record<string, number> = {};
+    items.forEach((item) => {
+      const normalizedId = extractDishId(item?.dish_id);
+      if (!normalizedId) {
+        return;
+      }
+      const qty = typeof item?.quantity === 'number' ? item.quantity : 0;
+      if (qty > 0) {
+        mapping[normalizedId] = qty;
+      }
+    });
+    setCartQuantities(mapping);
+  }, []);
 
   // Fetch dishes for this restaurant
   useEffect(() => {
@@ -82,6 +118,114 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
       fetchDishes();
     }
   }, [isOpen, restaurant._id]);
+
+  const fetchCartState = useCallback(async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (!isOpen || !authToken) {
+      setCartQuantities({});
+      return;
+    }
+    try {
+      const response = await fetch(`${API_BASE_URL}/cart`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to load cart');
+      }
+      const data = await response.json();
+      updateQuantitiesFromCart(data.items || []);
+    } catch (err) {
+      console.error('Failed to load cart state:', err);
+      setCartQuantities({});
+    }
+  }, [isOpen, updateQuantitiesFromCart]);
+
+  useEffect(() => {
+    fetchCartState();
+  }, [fetchCartState]);
+
+  const handleAddToCart = async (dish: Dish) => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setCartStatus({ type: 'error', message: 'Please log in to add dishes to your cart.' });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/cart/items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({ dish_id: dish._id, quantity: 1 }),
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || 'Unable to add to cart.');
+      }
+
+      const data = await response.json();
+      if (data?.items) {
+        updateQuantitiesFromCart(data.items);
+      } else {
+        fetchCartState();
+      }
+      setCartStatus({ type: 'success', message: `${dish.name} added to cart.` });
+    } catch (err) {
+      setCartStatus({ type: 'error', message: err instanceof Error ? err.message : 'Unable to add to cart.' });
+    } finally {
+      setTimeout(() => setCartStatus(null), 4000);
+    }
+  };
+
+  const handleUpdateQuantity = async (dishId: string, nextQuantity: number) => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setCartStatus({ type: 'error', message: 'Please log in to manage your cart.' });
+      return;
+    }
+    try {
+      let response: Response;
+      if (nextQuantity <= 0) {
+        response = await fetch(`${API_BASE_URL}/cart/items/${dishId}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+      } else {
+        response = await fetch(`${API_BASE_URL}/cart/items/${dishId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({ quantity: nextQuantity }),
+        });
+      }
+
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || 'Unable to update cart.');
+      }
+
+      const data = await response.json();
+      if (data?.items) {
+        updateQuantitiesFromCart(data.items);
+      } else {
+        fetchCartState();
+      }
+      setCartStatus({ type: 'success', message: 'Cart updated.' });
+    } catch (err) {
+      setCartStatus({ type: 'error', message: err instanceof Error ? err.message : 'Unable to update cart.' });
+    } finally {
+      setTimeout(() => setCartStatus(null), 4000);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -122,6 +266,12 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
           <div className="menu-error">
             <p>Error: {error}</p>
             <p>Unable to load menu items.</p>
+          </div>
+        )}
+
+        {cartStatus && (
+          <div className={`cart-status ${cartStatus.type}`}>
+            {cartStatus.message}
           </div>
         )}
 
@@ -174,12 +324,38 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
                   )}
                   
                   <div className="dish-footer">
-                    <button 
-                      className="ingredients-btn"
-                      onClick={() => handleIngredientsClick(dish)}
-                    >
-                      Ingredients & Details
-                    </button>
+                    <div className="dish-actions">
+                      <button 
+                        className="ingredients-btn"
+                        onClick={() => handleIngredientsClick(dish)}
+                      >
+                        Ingredients & Details
+                      </button>
+                      {cartQuantities[dish._id] && cartQuantities[dish._id] > 0 ? (
+                        <div className="inline-quantity">
+                          <button
+                            className="qty-btn"
+                            onClick={() => handleUpdateQuantity(dish._id, cartQuantities[dish._id] - 1)}
+                          >
+                            -
+                          </button>
+                          <span>{cartQuantities[dish._id]}</span>
+                          <button
+                            className="qty-btn"
+                            onClick={() => handleUpdateQuantity(dish._id, cartQuantities[dish._id] + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          className="add-cart-btn"
+                          onClick={() => handleAddToCart(dish)}
+                        >
+                          Add to Cart
+                        </button>
+                      )}
+                    </div>
                     
                     {/* Show explicit allergens or inferred allergens */}
                     {((dish.explicit_allergens && dish.explicit_allergens.length > 0) || 
