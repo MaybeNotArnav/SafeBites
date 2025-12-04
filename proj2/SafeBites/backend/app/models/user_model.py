@@ -23,6 +23,7 @@ class UserCreate(BaseModel):
     # Limit password to 3–72 characters
     password: str = Field(..., min_length=3, max_length=72)
     allergen_preferences: List[str] = Field(default_factory=list)
+    role: str = Field(default="user")
 
 class UserUpdate(BaseModel):
     """
@@ -36,6 +37,7 @@ class UserUpdate(BaseModel):
     """
     name: Optional[str]
     allergen_preferences: Optional[List[str]]
+    role: Optional[str]
 
 class UserOut(BaseModel):
     """
@@ -51,3 +53,4 @@ class UserOut(BaseModel):
     name: str
     username: str
     allergen_preferences: List[str] = []
+    role: str = "user"

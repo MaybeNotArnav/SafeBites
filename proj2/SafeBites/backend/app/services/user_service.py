@@ -59,6 +59,7 @@ def create_user(user_create):
     hashed = pwd_ctx.hash(user_create.password[:72])
     doc = user_create.model_dump()
     doc["password"] = hashed
+    doc.setdefault("role", "user")
     try:
         res = db.users.insert_one(doc)
         created = db.users.find_one({"_id": res.inserted_id})
