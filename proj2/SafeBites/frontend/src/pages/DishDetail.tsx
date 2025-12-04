@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react';
 import './DishDetail.css';
+import ReviewForm from '../components/ReviewForm';
+import ReviewList from '../components/ReviewList';
+import { reviewAPI } from '../api/reviewAPI';
 
 interface InferredAllergen {
   allergen: string;
@@ -31,15 +35,91 @@ interface Dish {
   nutrition_facts?: NutritionFacts;
   availaibility?: boolean;
   serving_size?: string;
+  avg_rating?: number;
+  review_count?: number;
+}
+
+interface Review {
+  _id: string;
+  user_id: string;
+  rating: number;
+  comment?: string;
+  created_at: string;
+  updated_at?: string;
 }
 
 interface DishDetailProps {
   dish: Dish;
   isOpen: boolean;
   onClose: () => void;
+  authToken?: string | null;
+  currentUserId?: string;
 }
 
-function DishDetail({ dish, isOpen, onClose }: DishDetailProps) {
+function DishDetail({ dish, isOpen, onClose, authToken, currentUserId }: DishDetailProps) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      loadReviews();
+    }
+  }, [isOpen, dish._id]);
+
+  const loadReviews = async () => {
+    setIsLoadingReviews(true);
+    try {
+      const data = await reviewAPI.listReviewsForDish(dish._id);
+      setReviews(data);
+    } catch (error) {
+      console.error('Failed to load reviews:', error);
+      setReviews([]);
+    } finally {
+      setIsLoadingReviews(false);
+    }
+  };
+
+  const handleSubmitReview = async (rating: number, comment: string) => {
+    if (!authToken) return;
+    setIsSubmittingReview(true);
+    try {
+      if (editingReviewId) {
+        await reviewAPI.updateReview(editingReviewId, { rating, comment }, authToken);
+        setEditingReviewId(null);
+      } else {
+        await reviewAPI.createReview({ dish_id: dish._id, rating, comment }, authToken);
+      }
+      await loadReviews();
+    } catch (error) {
+      console.error('Failed to submit review:', error);
+      throw error;
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
+
+  const handleEditReview = (reviewId: string) => {
+    const review = reviews.find(r => r._id === reviewId);
+    if (review) {
+      setEditingReviewId(reviewId);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId: string) => {
+    if (!authToken) return;
+    if (!window.confirm('Are you sure you want to delete this review?')) return;
+    
+    try {
+      await reviewAPI.deleteReview(reviewId, authToken);
+      await loadReviews();
+    } catch (error) {
+      console.error('Failed to delete review:', error);
+    }
+  };
+
+  const editingReview = editingReviewId ? reviews.find(r => r._id === editingReviewId) : null;
   if (!isOpen) return null;
 
   // Group inferred allergens by confidence level for visual distinction
@@ -56,7 +136,18 @@ function DishDetail({ dish, isOpen, onClose }: DishDetailProps) {
         ✕
       </button>
       
-      <h2 className="dish-detail-title">{dish.name}</h2>
+      <div className="dish-detail-header">
+        <h2 className="dish-detail-title">{dish.name}</h2>
+        {dish.avg_rating !== null && dish.avg_rating !== undefined && (
+          <div className="dish-rating-badge">
+            <span className="stars-small">{'★'.repeat(Math.round(dish.avg_rating)) + '☆'.repeat(5 - Math.round(dish.avg_rating))}</span>
+            <span className="rating-value">{dish.avg_rating.toFixed(1)}</span>
+            {dish.review_count !== undefined && dish.review_count > 0 && (
+              <span className="review-count-small">({dish.review_count})</span>
+            )}
+          </div>
+        )}
+      </div>
       
       {/* Ingredients Section */}
       <div className="detail-section">
@@ -248,6 +339,48 @@ function DishDetail({ dish, isOpen, onClose }: DishDetailProps) {
           used as a guide only. Please consult with restaurant staff if you have severe 
           allergies or specific dietary restrictions.
         </p>
+      </div>
+
+      {/* Reviews Section */}
+      <div className="detail-section reviews-section">
+        <h3 className="section-title">
+          <span className="section-icon">⭐</span>
+          Reviews
+        </h3>
+
+        {editingReview && (
+          <div className="editing-review-info">
+            <p>Editing your review</p>
+            <button 
+              className="cancel-edit-btn"
+              onClick={() => setEditingReviewId(null)}
+            >
+              Cancel editing
+            </button>
+          </div>
+        )}
+
+        <ReviewForm
+          dishId={dish._id}
+          authToken={authToken || null}
+          onSubmit={handleSubmitReview}
+          isLoading={isSubmittingReview}
+          initialRating={editingReview?.rating}
+          initialComment={editingReview?.comment}
+          isEditing={!!editingReviewId}
+        />
+
+        {isLoadingReviews ? (
+          <p className="loading-text">Loading reviews...</p>
+        ) : (
+          <ReviewList
+            reviews={reviews}
+            currentUserId={currentUserId}
+            onEdit={handleEditReview}
+            onDelete={handleDeleteReview}
+            isLoading={isSubmittingReview}
+          />
+        )}
       </div>
     </div>
   );

@@ -398,6 +398,8 @@ function RestaurantMenu({ restaurant, isOpen, onClose }: RestaurantMenuProps) {
           dish={selectedDish}
           isOpen={isDishDetailOpen}
           onClose={handleCloseDishDetail}
+          authToken={localStorage.getItem("authToken")}
+          currentUserId={localStorage.getItem("userId") || localStorage.getItem("authToken")}
         />
       )}
     </div>

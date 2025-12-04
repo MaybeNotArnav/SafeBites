@@ -10,6 +10,7 @@ from bson import ObjectId
 from fastapi import HTTPException
 from bson.objectid import ObjectId
 from app.models.exception_model import NotFoundException, BadRequestException, DatabaseException, ConflictException
+from .review_service import get_review_stats_for_dish
 
 
 def _to_out(doc: dict) -> dict:
@@ -138,6 +139,14 @@ def get_dish(dish_id: str, user_id: str = None):
             d_out["safe_for_user"] = True
     else:
         d_out["safe_for_user"] = True
+    # attach review stats
+    try:
+        stats = get_review_stats_for_dish(dish_id)
+        d_out["avg_rating"] = round(stats["avg"], 2) if stats.get("avg") is not None else None
+        d_out["review_count"] = stats.get("count", 0)
+    except Exception:
+        d_out["avg_rating"] = None
+        d_out["review_count"] = 0
 
     return d_out
 
@@ -181,6 +190,14 @@ def update_dish(dish_id: str, update_data: dict):
     updated = db.dishes.find_one({"_id": obj})
     out = _to_out(updated)
     out["safe_for_user"] = True
+    # refresh review stats
+    try:
+        stats = get_review_stats_for_dish(dish_id)
+        out["avg_rating"] = round(stats["avg"], 2) if stats.get("avg") is not None else None
+        out["review_count"] = stats.get("count", 0)
+    except Exception:
+        out["avg_rating"] = None
+        out["review_count"] = 0
     return out
 
 
