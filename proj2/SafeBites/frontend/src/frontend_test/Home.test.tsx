@@ -346,6 +346,8 @@ describe('SafeBites - Streamlined Tests', () => {
           dish={testDish}
           isOpen={true}
           onClose={() => {}}
+          authToken={null}
+          currentUserId={undefined}
         />
       )
       

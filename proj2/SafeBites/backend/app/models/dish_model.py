@@ -126,3 +126,5 @@ class DishOut(BaseModel):
     availability: bool = True
     # ALWAYS boolean now
     safe_for_user: bool
+    avg_rating: Optional[float] = None
+    review_count: int = 0
