@@ -30,6 +30,7 @@ This system is designed for **scalability, modularity, and sustainability**, ali
 - 🎨 **React Frontend** – Responsive UI styled with TailwindCSS  
 - 🛒 **Cart & Checkout** – Build a cart, confirm checkout, and submit orders  
 - 📦 **Order History** – View previous purchases per user account  
+- 📊 **Admin Analytics Dashboard** – Role-based insights into restaurant orders and revenue  
 
 ---
 
@@ -196,7 +197,7 @@ docs/SELF_ASSESSMENT.md.
 | 🧠 Personalized Dish Recommender | ML-based recommendations using user profile embeddings | Planned |
 | 💬 Chat-based Ordering | Conversational ordering assistant using LLMs | Planned |
 | 📦 Delivery Tracking | Real-time order tracking dashboard | Planned |
-| 🧾 Admin Analytics Dashboard | Restaurant and order analytics visualization | Planned |
+| 🧾 Admin Analytics Dashboard | Restaurant and order analytics visualization | In Progress |
 
 
 ## 🧑‍💻 Contributors

@@ -1,0 +1,426 @@
+
+.admin-analytics-page {
+  width: 100%;
+  color: #1f2933;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff5f5;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #fecaca;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #b91c1c;
+}
+
+.page-header p {
+  margin: 0.3rem 0 0 0;
+  color: #6b7280;
+}
+
+.analytics-error {
+  color: #b91c1c;
+  background: #fee2e2;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+}
+
+.analytics-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: #ffffff;
+  border: 1px solid #fee2e2;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  flex: 1;
+}
+
+.analytics-filters label {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.35rem;
+}
+
+.analytics-filters input,
+.analytics-filters select {
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  color: #1f2933;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-actions button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  background: #b91c1c;
+  color: #fff;
+}
+
+.filter-actions button.ghost {
+  background: transparent;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+}
+
+.analytics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  border: 1px solid #fca5a5;
+  box-shadow: 0 8px 25px rgba(248, 113, 113, 0.12);
+}
+
+.summary-card p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.summary-card h3 {
+  margin: 0.4rem 0 0 0;
+  font-size: 1.75rem;
+  color: #b91c1c;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.analytics-panel {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.25rem;
+  border: 1px solid #fee2e2;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.analytics-panel.full-width {
+  width: 100%;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel-header span {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.orders-trend,
+.top-dishes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.trend-row,
+.dish-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff5f5;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #ffe4e6;
+}
+
+.trend-date {
+  margin: 0;
+  font-weight: 600;
+}
+
+.trend-orders {
+  margin: 0.15rem 0 0 0;
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.trend-revenue {
+  font-weight: 600;
+  color: #be123c;
+}
+
+.dish-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fecaca;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.dish-name {
+  margin: 0;
+  font-weight: 600;
+  color: #1f2933;
+}
+
+.dish-meta {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.dish-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  color: #1f2933;
+}
+
+.dish-stats strong {
+  color: #b91c1c;
+}
+
+.restaurant-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.restaurant-row {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  padding: 0.75rem 1rem;
+  background: #fff5f5;
+  border-radius: 10px;
+  align-items: center;
+  border: 1px solid #ffe4e6;
+}
+
+.restaurant-row.header {
+  background: transparent;
+  border-bottom: 1px solid #fca5a5;
+  border-radius: 0;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.restaurant-name {
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.empty-state {
+  margin: 0.5rem 0 0 0;
+  color: #9ca3af;
+}
+
+.customer-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.metric-pill {
+  background: #fff5f5;
+  border: 1px solid #ffe4e6;
+  border-radius: 12px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.metric-pill p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.metric-pill strong {
+  font-size: 1.2rem;
+  color: #b91c1c;
+}
+
+.top-customers h5,
+.top-allergens h5,
+.menu-performance-grid h5 {
+  margin: 0 0 0.75rem 0;
+  color: #b91c1c;
+}
+
+.top-customers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.customer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem;
+  border-radius: 10px;
+  border: 1px solid #ffe4e6;
+  background: #fff5f5;
+  gap: 1rem;
+}
+
+.customer-name {
+  margin: 0;
+  font-weight: 600;
+  color: #1f2933;
+}
+
+.customer-meta,
+.customer-allergens {
+  margin: 0.15rem 0 0 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.customer-allergens {
+  color: #b91c1c;
+}
+
+.customer-last-order {
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.watchlist-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.watchlist-metrics div {
+  background: #fff5f5;
+  border: 1px solid #ffe4e6;
+  border-radius: 12px;
+  padding: 0.85rem;
+}
+
+.watchlist-metrics p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.watchlist-metrics strong {
+  color: #b91c1c;
+  font-size: 1.25rem;
+}
+
+.top-allergens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.allergen-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #fde68a;
+}
+
+.allergen-row strong {
+  color: #b45309;
+}
+
+.menu-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.menu-stats-grid div {
+  background: #fff5f5;
+  border: 1px solid #ffe4e6;
+  border-radius: 12px;
+  padding: 0.9rem;
+}
+
+.menu-stats-grid p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.menu-stats-grid strong {
+  font-size: 1.25rem;
+  color: #b91c1c;
+}
+
+.menu-performance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.dish-rank.slow {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+@media (max-width: 640px) {
+  .restaurant-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+  }
+
+  .restaurant-row span:nth-child(3),
+  .restaurant-row span:nth-child(4) {
+    text-align: right;
+  }
+}

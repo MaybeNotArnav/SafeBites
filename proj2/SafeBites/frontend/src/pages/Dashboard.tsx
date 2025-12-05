@@ -6,12 +6,14 @@ import SearchChat from './SearchChat';
 import Settings from './Settings';
 import Cart from './Cart';
 import Orders from './Orders';
+import AdminAnalytics from './AdminAnalytics';
 
 function Dashboard() {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
+  const [userRole, setUserRole] = useState('user');
 
   // User data from API
   const [username, setUsername] = useState('');
@@ -53,6 +55,7 @@ function Dashboard() {
       setUsername(userData.username || storedUsername || 'User');
       setName(userData.name || 'User');
       setAllergies(userData.allergen_preferences || []);
+      setUserRole(userData.role || 'user');
     } catch (error) {
       console.error('Dashboard - Error fetching user data:', error);
       // Use fallback data from localStorage
@@ -85,6 +88,8 @@ function Dashboard() {
         return <Cart />;
       case 'orders':
         return <Orders />;
+      case 'admin-analytics':
+        return <AdminAnalytics />;
       default:
         return <Home />;
     }
@@ -207,6 +212,16 @@ function Dashboard() {
               <img src="/icons/icons8-purchase-order-24.png" alt="Orders" className="sidebar-icon" />
               {isSidebarOpen && <span className="sidebar-text">Past Orders</span>}
             </button>
+
+            {userRole === 'admin' && (
+              <button 
+                className={`sidebar-item ${currentPage === 'admin-analytics' ? 'active' : ''}`}
+                onClick={() => setCurrentPage('admin-analytics')}
+              >
+                <img src="/icons/icons8-receipt-dollar-24.png" alt="Admin Analytics" className="sidebar-icon" />
+                {isSidebarOpen && <span className="sidebar-text">Admin Analytics</span>}
+              </button>
+            )}
           </nav>
         </aside>
 
