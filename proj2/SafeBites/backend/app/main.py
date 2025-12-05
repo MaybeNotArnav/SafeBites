@@ -16,7 +16,7 @@ Key Features:
 import logging, os
 import threading
 from fastapi import FastAPI
-from .routers import restaurant_router, dish_router, user_router, cart_router, order_router
+from .routers import restaurant_router, dish_router, user_router, cart_router, order_router, admin_router
 from .services.faiss_service import build_faiss_from_db
 from .services.exception_service import register_exception_handlers
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,6 +41,7 @@ app.include_router(dish_router.router)
 app.include_router(user_router.router)
 app.include_router(cart_router.router)
 app.include_router(order_router.router)
+app.include_router(admin_router.router)
 
 
 logger.info("Registering Exception Handlers....")
