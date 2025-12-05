@@ -9,7 +9,7 @@ food knowledge.
 """
 import logging
 from typing import Dict
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 

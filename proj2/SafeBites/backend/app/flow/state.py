@@ -84,11 +84,11 @@ class ChatState(BaseModel):
     """
     user_id:str
     session_id:str
-    restaurant_id:str
+    restaurant_id:Optional[str] = None
     query:str
     # intents:Optional[List[Dict[str,Any]]] = None
     intents:Optional[IntentExtractionResult] = None
-    context:Optional[List[Dict[str,Any]]] = None
+    context: Optional[List[Dict[str, Any]]] = None
     current_context:Optional[str] = ""
     query_parts: Optional[Dict[str,Any]] = None
     # menu_results: Optional[Dict[str,List[Dict[str, Any]]]] = None
@@ -99,3 +99,12 @@ class ChatState(BaseModel):
     response : str = ""
     status : str = "pending"
     timestamp : str = datetime.utcnow().isoformat()
+
+class ChatState(BaseModel):
+    """
+    ... (docstring) ...
+    """
+    user_id: str
+    session_id: str
+    restaurant_id: Optional[str] = None  # Changed from str to Optional[str]
+    query: str

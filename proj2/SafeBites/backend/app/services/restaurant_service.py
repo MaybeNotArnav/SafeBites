@@ -16,7 +16,7 @@ from app.services.faiss_service import update_faiss_index
 from app.db import get_db
 from pymongo.errors import PyMongoError
 from langchain.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os, json
 from dotenv import load_dotenv
