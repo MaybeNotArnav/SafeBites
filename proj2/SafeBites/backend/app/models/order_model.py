@@ -65,3 +65,4 @@ class OrderOut(BaseModel):
     delivery_address: Optional[str] = None
     special_instructions: Optional[str] = None
     placed_at: datetime
+    estimated_arrival_time: Optional[datetime] = None

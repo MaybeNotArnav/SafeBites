@@ -29,6 +29,7 @@ interface Order {
   total: number;
   status: string;
   placed_at: string;
+  estimated_arrival_time?: string;
   payment_method?: string;
   delivery_address?: string;
 }
@@ -100,9 +101,17 @@ function Orders() {
                     <h3>Order #{order._id.slice(-6)}</h3>
                     <p className="order-date">Placed on {formatDate(order.placed_at)}</p>
                   </div>
-                  <span className={`order-status ${order.status}`}>
-                    {order.status.toUpperCase()}
-                  </span>
+                  <div className="order-status-container">
+                    <span className={`order-status ${order.status}`}>
+                      {order.status.toUpperCase()}
+                    </span>
+                    {order.estimated_arrival_time && (
+                      <div className="order-arrival-time">
+                        <span className="arrival-icon">🕒</span>
+                        <span>Arriving: {formatDate(order.estimated_arrival_time)}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {order.restaurants && order.restaurants.length > 0 && (
