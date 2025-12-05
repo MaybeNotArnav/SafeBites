@@ -72,8 +72,14 @@ def checkout(user_id: str, payload: CheckoutRequest) -> Dict:
     restaurants = _summarize_restaurants(items)
 
     now = datetime.utcnow()
-    # Estimate arrival 45 minutes from now
-    arrival_time = now + timedelta(minutes=45)
+    # Estimate arrival dynamically: base prep + per-restaurant and per-item buffers
+    restaurant_count = max(len(restaurants), 1)
+    total_items = sum(item.get("quantity", 0) or 0 for item in items)
+    base_minutes = 35
+    restaurant_buffer = max(0, restaurant_count - 1) * 7
+    item_buffer = max(0, total_items - 3) * 2
+    prep_minutes = min(90, base_minutes + restaurant_buffer + item_buffer)
+    arrival_time = now + timedelta(minutes=prep_minutes)
 
     order_doc = {
         "user_id": user_id,
