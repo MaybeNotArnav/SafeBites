@@ -6,7 +6,8 @@ dish data using OpenAI embeddings and FAISS.
 """
 import logging
 from datetime import datetime
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+# from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.prompts import ChatPromptTemplate
 import os,json
@@ -29,9 +30,20 @@ db = client[DB_NAME]
 dish_collection = db["dishes"]
 
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large",openai_api_key=os.getenv("OPENAI_KEY"))
-embedding_dim = 1536
-llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+# embeddings = OpenAIEmbeddings(model="text-embedding-3-large",openai_api_key=os.getenv("OPENAI_KEY"))
+# embedding_dim = 1536
+# llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="models/embedding-001", 
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=1,
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    callbacks=[LLMUsageTracker()]
+)
     
 
 def extract_query_intent(query):
@@ -79,7 +91,8 @@ def extract_query_intent(query):
     """)
     try:
         response =  llm.invoke(intent_prompt.format_messages(query=query))
-        intents_json = json.loads(response.content)
+        content = response.content.strip().replace("```json", "").replace("```", "")
+        intents_json = json.loads(content)
         return QueryIntent(**intents_json)
     except Exception as e:
         logging.error(str(e))

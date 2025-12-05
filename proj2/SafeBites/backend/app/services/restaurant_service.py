@@ -17,6 +17,7 @@ from app.db import get_db
 from pymongo.errors import PyMongoError
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 import os, json
 from dotenv import load_dotenv
 from ..models.dish_model import DishCreate
@@ -31,7 +32,13 @@ db = get_db()
 tmp_dir = "/tmp"
 os.makedirs(tmp_dir, exist_ok=True)
 
-llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+# llm = ChatOpenAI(model="gpt-5",temperature=1,openai_api_key=os.getenv("OPENAI_KEY"),callbacks=[LLMUsageTracker()])
+llm = ChatGoogleGenerativeAI(
+    model="gemini-flash-latest",
+    temperature=1,
+    google_api_key=os.getenv("GOOGLE_API_KEY"),
+    callbacks=[LLMUsageTracker()]
+)
 
 restaurant_collection = db["restaurants"]
 
@@ -132,7 +139,11 @@ def enrich_dish_info(dish:DishCreate):
     Uses a GPT-5 model (via LangChain) to generate structured JSON output.
     Does not modify existing dish metadata like name, price, or availability.
     """
-    llm = ChatOpenAI(model="gpt-5", api_key=os.environ.get("OPENAI_KEY"))
+    # llm = ChatOpenAI(model="gpt-5", api_key=os.environ.get("OPENAI_KEY"))
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-flash-latest", 
+        google_api_key=os.environ.get("GOOGLE_API_KEY")
+    )
     prompt_template = ChatPromptTemplate.from_template("""
 You are an allergen annotator for a restaurant dish database.
 
@@ -181,10 +192,12 @@ Output JSON ONLY:
     response = llm.invoke(prompt)
 
     try:
-        refined = json.loads(response.content)
+        # Added cleanup for Gemini's markdown code blocks
+        content = response.content.strip().replace("```json", "").replace("```", "")
+        refined = json.loads(content)
     except Exception as e:
         logger.error(str(e))
-        return dish
+        return dish  
     
     if not getattr(dish, "ingredients", []):
         print("Setting ingredients")
@@ -439,7 +452,8 @@ Now analyze this query:
 """)
     try:
         response =  llm.invoke(prompt_template.format_messages(query=query))
-        raw_filters = json.loads(response.content)
+        content = response.content.strip().replace("```json", "").replace("```", "")
+        raw_filters = json.loads(content)
         logger.debug(f"Extracted raw filters: {raw_filters}")
         price = raw_filters.get("price", {})
         min_price = price.get("min")
@@ -456,22 +470,6 @@ Now analyze this query:
     except Exception as e:
         raise GenericException(str(e))
 
-    # price = filters.get("price",{})
-    # include_ing = set(filters.get("ingredients",{}).get("include",[]))
-    # exclude_ing = set(filters.get("ingredients",{}).get("exclude",[]))
-    # exclude_allergens = set(filters.get("allergens",{}).get("exclude",[]))
-    # nutrition = filters.get("nutrition",{})
-
-    # DishData(
-    #         dish_name=dish["name"],
-    #         description=dish["description"],
-    #         price=dish["price"],
-    #         ingredients=dish["ingredients"],
-    #         serving_size=dish["serving_size"],
-    #         availability=dish["availaibility"],
-    #         allergens=[a["allergen"] for a in dish["inferred_allergens"]],
-    #         nutrition_facts=dish["nutrition_facts"]
-    #     )
 
     def passes_nutrition_filter(dish):
         facts = dish.nutrition_facts
@@ -540,7 +538,8 @@ def validate_retrieved_dishes(query:str, dishes:list):
     """)
     try:
         response =  llm.invoke(prompt_template.format_messages(query=query,dishes=dishes))
-        parsed = json.loads(response.content)
+        content = response.content.strip().replace("```json", "").replace("```", "")
+        parsed = json.loads(content)
         logging.debug(f"Filtered Dish IDs : {parsed}")
         validated = [DishValidationResult(**item) for item in parsed]
     except Exception as e:
