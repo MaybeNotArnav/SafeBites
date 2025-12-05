@@ -60,6 +60,7 @@ class DishCreate(BaseModel):
     ingredients: List[str] = Field(default_factory=list)
     price: float
     explicit_allergens: Optional[List[Union[str, AllergenInfo]]] = Field(default_factory=list)
+    inferred_allergens: Optional[List[AllergenInfo]] = Field(default_factory=list)
     nutrition_facts : Optional[Dict[str, Any]] = None
     availability: Optional[bool] = True
 
@@ -88,6 +89,7 @@ class DishUpdate(BaseModel):
     ingredients: Optional[List[str]] = None
     price: Optional[float] = None
     explicit_allergens: Optional[List[Union[str, AllergenInfo]]] = None
+    inferred_allergens: Optional[List[AllergenInfo]] = None
     nutrition_facts: Optional[Dict[str, Any]] = None
     availability: Optional[bool] = None
 
@@ -122,6 +124,7 @@ class DishOut(BaseModel):
     ingredients: List[str]
     price: float
     explicit_allergens: Optional[List[Union[str, AllergenInfo]]] = []
+    inferred_allergens: Optional[List[AllergenInfo]] = []
     nutrition_facts : Optional[Dict[str, Any]] = None
     availability: bool = True
     # ALWAYS boolean now

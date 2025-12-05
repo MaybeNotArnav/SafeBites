@@ -25,13 +25,16 @@ def get_menu_items(state):
     """
     results = {}
     restaurant_id = getattr(state,"restaurant_id",None)
-    query_parts = getattr(state,"query_parts",{}).get("menu_search",[])
+    if restaurant_id == "global_search":
+        restaurant_id = None
+
+    query_parts = getattr(state, "query_parts", {}).get("menu_search", [])
 
     if not query_parts:
         logger.warning("No menu_search query parts found in state.")
         return MenuResultResponse(menu_results=results)
 
-    logger.info(f"Processing {len(query_parts)} menu search queries for restaurant {restaurant_id}")
+    logger.info(f"Processing {len(query_parts)} menu search queries. Restaurant filter: {restaurant_id}")
     for q in query_parts:
         logging.debug(f"Retrieving menu items for query: {q} and restaurant_id: {restaurant_id}")
         try:

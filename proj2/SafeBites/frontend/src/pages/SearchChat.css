@@ -530,3 +530,25 @@
     padding: 0.75rem;
   }
 }
+
+.search-scope-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  background: #f0f4f8;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.toggle-label:hover {
+  background: #e2e8f0;
+}

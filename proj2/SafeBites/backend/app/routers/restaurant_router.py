@@ -76,14 +76,23 @@ async def chat_search(payload: ChatQuery):
         query = payload.query
         restaurant_id = payload.restaurant_id
         # prev_state = state_store.get("sess001")
-        session_id = state_service.get_or_create_session("u123", restaurant_id)
+        session_key_id = restaurant_id if restaurant_id else "global_search"
+        user_id = "u123"
+        session_id = state_service.get_or_create_session(user_id, session_key_id)
 
         context = state_service.rebuild_context(session_id)
         logger.debug(f"Rebuilt Context: {context}")
 
         chat_graph = create_chat_graph()
-        state = ChatState(user_id="u123", session_id=session_id, restaurant_id=restaurant_id, query=query, query_parts={},
-                          context=context,current_context="")
+        state = ChatState(
+            user_id=user_id, 
+            session_id=session_id, 
+            restaurant_id=restaurant_id, # This can now be None
+            query=query, 
+            query_parts={},
+            context=context,
+            current_context=""
+        )
 
         final_state = chat_graph.invoke(state)
         logger.debug(f"Final State: {final_state}")
