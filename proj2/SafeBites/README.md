@@ -30,6 +30,7 @@ It integrates **LangGraph + FAISS** for semantic search, enabling users to query
 - **Admin Analytics Dashboard** – Role-based insights into restaurant orders and revenue  
 - **Review system** – Peer-reviewed dishes that tell you what's tasty
 - **ETA/ Delivery Estimation** – Know exactly when your food is showing up
+- **Shift to Gemini** – Google's AI buddy
 
 ---
 
@@ -75,9 +76,7 @@ food-delivery-system/
 | Backend | FastAPI, LangGraph, LangChain | Modular async API services |
 | Database | MongoDB | Stores users, dishes, and restaurant metadata |
 | Vector Search | FAISS | Efficient semantic similarity search |
-| AI Model | OpenAI / Local | Natural language understanding |
-| Deployment | Local & Cloud | Consistent runtime environments |
-
+| AI Model | Gemini | Natural language understanding |
 
 ## Local Setup  
 
@@ -90,6 +89,7 @@ food-delivery-system/
 | Node.js | ≥ 18 | Frontend runtime |
 | MongoDB | latest | Database |
 | Git | — | Version control |
+| Gemini API Key | — | AI model |
 
 ## Backend Setup  
 ```
