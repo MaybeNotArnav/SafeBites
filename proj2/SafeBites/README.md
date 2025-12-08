@@ -8,44 +8,43 @@
 [![Coverage](https://img.shields.io/codecov/c/github/the-Shallow/SE-WOLFCAFE?label=Coverage&logo=78%)](https://se-wolfcafe.onrender.com/index.html)
 [![License](https://img.shields.io/badge/License-MIT-yellow?logo=opensource-initiative)](LICENSE)
 [![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
-[![Rubric](https://img.shields.io/badge/rubric-brightgreen.svg)](docs/SELF_ASSESSMENT.md)
 [![Project Poster](https://img.shields.io/badge/poster-brightgreen.svg)](docs/POSTER.pdf)
-[![Chat System Flowchart](https://img.shields.io/badge/chatsystem-brightgreen.svg)](docs/CHAT_SYSTEM_FLOWCHART.pdf)
 ---
 
-## 🏗️ Overview  
+## Overview  
 **SafeBites** is a full-stack application that leverages **AI-driven natural language understanding** to simplify how users find, customize, and order food.  
 It integrates **LangGraph + FAISS** for semantic search, enabling users to query menus conversationally (e.g., “Find vegan dishes under $10”).  
 
-This system is designed for **scalability, modularity, and sustainability**, aligning with the *Software Engineering Project 2* guidelines.
+
+## Demo Video
+![Watch here!(https://drive.google.com/file/d/10WbCn-RfsoAzLTsXhIN3X7BilVLalhpf/view?usp=sharing)](https://storage.googleapis.com/support-forums-api/attachment/thread-4345092-5580440627900159895.png)
+
+---
+## What existed
+- **Restaurant & Menu Search** – Semantic retrieval using LangGraph + FAISS  
+- **AI Query Understanding** – Extracts intents and filters structured data  
+- **Allergen Detection** – Considers user preferences and allergens
+- **Order History** – View previous purchases per user account 
+## ...and what's been added
+- **Cart & Checkout** – Build a cart, confirm checkout, and submit orders  
+- **Admin Analytics Dashboard** – Role-based insights into restaurant orders and revenue  
+- **Review system** – Peer-reviewed dishes that tell you what's tasty
+- **ETA/ Delivery Estimation** – Know exactly when your food is showing up
 
 ---
 
-## 🚀 Features
-- 🍽️ **Restaurant & Menu Search** – Semantic retrieval using LangGraph + FAISS  
-- 🤖 **AI Query Understanding** – Extracts intents and filters structured data  
-- 🧠 **Allergen Detection** – Considers user preferences and allergens  
-- 💾 **MongoDB Integration** – Persistent storage for restaurants, dishes, and users  
-- ⚡ **FastAPI Backend** – Modular REST API with async support  
-- 🎨 **React Frontend** – Responsive UI styled with TailwindCSS  
-- 🛒 **Cart & Checkout** – Build a cart, confirm checkout, and submit orders  
-- 📦 **Order History** – View previous purchases per user account  
-- 📊 **Admin Analytics Dashboard** – Role-based insights into restaurant orders and revenue  
-
----
-
-## 🧠 Architecture Overview
+## Architecture Overview
 ```plaintext
 food-delivery-system/
 ├── frontend/          # React + Tailwind app
 ├── backend/           # FastAPI + LangGraph + MongoDB + FAISS
 ├── docs/              # Documentation, self-assessment, poster
 └── README.md
-🧩 Backend orchestrates LLM-based reasoning, semantic retrieval, and structured filtering.
-🖥️ Frontend provides intuitive interactions for browsing and ordering.
+ Backend orchestrates LLM-based reasoning, semantic retrieval, and structured filtering.
+ Frontend provides intuitive interactions for browsing and ordering.
 ```
 
-## 👥 Intended Users
+## Intended Users
 
 **SafeBites** is designed for:
 
@@ -53,7 +52,7 @@ food-delivery-system/
 - **Restaurant Owners:** Who want to manage menus, dishes, and customer preferences efficiently.
 - **Developers / Researchers:** Interested in exploring AI-based semantic search, LangGraph integrations, and scalable food delivery systems.
 
-## 📖 Example Use Cases
+## Example Use Cases
 
 1. **Finding Vegan Dishes under $10:**  
    A user searches, "Find vegan dishes under $10," and the system returns relevant dishes using semantic search via FAISS and LangGraph.
@@ -68,7 +67,7 @@ food-delivery-system/
    Developers can test AI query understanding, embeddings, and modular FastAPI endpoints for building similar projects.
 
 
-## 🧰 Tech Stack  
+## Tech Stack  
 
 | **Layer** | **Technology** | **Description** |
 |------------|----------------|-----------------|
@@ -80,9 +79,9 @@ food-delivery-system/
 | Deployment | Local & Cloud | Consistent runtime environments |
 
 
-## ⚙️ Local Setup  
+## Local Setup  
 
-### 🛠️ Prerequisites  
+### Prerequisites  
 
 | **Tool** | **Required Version** | **Purpose** |
 |-----------|----------------------|--------------|
@@ -92,7 +91,7 @@ food-delivery-system/
 | MongoDB | latest | Database |
 | Git | — | Version control |
 
-## 🧩 Backend Setup  
+## Backend Setup  
 ```
 cd backend
 python -m venv venv
@@ -103,7 +102,7 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### 🔧 Install Dependencies  
+### Install Dependencies  
 ```
 pip install -r requirements.txt
 ```
@@ -121,7 +120,7 @@ uvicorn app.main:app --reload
 Backend available at http://localhost:8000
 ```
 
-## 🎨 Frontend Setup
+## Frontend Setup
 ```
 cd frontend
 npm install
@@ -129,13 +128,13 @@ npm run dev
 Frontend runs on http://localhost:5173
 ```
 
-### 🛍️ Cart & Orders API
+### Cart & Orders API
 - `POST /cart/items` – Add dishes to the active cart
 - `PATCH /cart/items/{dish_id}` – Update quantities
 - `POST /orders/checkout` – Convert the cart into an order
 - `GET /orders` – List past orders for the logged-in user
 
-## 🧪 Testing
+## Testing
 To run backend tests:
 ```
 pytest
@@ -158,7 +157,7 @@ Runs tests with COVERAGE:
 npm run test -- --coverage
 ```
 
-## 🤝 Contributing  
+## Contributing  
 
 We welcome new contributors!  
 
@@ -168,51 +167,26 @@ git checkout -b feature/your-feature
 # Make your changes
 git push origin feature/your-feature
 Then open a Pull Request to the main branch.
-
-📘 See the full CONTRIBUTING.md for setup, style guide, and testing conventions.
 ```
 
-## 📜 License
+## License
 This project is licensed under the MIT License.
 See LICENSE for details.
 
-## 🗂️ Additional Documents
+## Additional Documents
 
 | Document | Purpose |
 |-----------|----------|
 | **CONTRIBUTING.md** | Development and PR guidelines |
 | **CODE_OF_CONDUCT.md** | Behavioral standards |
-| **docs/SELF_ASSESSMENT.md** | Rubric evidence (Q1–Q16) |
 | **docs/API_DOCS.md** | API endpoints and schema documentation |
 | **docs/POSTER.pdf** | Visual project summary and future roadmap |
-
-## 🧾 Rubric Reference:
-Detailed mapping of rubric criteria to repository artifacts can be found in
-docs/SELF_ASSESSMENT.md.
-
-## 🚀 Future Roadmap (for Project 3)
-
-| Feature | Description | Status |
-|---------|------------|--------|
-| 🧠 Personalized Dish Recommender | ML-based recommendations using user profile embeddings | Planned |
-| 💬 Chat-based Ordering | Conversational ordering assistant using LLMs | Planned |
-| 📦 Delivery Tracking | Real-time order tracking dashboard | Planned |
-| 🧾 Admin Analytics Dashboard | Restaurant and order analytics visualization | In Progress |
-
-
-## 🧑‍💻 Contributors
-
-| Name | Role | Contributions |
-|------|------|---------------|
-| Khush Patel & Richa Jha | Backend Developer | FastAPI, LangGraph, FAISS Integration |
-| Mia Glen & Ishwarya | Frontend Developer | React + Tailwind UI |
-
 
 ## 💬 Contact
 
 For inquiries or collaboration, reach out via GitHub **Issues** or **Discussions**:  
 
-🔗 [Project Discussions](https://github.com/the-Shallow/SE-WOLFCAFE/discussions)
+🔗 [Project Discussions](https://github.com/MaybeNotArnav/SafeBites/discussions)
 
 
 ## ⭐ Support  
