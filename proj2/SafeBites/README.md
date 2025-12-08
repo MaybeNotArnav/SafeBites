@@ -9,6 +9,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow?logo=opensource-initiative)](LICENSE)
 [![Contributions welcome](https://img.shields.io/badge/Contributions-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
 [![Project Poster](https://img.shields.io/badge/poster-brightgreen.svg)](docs/POSTER.pdf)
+[![DOI](https://zenodo.org/badge/17858284.svg)](https://zenodo.org/badge/latestdoi/17858284)
 ---
 
 ## Overview  
