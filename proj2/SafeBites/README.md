@@ -17,7 +17,7 @@ It integrates **LangGraph + FAISS** for semantic search, enabling users to query
 
 
 ## Demo Video
-![Watch here!(https://drive.google.com/file/d/10WbCn-RfsoAzLTsXhIN3X7BilVLalhpf/view?usp=sharing)]([https://storage.googleapis.com/support-forums-api/attachment/thread-4345092-5580440627900159895.png)](https://drive.google.com/file/d/1NpAZi4lWYQjYY4B56Ee3OTgGp2cJhaMp/view?usp=sharing)
+[![Watch here!](https://images.unsplash.com/photo-1611162616475-46b635cb6868)](https://drive.google.com/file/d/10WbCn-RfsoAzLTsXhIN3X7BilVLalhpf/view?usp=sharing)
 
 ---
 ## What existed
