@@ -12,12 +12,20 @@ function Welcome() {
           <img src="/wolfLogo.png" alt="SafeBites Logo" className="logo-img" />
           <h1>SafeBites</h1>
         </div>
+        <div>
         <button 
           className="header-signup-btn"
           onClick={() => navigate('/signup')}
         >
           Sign Up
         </button>
+        <button 
+          className="header-signup-btn"
+          onClick={() => navigate('/login')}
+        >
+          Log In
+        </button>
+        </div>
       </header>
 
       {/* Hero Section with Search */}
