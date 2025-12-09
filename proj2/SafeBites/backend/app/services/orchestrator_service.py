@@ -1,5 +1,5 @@
 from langchain.agents import initialize_agent, Tool, AgentType
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.memory import ConversationBufferMemory
 from langchain.tools import StructuredTool
@@ -10,6 +10,8 @@ from ..services.response_synthesizer_tool import format_final_response
 from ..services.dish_info_service import get_dish_info
 import os
 from dotenv import load_dotenv
+
+from typing import Optional # Add this import
 
 load_dotenv()
 
@@ -22,7 +24,7 @@ llm = ChatGoogleGenerativeAI(
 
 class MenuQuery(BaseModel):
     query: str
-    restaurant_id: str
+    restaurant_id: Optional[str] = None
 
 get_menu_items_tool = StructuredTool.from_function(
     func=get_menu_items,
@@ -36,21 +38,6 @@ get_menu_items_tool = StructuredTool.from_function(
         "Example queries: 'show me desserts with chocolate', 'find gluten-free pizzas'."
         "Return a json containing list of hits which internally contains dish which are matching the query."
     ),
-    return_direct=False,
-    # args=[
-    #     ToolParameter(
-    #         name="query",
-    #         description="The dish or ingredient to search for",
-    #         type=str,
-    #         required=True
-    #     ),
-    #     ToolParameter(
-    #         name="restaurant_id",
-    #         description="Restaurant ID of the restaurant",
-    #         type=str,
-    #         required=True
-    #     ),
-    # ]
 )
 
 get_dish_info_tool = StructuredTool.from_function(
@@ -88,7 +75,8 @@ memory = ConversationBufferMemory(memory_key="chat_history", return_messages=Tru
 agents = initialize_agent(
     tools=tools,
     llm=llm,
-    agent=AgentType.OPENAI_FUNCTIONS,
+    agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
     memory=memory,
-    verbose=True
+    verbose=True,
+    handle_parsing_errors=True
 )

@@ -35,9 +35,9 @@ class UserUpdate(BaseModel):
         password (str): User's password (must be between 3 and 72 characters).
         allergen_preferences (List[str]): List of allergens the user wishes to avoid.
     """
-    name: Optional[str]
-    allergen_preferences: Optional[List[str]]
-    role: Optional[str]
+    name: Optional[str] = None
+    allergen_preferences: Optional[List[str]] = None
+    role: Optional[str] = None
 
 class UserOut(BaseModel):
     """

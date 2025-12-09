@@ -35,8 +35,11 @@ function SearchChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [searchAllRestaurants, setSearchAllRestaurants] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  
 
   // Example queries for quick start
   const exampleQueries = [
@@ -96,11 +99,11 @@ function SearchChat() {
       // Simple request body - just query and restaurant_id
       const requestBody = {
         query: currentQuery,
-        restaurant_id: "rest_1"
+        restaurant_id: searchAllRestaurants ? null : "rest_1"
       };
 
       console.log('=== CHAT API REQUEST ===');
-      console.log('URL:', `${API_BASE_URL}/restaurants/search`);
+      console.log('Searching mode:', searchAllRestaurants ? 'All Restaurants' : 'Single Restaurant');
       console.log('Body:', JSON.stringify(requestBody, null, 2));
 
       // Call the search API (correct endpoint!)
@@ -277,6 +280,17 @@ function SearchChat() {
       {/* Header with Instructions */}
       <div className="chat-header">
         <h1 className="chat-title">Search Chat</h1>
+        <div className="search-scope-toggle">
+          <label className="toggle-label">
+            <input
+              type="checkbox"
+              checked={searchAllRestaurants}
+              onChange={(e) => setSearchAllRestaurants(e.target.checked)}
+            />
+            <span className="toggle-text">Search Across All Restaurants</span>
+          </label>
+        </div>
+        
         <div className="chat-instructions">
           <h3>How to use:</h3>
           <ul>

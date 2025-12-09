@@ -7,7 +7,7 @@ for a food delivery assistant. It uses a large language model (LLM) to:
 2. Summarize prior conversation context relevant to the current query, 
    producing a concise factual summary.
 """
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 import os, json

@@ -1,5 +1,5 @@
 """Order placement and history services."""
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List
 from bson.objectid import ObjectId
 from app.db import db
@@ -12,6 +12,8 @@ def _serialize_order(order: Dict) -> Dict:
     doc["_id"] = str(doc["_id"])
     if "placed_at" in doc and isinstance(doc["placed_at"], datetime):
         doc["placed_at"] = doc["placed_at"].isoformat()
+    if "estimated_arrival_time" in doc and isinstance(doc["estimated_arrival_time"], datetime):
+        doc["estimated_arrival_time"] = doc["estimated_arrival_time"].isoformat()
     return doc
 
 
@@ -69,6 +71,16 @@ def checkout(user_id: str, payload: CheckoutRequest) -> Dict:
     items = cart.get("items", [])
     restaurants = _summarize_restaurants(items)
 
+    now = datetime.utcnow()
+    # Estimate arrival dynamically: base prep + per-restaurant and per-item buffers
+    restaurant_count = max(len(restaurants), 1)
+    total_items = sum(item.get("quantity", 0) or 0 for item in items)
+    base_minutes = 35
+    restaurant_buffer = max(0, restaurant_count - 1) * 7
+    item_buffer = max(0, total_items - 3) * 2
+    prep_minutes = min(90, base_minutes + restaurant_buffer + item_buffer)
+    arrival_time = now + timedelta(minutes=prep_minutes)
+
     order_doc = {
         "user_id": user_id,
         "items": items,
@@ -81,7 +93,8 @@ def checkout(user_id: str, payload: CheckoutRequest) -> Dict:
         "payment_method": payload.payment_method,
         "delivery_address": payload.delivery_address,
         "special_instructions": payload.special_instructions,
-        "placed_at": datetime.utcnow(),
+        "placed_at": now,
+        "estimated_arrival_time": arrival_time
     }
 
     res = db.orders.insert_one(order_doc)

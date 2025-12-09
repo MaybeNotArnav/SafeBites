@@ -1,5 +1,5 @@
 """Admin-only analytics endpoints."""
-from datetime import datetime
+from datetime import datetime, time
 from fastapi import APIRouter, Depends, HTTPException, Query
 from app.dependencies.auth import require_admin_user
 from app.services import analytics_service
@@ -7,13 +7,24 @@ from app.services import analytics_service
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 
-def _parse_date(value: str | None) -> datetime | None:
+def _parse_date(value: str | None, *, end_of_day: bool = False) -> datetime | None:
     if not value:
         return None
+    trimmed = value.strip()
+    has_explicit_time = len(trimmed) > 10 and trimmed[10] in {"T", " "}
     try:
-        return datetime.fromisoformat(value)
+        parsed = datetime.fromisoformat(trimmed)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=f"Invalid date format: {value}") from exc
+
+    if parsed.tzinfo:
+        parsed = parsed.replace(tzinfo=None)
+
+    if not has_explicit_time:
+        boundary = time.max if end_of_day else time.min
+        parsed = datetime.combine(parsed.date(), boundary)
+
+    return parsed
 
 
 @router.get("/analytics")
@@ -24,8 +35,8 @@ def get_admin_analytics(
     current_user=Depends(require_admin_user),
 ):
     """Return aggregated metrics for admins."""
-    start_dt = _parse_date(start_date)
-    end_dt = _parse_date(end_date)
+    start_dt = _parse_date(start_date, end_of_day=False)
+    end_dt = _parse_date(end_date, end_of_day=True)
     if start_dt and end_dt and start_dt > end_dt:
         raise HTTPException(status_code=400, detail="start_date must be before end_date")
     return analytics_service.get_platform_analytics(start_dt, end_dt, restaurant_id)

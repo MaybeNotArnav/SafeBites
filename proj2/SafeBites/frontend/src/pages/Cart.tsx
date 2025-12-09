@@ -150,6 +150,7 @@ function Cart() {
       }
 
       const order = await response.json();
+      window.dispatchEvent(new CustomEvent('safebites:order-placed', { detail: order }));
       setCheckoutMessage(`Order #${order._id} placed successfully!`);
       setForm({ deliveryAddress: '', paymentMethod: 'card', specialInstructions: '' });
       await fetchCart();
